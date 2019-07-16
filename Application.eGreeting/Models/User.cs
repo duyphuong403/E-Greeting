@@ -20,6 +20,12 @@ namespace Application.eGreeting.Models
         public string UserName { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
+        [StringLength(50, MinimumLength =6)]
+        [Display(Name ="Password")]
+        public string Password { get; set; }
+
+        [Required]
         [Display(Name ="Role")]
         public bool Role { get; set; }
 
