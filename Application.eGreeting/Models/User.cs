@@ -15,39 +15,36 @@ namespace Application.eGreeting.Models
         public int UserId { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 6)]
+        [StringLength(50, MinimumLength = 3)]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
         [Required]
+        [StringLength(50, MinimumLength = 8)]
+        [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        [StringLength(50, MinimumLength =6)]
-        [Display(Name ="Password")]
         public string Password { get; set; }
 
-        [Required]
         [Display(Name ="Role")]
         public bool Role { get; set; }
 
-        [Required]
         [Display(Name = "Is Subcribe Send")]
         public bool IsSubcribeSend { get; set; }
 
-        [Required]
         [Display(Name = "Is Subcribe Receive")]
         public bool IsSubcribeReceive { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength =6)]
         [Display(Name = "Full Name")]
-        public int FullName { get; set; }
+        public string FullName { get; set; }
 
         [Required]
         [Display(Name = "Gender")]
         public bool Gender { get; set; }
 
         [Required]
-        [MaxLength(10),MinLength(8)]
+        [RegularExpression("/^[0-9]{8,10}$/")]
         [Display(Name ="Phone Number")]
         public int Phone { get; set; }
 
@@ -55,6 +52,7 @@ namespace Application.eGreeting.Models
         [EmailAddress]
         [StringLength(50, MinimumLength =10)]
         [Display(Name ="Email Address")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
     }
 }

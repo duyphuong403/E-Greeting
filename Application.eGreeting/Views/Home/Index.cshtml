@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Application.eGreeting.Models.Card>
+
+@{
+    ViewBag.Title = "Index";
+    int i = 1;
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            No.
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NameCard)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @i
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NameCard)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td width="20%">
+            <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" width="100%"/>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CardId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CardId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CardId })
+        </td>
+    </tr>
+    i++;
+}
+
+</table>
