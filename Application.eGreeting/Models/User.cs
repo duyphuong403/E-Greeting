@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Application.eGreeting.Models
 {
-    public class UserModel
+    public class User
     {
     }
 }
