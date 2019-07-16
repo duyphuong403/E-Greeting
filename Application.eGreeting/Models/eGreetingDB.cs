@@ -1,6 +1,7 @@
 namespace Application.eGreeting.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
 
@@ -22,6 +23,31 @@ namespace Application.eGreeting.Models
 
         public virtual DbSet<User> Users { get; set; }
 
+        public virtual DbSet<Card> Cards { get; set; }
+
+    }
+
+    public class DBInit : DropCreateDatabaseIfModelChanges<eGreetingDB>
+    {
+        protected override void Seed(eGreetingDB context)
+        {
+            // Seed some record for Cards
+            var ds = new List<Card>
+            {
+                new Card { NameCard="eGreeting-Birthday-001",Category="Birthday",ImageName="image1.jpg"},
+            };
+            ds.ForEach(item => context.Cards.Add(item));
+            context.SaveChanges();
+
+            // Seed some record for Users
+            var dsUser = new List<User>
+            {
+                new User { UserName = "admin" ,Password = "admin1234", FullName = "Admin", Gender = true, Email ="admin@egreeting.com",Phone = 0762327226, Role = true},
+                new User { UserName = "test" ,Password = "12345678", FullName = "test", Gender = true, Email ="test@gmail.com",Phone = 0762371254}
+            };
+            dsUser.ForEach(item => context.Users.Add(item));
+            context.SaveChanges();
+        }
     }
 
    

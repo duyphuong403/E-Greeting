@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Application.eGreeting.DataAccess;
 using System.Web.Mvc;
 
 namespace Application.eGreeting.Controllers
@@ -11,7 +8,7 @@ namespace Application.eGreeting.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            return View(CardDAO.GetAllCard);
         }
 
         // GET: Home/Details/5
