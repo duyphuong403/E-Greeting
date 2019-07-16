@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Application.eGreeting.DataAccess;
 
 namespace Application.eGreeting.Controllers
 {
@@ -11,13 +12,18 @@ namespace Application.eGreeting.Controllers
         // GET: User
         public ActionResult Index()
         {
-            return View();
+            return View(UserDAO.GetAllUser);
         }
 
         // GET: User/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var d = UserDAO.GetUser(id);
+            if (d != null)
+            {
+                return View(d);
+            }
+            return View("Index");
         }
 
         // GET: User/Create
