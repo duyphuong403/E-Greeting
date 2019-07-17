@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Application.eGreeting.DataAccess;
+using Application.eGreeting.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.eGreeting.Controllers
 {
@@ -34,37 +36,36 @@ namespace Application.eGreeting.Controllers
 
         // POST: User/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(UserDAO newUser)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (UserDAO.CreateUser(newUser))
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("", "Duplicate ID!!!");
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: User/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var edi = UserDAO.GetUser(id);
+            return View(edi);
         }
 
         // POST: User/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(UserDAO editU)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                UserDAO.EditUser(editU);
                 return RedirectToAction("Index");
             }
-            catch
+            else
             {
                 return View();
             }
@@ -73,23 +74,16 @@ namespace Application.eGreeting.Controllers
         // GET: User/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: User/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
+            if (UserDAO.DeleteUser(id))
             {
-                // TODO: Add delete logic here
-
                 return RedirectToAction("Index");
             }
-            catch
+            else
             {
+                ViewBag.Message = "Delete error, cannot find this User!!!";
                 return View();
             }
         }
+
     }
 }

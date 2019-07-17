@@ -9,7 +9,7 @@ namespace Application.eGreeting.DataAccess
 {
     public class UserDAO
     {
-            private static eGreetingDB db = new eGreetingDB();
+           static eGreetingDB db = new eGreetingDB();
 
             public static IEnumerable<User> GetAllUser{ get => db.Users; }
 
@@ -18,7 +18,7 @@ namespace Application.eGreeting.DataAccess
                 return db.Users.Find(id);
             }
 
-            public static bool Create(User newUser)
+            public static bool CreateUser(User newUser)
             {
                 var b = GetUser(newUser.UserId);
                 if (b == null)
