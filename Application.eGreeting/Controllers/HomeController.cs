@@ -49,5 +49,18 @@ namespace Application.eGreeting.Controllers
             }
             return View();
         }
+
+        //GET: Home/Logout
+        public ActionResult Logout()
+        {
+            if (Session["username"] != null)
+            {
+                Session["username"] = null;
+                Session["role"] = null;
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }
