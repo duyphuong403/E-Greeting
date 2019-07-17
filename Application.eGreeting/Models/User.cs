@@ -25,6 +25,12 @@ namespace Application.eGreeting.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Required]
+        [StringLength(50, MinimumLength = 8)]
+        [Display(Name = "RePassword")]
+        [DataType(DataType.Password)]
+        public string RePassword { get; set; }
+
         [Display(Name ="Role")]
         public bool Role { get; set; }
 
@@ -35,7 +41,7 @@ namespace Application.eGreeting.Models
         public bool IsSubcribeReceive { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength =6)]
+        [StringLength(50)]
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
@@ -44,7 +50,7 @@ namespace Application.eGreeting.Models
         public bool Gender { get; set; }
 
         [Required]
-        [RegularExpression("/^[0-9]{8,10}$/")]
+        [RegularExpression("[0-9]{8,10}", ErrorMessage ="Phone Number must be from 8 - 10 digits")]
         [Display(Name ="Phone Number")]
         public int Phone { get; set; }
 

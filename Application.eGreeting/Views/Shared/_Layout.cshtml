@@ -113,7 +113,17 @@
                         }
                         else
                         {
-                            <p>Welcome <a class="dropdown-item" href="Home/UserProfile">@Session["username"]</a></p>
+                            if (Session["role"] != null)
+                            {
+                                if (Session["role"].ToString() == "true")
+                                {
+                                    <p>Welcome <a class="dropdown-item" href="Admin/Index">@Session["username"]</a></p>
+                                }
+                                else
+                                {
+                                    <p>Welcome <a class="dropdown-item" href="User/Index">@Session["username"]</a></p>
+                                }
+                            }
                             <a class="dropdown-item" href="Home/Logout">Sign out</a>
                         }
                     </div>

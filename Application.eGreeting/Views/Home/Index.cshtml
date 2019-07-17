@@ -2,19 +2,12 @@
 
 @{
     ViewBag.Title = "Index";
-    int i = 1;
 }
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
-        <th>
-            No.
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.NameCard)
         </th>
@@ -32,9 +25,7 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @i
-        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.NameCard)
         </td>
@@ -48,12 +39,9 @@
             @Html.DisplayFor(modelItem => item.DateCreated)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CardId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CardId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CardId })
+            @Html.ActionLink("Select", "Select", new { id=item.CardId }, new { @class="btn btn-primary" })
         </td>
     </tr>
-    i++;
 }
 
 </table>

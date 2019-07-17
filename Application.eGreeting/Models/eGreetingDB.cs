@@ -40,13 +40,13 @@ namespace Application.eGreeting.Models
             context.SaveChanges();
 
             // Seed some record for Users
-            var dsUser = new List<User>
-            {
-                new User { UserName = "admin" ,Password = "admin1234", FullName = "Admin", Gender = true, Email ="admin@egreeting.com",Phone = 0762327226, Role = true},
-                new User { UserName = "test" ,Password = "12345678", FullName = "test", Gender = true, Email ="test@gmail.com",Phone = 0762371254}
-            };
-            dsUser.ForEach(item => context.Users.Add(item));
-            context.SaveChanges();
+            //var dsUser = new List<User>
+            //{
+            //    new User { UserName = "admin" ,Password = "admin1234", FullName = "Admin", Gender = true, Email ="admin@egreeting.com",Phone = 0762327226, Role = true},
+            //    new User { UserName = "test" ,Password = "12345678", FullName = "test", Gender = true, Email ="test@gmail.com",Phone = 0762371254}
+            //};
+            //dsUser.ForEach(item => context.Users.Add(item));
+            //context.SaveChanges();
         }
     }
 

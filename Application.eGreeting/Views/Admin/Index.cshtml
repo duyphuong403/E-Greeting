@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Application.eGreeting.Models.User>
+
+@{
+    ViewBag.Title = "Manage User";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+    int i = 1;
+}
+
+<h2>Manage User</h2>
+
+<p>
+    @Html.ActionLink("Create New User", "CreateUser", "Admin", new { @class="btn btn-primary"})
+    @Html.ActionLink("Create New Card", "CreatCard", "Admin", new { @class = "btn btn-success" })
+</p>
+<table class="table">
+    <tr>
+        <th>No.</th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsSubcribeSend)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsSubcribeReceive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>@i</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>        
+        <td>
+            @Html.DisplayFor(modelItem => item.Role)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsSubcribeSend)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsSubcribeReceive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+        </td>
+    </tr>
+    i++;
+}
+
+</table>

@@ -40,7 +40,7 @@ namespace Application.eGreeting.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (UserDAO.CreateUser(newUser))
+                if (UserDAO.Create(newUser))
                 {
                     return RedirectToAction("Index");
                 }

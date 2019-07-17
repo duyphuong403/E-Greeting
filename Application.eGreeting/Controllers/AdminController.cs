@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Application.eGreeting.DataAccess;
+using Application.eGreeting.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +10,11 @@ namespace Application.eGreeting.Controllers
 {
     public class AdminController : Controller
     {
+        // Manage Card
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+            return View(UserDAO.GetAllUser);
         }
 
         // GET: Admin/Details/5
@@ -20,19 +23,33 @@ namespace Application.eGreeting.Controllers
             return View();
         }
 
-        // GET: Admin/Create
-        public ActionResult Create()
+        // GET: Admin/CreateCard
+        public ActionResult CreateCard()
         {
-            return View();
+            if (Session["username"] != null && Session["role"] != null)
+            {
+                if (Session["role"].ToString().ToLower() == "true")
+                {
+                    return View();
+                }
+            }
+            ModelState.AddModelError("", "You not permit to access this page");
+            return RedirectToAction("Index","Home");
         }
 
-        // POST: Admin/Create
+        // POST: Admin/CreateCard
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult CreateCard(Card newCard, HttpPostedFileBase file)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    if (file != null)
+                    {
+
+                    }
+                }
 
                 return RedirectToAction("Index");
             }
@@ -85,5 +102,51 @@ namespace Application.eGreeting.Controllers
                 return View();
             }
         }
+
+
+        // Manage User
+
+          // GET: Admin/CreateCard
+        public ActionResult CreateUser()
+        {
+            if (Session["username"] != null && Session["role"] != null)
+            {
+                if (Session["role"].ToString().ToLower() == "true")
+                {
+                    return View();
+                }
+            }
+            ModelState.AddModelError("", "You not permit to access this page");
+            return RedirectToAction("Index", "Home");
+        }
+
+        // POST: Admin/CreateCard
+        [HttpPost]
+        public ActionResult CreateUser(User newUser)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (newUser.Password != newUser.RePassword)
+                    {
+                        ModelState.AddModelError("", "RePassword not match.");
+                        return View();
+                    }
+                    if (UserDAO.Create(newUser))
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                ModelState.AddModelError("", "Create new User failed .");
+                return View();
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View();
+            }
+        }
+
     }
 }
