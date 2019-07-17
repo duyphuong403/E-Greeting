@@ -1,30 +1,32 @@
-﻿using Application.eGreeting.DataAccess;
-using Application.eGreeting.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Application.eGreeting.Controllers
 {
-    public class HomeController : Controller
+    public class AdminController : Controller
     {
-        // GET: Home
+        // GET: Admin
         public ActionResult Index()
         {
-            return View(CardDAO.GetAllCard);
+            return View();
         }
 
-        // GET: Home/Details/5
+        // GET: Admin/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Home/Create
+        // GET: Admin/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Home/Create
+        // POST: Admin/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -40,13 +42,13 @@ namespace Application.eGreeting.Controllers
             }
         }
 
-        // GET: Home/Edit/5
+        // GET: Admin/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Home/Edit/5
+        // POST: Admin/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -62,13 +64,13 @@ namespace Application.eGreeting.Controllers
             }
         }
 
-        // GET: Home/Delete/5
+        // GET: Admin/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Home/Delete/5
+        // POST: Admin/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
@@ -82,40 +84,6 @@ namespace Application.eGreeting.Controllers
             {
                 return View();
             }
-        }
-
-        //GET: Home/Login
-        public ActionResult Login()
-        {
-            if (Session["username"] != null)
-            {
-                return RedirectToAction("Index");
-            }
-            return View();
-        }
-
-        // POST: Home/Login
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(User login)
-        {
-            var model = new User
-            {
-                UserName = login.UserName,
-                Password = login.Password
-            };
-            var search = UserDAO.CheckLogin(model);
-            if (search != null)
-            {
-                Session["username"] = search.UserName;
-                Session["role"] = search.Role.ToString().ToLower();
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Invalid account");
-            }
-            return View();
         }
     }
 }

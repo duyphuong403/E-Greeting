@@ -9,55 +9,60 @@ namespace Application.eGreeting.DataAccess
 {
     public class UserDAO
     {
-            private static eGreetingDB db = new eGreetingDB();
+        private static eGreetingDB db = new eGreetingDB();
 
-            public static IEnumerable<User> GetAllUser{ get => db.Users; }
+        public static IEnumerable<User> GetAllUser { get => db.Users; }
 
-            public static User GetUser(int id)
+        public static User CheckLogin(User user)
+        {
+            return db.Users.FirstOrDefault(item => item.UserName == user.UserName && item.Password == user.Password);
+        }
+
+        public static User GetUser(int id)
+        {
+            return db.Users.Find(id);
+        }
+
+        public static bool Create(User newUser)
+        {
+            var b = GetUser(newUser.UserId);
+            if (b == null)
             {
-                return db.Users.Find(id);
+                db.Users.Add(newUser);
+                db.SaveChanges();
+                return true;
             }
+            return false;
+        }
 
-            public static bool Create(User newUser)
+        public static bool EditUser(User editUser)
+        {
+            var b = GetUser(editUser.UserId);
+            if (b != null)
             {
-                var b = GetUser(newUser.UserId);
-                if (b == null)
-                {
-                    db.Users.Add(newUser);
-                    db.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-
-            public static bool EditUser(User editUser)
-            {
-                var b = GetUser(editUser.UserId);
-                if (b != null)
-                {
-                    b.Password = editUser.Password;
+                b.Password = editUser.Password;
                 b.IsSubcribeSend = editUser.IsSubcribeSend;
                 b.IsSubcribeReceive = editUser.IsSubcribeReceive;
                 b.FullName = editUser.FullName;
                 b.Gender = editUser.Gender;
                 b.Phone = editUser.Phone;
                 b.Email = editUser.Email;
-                    db.SaveChanges();
-                    return true;
-                }
-                return false;
+                db.SaveChanges();
+                return true;
             }
+            return false;
+        }
 
-            public static bool DeleteUser(int id)
+        public static bool DeleteUser(int id)
+        {
+            var b = GetUser(id);
+            if (b != null)
             {
-                var b = GetUser(id);
-                if (b != null)
-                {
-                    db.Users.Remove(b);
-                    db.SaveChanges();
-                    return true;
-                }
-                return false;
+                db.Users.Remove(b);
+                db.SaveChanges();
+                return true;
             }
+            return false;
+        }
     }
 }
