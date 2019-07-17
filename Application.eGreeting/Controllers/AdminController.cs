@@ -32,9 +32,11 @@ namespace Application.eGreeting.Controllers
                 {
                     return View();
                 }
+                ModelState.AddModelError("", "You not permit to access this page");
+                return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "You not permit to access this page");
-            return RedirectToAction("Index","Home");
+            ModelState.AddModelError("", "You need login to access this page");
+            return RedirectToAction("Login", "Home");
         }
 
         // POST: Admin/CreateCard
@@ -115,9 +117,11 @@ namespace Application.eGreeting.Controllers
                 {
                     return View();
                 }
+                ModelState.AddModelError("", "You not permit to access this page");
+                return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "You not permit to access this page");
-            return RedirectToAction("Index", "Home");
+            ModelState.AddModelError("", "You need login to access this page");
+            return RedirectToAction("Login", "Home");
         }
 
         // POST: Admin/CreateCard
@@ -133,9 +137,18 @@ namespace Application.eGreeting.Controllers
                         ModelState.AddModelError("", "RePassword not match.");
                         return View();
                     }
-                    if (UserDAO.Create(newUser))
+                    var search = UserDAO.GetUserByUsername(newUser.UserName);
+                    if (search == null)
                     {
-                        return RedirectToAction("Index");
+                        if (UserDAO.Create(newUser))
+                        {
+                            return RedirectToAction("Index");
+                        }                        
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Username is existed");
+                        return View();
                     }
                 }
                 ModelState.AddModelError("", "Create new User failed .");

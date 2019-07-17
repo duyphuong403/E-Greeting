@@ -27,7 +27,7 @@
 <body class="container-fluid">
 
     <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
+    <nav class="navbar navbar-expand-lg navbar-dark secondary-color">
 
         <!-- Navbar brand -->
         @Html.ActionLink("eGreeting Online", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -50,51 +50,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Birthday", "Birthday", "Home", new { area = "" }, new { @class = "nav-link" })
-                    @*<a class="nav-link" href="#">Features</a>*@
+                    @Html.ActionLink("Manage Card", "ManageCard", "Admin", new { area = "" }, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("New Year", "NewYear", "Home", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Manage User", "ManageUser", "Admin", null, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Festival", "Festival", "Home", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Manage Feedback", "ManageFeedback", "Admin", null, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Feedback", "Feedback", "Home", null, new { @class = "nav-link" })
-                </li>
-                <!-- Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">Subscribe</a>
-                    @*@Html.ActionLink("Subscribe", "Subscribe", "Home", null, new { @class = "nav-link" })*@
-
-                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="Home/SubscribeSend">Subscribe Send Card</a>
-                        <a class="dropdown-item" href="Home/SubscribeReceive">Subscribe Receive New Card</a>
-                    </div>
-                </li>
+                    @Html.ActionLink("Manage Subscribe", "ManageSubscribe", "Admin", null, new { @class = "nav-link" })
+                </li>               
             </ul>
             <!-- Links -->
-            <!-- Form Search -->
-            <form class="form-inline" action="Home/Search">
-                <div class="md-form my-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                    <a href="#" class="nav-item" style="color: white"><i class="fa fa-search" aria-hidden="true"></i></a>
-                </div>
-            </form>
-            <!-- Form Search -->
             <!-- Login/Register -->
-            <ul class="navbar-nav ml-auto nav-flex-icons">
-                <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link waves-effect waves-light">
-                        <i class="fab fa-google-plus-g"></i>
-                    </a>
-                </li>
+            <ul class="navbar-nav ml-auto nav-flex-icons">               
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
@@ -136,7 +106,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="page-footer font-small blue" style="position: fixed; width: 100%">
+    <footer class="page-footer font-small secondary-color" style="position: fixed; width: 100%">
         <!-- Footer Links -->
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">

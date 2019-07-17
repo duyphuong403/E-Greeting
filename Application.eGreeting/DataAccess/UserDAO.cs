@@ -23,6 +23,11 @@ namespace Application.eGreeting.DataAccess
             return db.Users.Find(id);
         }
 
+        public static User GetUserByUsername(string username)
+        {
+            return db.Users.Find(username);
+        }
+
         public static bool Create(User newUser)
         {
             var b = GetUser(newUser.UserId);

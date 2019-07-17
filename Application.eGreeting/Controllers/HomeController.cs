@@ -37,6 +37,10 @@ namespace Application.eGreeting.Controllers
             {
                 Session["username"] = search.FullName;
                 Session["role"] = search.Role.ToString().ToLower();
+                if (Session["role"].ToString() == "true")
+                {
+                    return RedirectToAction("Index","Admin");
+                }
                 return RedirectToAction("Index");
             }
             else
