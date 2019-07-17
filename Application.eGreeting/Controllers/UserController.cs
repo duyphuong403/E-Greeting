@@ -36,7 +36,7 @@ namespace Application.eGreeting.Controllers
 
         // POST: User/Create
         [HttpPost]
-        public ActionResult Create(UserDAO newUser)
+        public ActionResult Create(User newUser)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace Application.eGreeting.Controllers
 
         // POST: User/Edit/5
         [HttpPost]
-        public ActionResult Edit(UserDAO editU)
+        public ActionResult Edit(User editU)
         {
             if (ModelState.IsValid)
             {
