@@ -49,5 +49,29 @@ namespace Application.eGreeting.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+        // POST: User/Register
+        [HttpPost]
+        public ActionResult Register(User regisUser)
+        {
+            if (ModelState.IsValid)
+            {
+                if (UserDAO.Create(regisUser))
+                {
+                    if (Session["username"]!=null)
+                    {
+                        return View();
+                    }
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("", "Duplicate ID!!!");
+            }
+            return View();
+        }
+
     }
 }
