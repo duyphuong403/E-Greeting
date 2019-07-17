@@ -14,7 +14,12 @@ namespace Application.eGreeting.Controllers
         // GET: User
         public ActionResult Index()
         {
-            return View(UserDAO.GetAllUser);
+            if (Session["username"] != null)
+            {
+                return View();
+            }
+            ModelState.AddModelError("", "You need login to access this page");
+            return RedirectToAction("Login", "Home");
         }
 
         // GET: User/Details/5

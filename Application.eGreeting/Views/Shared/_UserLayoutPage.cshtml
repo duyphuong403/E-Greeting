@@ -1,13 +1,152 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - eGreeting Online</title>
+    @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
+
+    @*CDN mdbootstrap*@
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/css/mdb.min.css" rel="stylesheet">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
+
+    @*<script src="~/Scripts/modernizr-2.6.2.js"></script>*@
 </head>
-<body>
-    <div>
+<body class="container-fluid">
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
+
+        <!-- Navbar brand -->
+        @Html.ActionLink("eGreeting Online", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+                aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">
+                        Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Birthday", "Birthday", "Home", new { area = "" }, new { @class = "nav-link" })
+                    @*<a class="nav-link" href="#">Features</a>*@
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("New Year", "NewYear", "Home", null, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Festival", "Festival", "Home", null, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Feedback", "Feedback", "Home", null, new { @class = "nav-link" })
+                </li>
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Subscribe</a>
+                    @*@Html.ActionLink("Subscribe", "Subscribe", "Home", null, new { @class = "nav-link" })*@
+
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="Home/SubscribeSend">Subscribe Send Card</a>
+                        <a class="dropdown-item" href="Home/SubscribeReceive">Subscribe Receive New Card</a>
+                    </div>
+                </li>
+            </ul>
+            <!-- Links -->
+            <!-- Form Search -->
+            <form class="form-inline" action="Home/Search">
+                <div class="md-form my-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <a href="#" class="nav-item" style="color: white"><i class="fa fa-search" aria-hidden="true"></i></a>
+                </div>
+            </form>
+            <!-- Form Search -->
+            <!-- Login/Register -->
+            <ul class="navbar-nav ml-auto nav-flex-icons">
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link waves-effect waves-light">
+                        <i class="fab fa-google-plus-g"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                         aria-labelledby="navbarDropdownMenuLink-333">
+                        @if (Session["username"] == null)
+                        {
+                            <a class="dropdown-item" href="Home/Login">Sign in</a>
+                            <a class="dropdown-item" href="Home/Register">Register</a>
+                        }
+                        else
+                        {
+                            if (Session["role"] != null)
+                            {
+                                if (Session["role"].ToString() == "true")
+                                {
+                                    <p>Welcome <a class="dropdown-item" href="Admin/Index">@Session["username"]</a></p>
+                                }
+                                else
+                                {
+                                    <p>Welcome <a class="dropdown-item" href="User/Index">@Session["username"]</a></p>
+                                }
+                            }
+                            <a class="dropdown-item" href="Home/Logout">Sign out</a>
+                        }
+                    </div>
+                </li>
+            </ul>
+            <!-- Login/Register -->
+        </div>
+        <!-- Collapsible content -->
+    </nav>
+    <!--/.Navbar-->
+
+    <div class="container body-content" style="padding-top: 30px; padding-bottom: 30px">
         @RenderBody()
     </div>
+
+    <!-- Footer -->
+    <footer class="page-footer font-small blue" style="position: fixed; width: 100%">
+        <!-- Footer Links -->
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+            <a href="Home/Index">&copy; @DateTime.Now.Year - eGreeting Online</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
 </body>
 </html>
