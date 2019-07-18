@@ -1,16 +1,19 @@
 ﻿@model IEnumerable<Application.eGreeting.Models.Card>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Manage Card";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+    int i = 1;
 }
 
-<h2>Index</h2>
-@if (ViewBag.Message != null)
-{
-    <span class="success sweet-alert"> @ViewBag.Message</span>
-}
+<h2>Manage Card</h2>
+
+<p>
+    @Html.ActionLink("Create New Card", "CreateCard", "Admin", new { @class = "btn btn-success" })
+</p>
 <table class="table">
     <tr>
+        <th>No.</th>
         <th>
             @Html.DisplayNameFor(model => model.NameCard)
         </th>
@@ -23,13 +26,13 @@
         <th>
             @Html.DisplayNameFor(model => model.DateCreated)
         </th>
-        <th></th>
+        <th>Action</th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
-
+            <td>@i</td>
             <td>
                 @Html.DisplayFor(modelItem => item.NameCard)
             </td>
@@ -37,15 +40,17 @@
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td width="20%">
-                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width:100%"/>
+                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width: 100%" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
-                @Html.ActionLink("Select", "Select", new { id = item.CardId }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Edit", "EditCard", new { id = item.CardId }, new { @class="btn btn-warning" }) 
+                @Html.ActionLink("Delete", "DeleteCard", new { id = item.CardId }, new {@onclick="return confirm('Are you sure ?')", @id = "btnDelete", @class = "btn btn-danger" })
             </td>
         </tr>
+        i++;
     }
 
 </table>

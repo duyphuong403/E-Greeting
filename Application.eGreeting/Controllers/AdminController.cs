@@ -2,6 +2,7 @@
 using Application.eGreeting.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,14 +15,51 @@ namespace Application.eGreeting.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View(UserDAO.GetAllUser);
+            if (Session["username"] != null && Session["role"] != null)
+            {
+                if (Session["role"].ToString().ToLower() == "true")
+                {
+                    return View();
+                }
+                ModelState.AddModelError("", "You not permit to access this page");
+                return RedirectToAction("Index", "Home");
+            }
+            ModelState.AddModelError("", "You need login to access this page");
+            return RedirectToAction("Login", "Home");
         }
 
-        // GET: Admin/Details/5
-        public ActionResult Details(int id)
+        // GET: Admin/ManageCard
+        public ActionResult ManageCard()
         {
-            return View();
+            if (Session["username"] != null && Session["role"] != null)
+            {
+                if (Session["role"].ToString().ToLower() == "true")
+                {
+                    return View(CardDAO.GetAllCard);
+                }
+                ModelState.AddModelError("", "You not permit to access this page");
+                return RedirectToAction("Index", "Home");
+            }
+            ModelState.AddModelError("", "You need login to access this page");
+            return RedirectToAction("Login", "Home");
         }
+
+        // GET: Admin/ManageUser
+        public ActionResult ManageUser()
+        {
+            if (Session["username"] != null && Session["role"] != null)
+            {
+                if (Session["role"].ToString().ToLower() == "true")
+                {
+                    return View(UserDAO.GetAllUser);
+                }
+                ModelState.AddModelError("", "You not permit to access this page");
+                return RedirectToAction("Index", "Home");
+            }
+            ModelState.AddModelError("", "You need login to access this page");
+            return RedirectToAction("Login", "Home");
+        }
+
 
         // GET: Admin/CreateCard
         public ActionResult CreateCard()
@@ -47,18 +85,50 @@ namespace Application.eGreeting.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (file != null)
+                    if (file != null && file.ContentLength > 0)
                     {
-
+                        var ext = Path.GetExtension(file.FileName);
+                        if (CheckExtImg(ext))
+                        {
+                            var fileName = Path.GetFileName(file.FileName);
+                            var imagePath = Server.MapPath("~/ImageCard/" + fileName);
+                            newCard.ImageName = fileName;
+                           
+                            if (CardDAO.Create(newCard))
+                            {
+                                file.SaveAs(imagePath);
+                                return RedirectToAction("ManageCard");
+                            }
+                            ModelState.AddModelError("", "Create new card failed.");
+                            return View();
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Format image invalid");
+                            return View();
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Please choose Image");
+                        return View();
                     }
                 }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                ModelState.AddModelError("", e.Message);
                 return View();
             }
+        }
+
+        List<string> ImageExtension = new List<string> { ".png", ".jpg", ".jpeg" };
+
+        bool CheckExtImg(string ext)
+        {
+            return ImageExtension.Contains(ext.ToLower());
         }
 
         // GET: Admin/Edit/5
@@ -69,7 +139,7 @@ namespace Application.eGreeting.Controllers
 
         // POST: Admin/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult EditCard(int id, FormCollection collection)
         {
             try
             {
@@ -82,26 +152,35 @@ namespace Application.eGreeting.Controllers
                 return View();
             }
         }
+              
 
         // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Admin/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult DeleteCard(int id)
         {
             try
             {
-                // TODO: Add delete logic here
+                if (Session["username"] != null && Session["role"] != null)
+                {
+                    if (Session["role"].ToString().ToLower() == "true")
+                    {
+                        if (id >= 0)
+                        {
+                            if (CardDAO.DeleteCard(id))
+                            {
 
-                return RedirectToAction("Index");
+                            }
+                        }
+                        return RedirectToAction("ManageCard");
+                    }
+                    Alert("You not permit to access that page", NotificationType.error);
+                    return RedirectToAction("Index", "Home");
+                }
+                Alert("You not permit to access that page", NotificationType.error);
+                return RedirectToAction("Login", "Home");               
             }
             catch
             {
-                return View();
+                return RedirectToAction("ManageCard");
             }
         }
 
@@ -165,5 +244,18 @@ namespace Application.eGreeting.Controllers
             }
         }
 
+        public void Alert(string message, NotificationType notificationType)
+        {
+            var msg = "<script language='javascript'>swal('" + notificationType.ToString().ToUpper() + "', '" + message + "','" + notificationType + "')" + "</script>";
+            TempData["notification"] = msg;
+        }
+
+        public enum NotificationType
+        {
+            error,
+            success,
+            warning,
+            info
+        }
     }
 }

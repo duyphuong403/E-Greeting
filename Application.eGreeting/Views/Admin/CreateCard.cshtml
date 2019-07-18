@@ -8,10 +8,10 @@
 <h2>Create New Card</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("CreateCard", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Card</h4>
         <hr />
@@ -27,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Category, Application.eGreeting.DataAccess.CardDAO.GetCategoryList() , new { @class = "form-control" } )
+                @Html.DropDownListFor(model => model.Category, Application.eGreeting.DataAccess.CardDAO.GetCategoryList(), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,23 +35,23 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" name="file" id="file" value="" class="form-control" />
-                <img class="img-responsive" width="200" id="imgPreview"/>
+                <input type="file" name="file" id="file" class="form-control" required />
+                <img class="img-responsive" width="200" id="imgPreview" />
                 @Html.ValidationMessageFor(model => model.ImageName, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" id="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -61,10 +61,25 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+
 <script>
+    $('#submit').click(function () {
+        if ($('#file').val() === "") {
+            //alert("File not empty");
+            //sweetAlert("File not be empty !!", "Please select file", "error");
+            swal({
+                title: 'Error!',
+                text: 'Image not be empty - Please choose a image.',
+                type: 'error',
+                confirmButtonText: 'OK'
+            })
+            return false;
+        } else {
+            return true;
+        }
+    });
     $('#file').on("change", function () {
         if (this.files && this.files[0]) {
             var fr = new FileReader();

@@ -13,14 +13,26 @@
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/css/mdb.min.css" rel="stylesheet">
 
+    <!-- Style SWAL-->
+    <link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
+
     <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
+
+    <!--CDN Swal -->
+    <script type="text/javascript" src="~/Scripts/sweetalert2.all.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+
+    <script type="text/javascript" src="~/Scripts/sweetalert2.min.js"></script>
+
+
 
 </head>
 <body class="container-fluid">
@@ -73,8 +85,8 @@
                          aria-labelledby="navbarDropdownMenuLink-333">
                         @if (Session["username"] == null)
                         {
-                            <a class="dropdown-item" href="Home/Login">Sign in</a>
-                            <a class="dropdown-item" href="Home/Register">Register</a>
+                            <a class="dropdown-item" href="/Home/Login">Sign in</a>
+                            <a class="dropdown-item" href="/Home/Register">Register</a>
                         }
                         else
                         {
@@ -82,14 +94,14 @@
                             {
                                 if (Session["role"].ToString() == "true")
                                 {
-                                    <p>Welcome <a class="dropdown-item" href="Admin/Index">@Session["username"]</a></p>
+                                    <p>Welcome <a class="dropdown-item" href="/Admin/Index">@Session["username"]</a></p>
                                 }
                                 else
                                 {
-                                    <p>Welcome <a class="dropdown-item" href="User/Index">@Session["username"]</a></p>
+                                    <p>Welcome <a class="dropdown-item" href="/User/Index">@Session["username"]</a></p>
                                 }
                             }
-                            <a class="dropdown-item" href="Home/Logout">Sign out</a>
+                            @Html.ActionLink("Sign out", "Logout","Home", null, new { @clas="dropdown-item"})
                         }
                     </div>
                 </li>
@@ -111,8 +123,7 @@
         <div class="footer-copyright text-center py-3">
             <a href="Home/Index">&copy; @DateTime.Now.Year - eGreeting Online</a>
         </div>
-        <!-- Copyright -->
-
+        <!-- Copyright -->        
     </footer>
     <!-- Footer -->
 </body>

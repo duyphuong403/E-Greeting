@@ -4,8 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - eGreeting Online</title>
-    @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />*@
-    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
+
 
     @*CDN mdbootstrap*@
     <!-- Font Awesome -->
@@ -24,7 +23,13 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
 
-    @*<script src="~/Scripts/modernizr-2.6.2.js"></script>*@
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+    <!-- Style SWAL-->
+    <link rel='stylesheet' href='~/Content/sweetalert.min.css'>
+    <!--CDN Swal -->
+    <script src="~/Scripts/sweetalert.min.js"></script>
+
 </head>
 <body class="container-fluid">
   
@@ -135,7 +140,8 @@
     </nav>
     <!--/.Navbar-->
 
-    <div class="container body-content"  style="padding-top: 30px; padding-bottom: 30px">
+    <div class="container body-content" style="padding-top: 30px; padding-bottom: 30px">
+        @Html.Partial("_NotificationPanel")
         @RenderBody()
     </div>
 
