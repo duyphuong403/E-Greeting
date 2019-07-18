@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - eGreeting Online</title>
 
-
-    @*CDN mdbootstrap*@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -46,7 +44,6 @@
                 </li>
                 <li class="nav-item">
                     @Html.ActionLink("Birthday", "Birthday", "Home", new { area = "" }, new { @class = "nav-link" })
-                    @*<a class="nav-link" href="#">Features</a>*@
                 </li>
                 <li class="nav-item">
                     @Html.ActionLink("New Year", "NewYear", "Home", null, new { @class = "nav-link" })
@@ -64,15 +61,15 @@
                     @*@Html.ActionLink("Subscribe", "Subscribe", "Home", null, new { @class = "nav-link" })*@
 
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="Home/SubscribeSend">Subscribe Send Card</a>
-                        <a class="dropdown-item" href="Home/SubscribeReceive">Subscribe Receive New Card</a>
+                        <a class="dropdown-item" href="/Home/SubscribeSend">Subscribe Send Card</a>
+                        <a class="dropdown-item" href="/Home/SubscribeReceive">Subscribe Receive New Card</a>
                     </div>
                 </li>
             </ul>
             <!-- Links -->
 
             <!-- Form Search -->
-            <form class="form-inline" action="Home/Search">
+            <form class="form-inline" action="/Home/Search">
                 <div class="md-form my-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
                     <a href="#" class="nav-item" style="color: white"><i class="fa fa-search" aria-hidden="true"></i></a>
@@ -101,8 +98,8 @@
                          aria-labelledby="navbarDropdownMenuLink-333">
                         @if (Session["username"] == null)
                         {
-                            <a class="dropdown-item" href="Home/Login">Sign in</a>
-                            <a class="dropdown-item" href="Home/Register">Register</a>
+                            <a class="dropdown-item" href="/Home/Login" style="text-align:center;">Sign in</a>
+                            <a class="dropdown-item" href="/Home/Register" style="text-align:center;">Register</a>
                         }
                         else
                         {
@@ -110,14 +107,14 @@
                             {
                                 if (Session["role"].ToString() == "true")
                                 {
-                                    <p>Welcome <a class="dropdown-item" href="Admin/Index">@Session["username"]</a></p>
+                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/Admin/Index" style="font-weight:900">@Session["username"]</a></p>
                                 }
                                 else
                                 {
-                                    <p>Welcome <a class="dropdown-item" href="User/Index">@Session["username"]</a></p>
+                                    <p>Welcome <a class="dropdown-item" href="/User/Index">@Session["username"]</a></p>
                                 }
                             }
-                            <a class="dropdown-item" href="Home/Logout">Sign out</a>
+                            <a class="dropdown-item" href="/Home/Logout" style="text-align:center;padding-top:0">Sign out</a>
                         }
                     </div>
                 </li>
@@ -138,7 +135,7 @@
         <!-- Footer Links -->
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">
-            <a href="Home/Index">&copy; @DateTime.Now.Year - eGreeting Online</a>
+            <a href="/Home/Index">&copy; @DateTime.Now.Year - eGreeting Online</a>
         </div>
         <!-- Copyright -->
         <!-- JQuery -->

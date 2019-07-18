@@ -45,7 +45,7 @@ namespace Application.eGreeting.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Invalid account");
+                Alert("Invalid Account", NotificationType.error);
             }
             return View();
         }
@@ -81,6 +81,21 @@ namespace Application.eGreeting.Controllers
                 ModelState.AddModelError("", "Duplicate ID!!!");
             }
             return View();
+        }
+
+
+        public void Alert(string message, NotificationType notificationType)
+        {
+            var msg = "<script language='javascript'>swal('" + notificationType.ToString().ToUpper() + "', '" + message + "','" + notificationType + "')" + "</script>";
+            TempData["notification"] = msg;
+        }
+
+        public enum NotificationType
+        {
+            error,
+            success,
+            warning,
+            info
         }
     }
 }

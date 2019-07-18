@@ -16,23 +16,10 @@
     <!-- Style SWAL-->
     <link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
 
-    <!-- JQuery -->
-    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
-
+    <!-- Style SWAL-->
+    <link rel='stylesheet' href='~/Content/sweetalert.min.css'>
     <!--CDN Swal -->
-    <script type="text/javascript" src="~/Scripts/sweetalert2.all.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
-
-    <script type="text/javascript" src="~/Scripts/sweetalert2.min.js"></script>
-
-
+    <script src="~/Scripts/sweetalert.min.js"></script>
 
 </head>
 <body class="container-fluid">
@@ -71,11 +58,11 @@
                 </li>
                 <li class="nav-item">
                     @Html.ActionLink("Manage Subscribe", "ManageSubscribe", "Admin", null, new { @class = "nav-link" })
-                </li>               
+                </li>
             </ul>
             <!-- Links -->
             <!-- Login/Register -->
-            <ul class="navbar-nav ml-auto nav-flex-icons">               
+            <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
@@ -94,14 +81,15 @@
                             {
                                 if (Session["role"].ToString() == "true")
                                 {
-                                    <p>Welcome <a class="dropdown-item" href="/Admin/Index">@Session["username"]</a></p>
+                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/Admin/Index" style="font-weight:900">@Session["username"]</a></p>
                                 }
                                 else
                                 {
                                     <p>Welcome <a class="dropdown-item" href="/User/Index">@Session["username"]</a></p>
                                 }
                             }
-                            @Html.ActionLink("Sign out", "Logout","Home", null, new { @clas="dropdown-item"})
+                            <a class="dropdown-item" href="/Home/Logout" style="text-align:center;padding-top:0">Sign out</a>
+                            
                         }
                     </div>
                 </li>
@@ -113,6 +101,7 @@
     <!--/.Navbar-->
 
     <div class="container body-content" style="padding-top: 30px; padding-bottom: 30px">
+        @Html.Partial("_NotificationPanel")
         @RenderBody()
     </div>
 
@@ -121,9 +110,17 @@
         <!-- Footer Links -->
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">
-            <a href="Home/Index">&copy; @DateTime.Now.Year - eGreeting Online</a>
+            <a href="/Home/Index">&copy; @DateTime.Now.Year - eGreeting Online</a>
         </div>
-        <!-- Copyright -->        
+        <!-- Copyright -->
+        <!-- JQuery -->
+        <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
     </footer>
     <!-- Footer -->
 </body>

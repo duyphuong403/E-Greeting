@@ -4,10 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - eGreeting Online</title>
-    @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />*@
-    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />*@
 
-    @*CDN mdbootstrap*@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Bootstrap core CSS -->
@@ -15,16 +12,11 @@
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/css/mdb.min.css" rel="stylesheet">
 
-    <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
+    <!-- Style SWAL-->
+    <link rel='stylesheet' href='~/Content/sweetalert.min.css'>
+    <!--CDN Swal -->
+    <script src="~/Scripts/sweetalert.min.js"></script>
 
-    @*<script src="~/Scripts/modernizr-2.6.2.js"></script>*@
 </head>
 <body class="container-fluid">
 
@@ -71,14 +63,14 @@
                     @*@Html.ActionLink("Subscribe", "Subscribe", "Home", null, new { @class = "nav-link" })*@
 
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="Home/SubscribeSend">Subscribe Send Card</a>
-                        <a class="dropdown-item" href="Home/SubscribeReceive">Subscribe Receive New Card</a>
+                        <a class="dropdown-item" href="/Home/SubscribeSend">Subscribe Send Card</a>
+                        <a class="dropdown-item" href="/Home/SubscribeReceive">Subscribe Receive New Card</a>
                     </div>
                 </li>
             </ul>
             <!-- Links -->
             <!-- Form Search -->
-            <form class="form-inline" action="Home/Search">
+            <form class="form-inline" action="/Home/Search">
                 <div class="md-form my-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
                     <a href="#" class="nav-item" style="color: white"><i class="fa fa-search" aria-hidden="true"></i></a>
@@ -106,8 +98,8 @@
                          aria-labelledby="navbarDropdownMenuLink-333">
                         @if (Session["username"] == null)
                         {
-                            <a class="dropdown-item" href="Home/Login">Sign in</a>
-                            <a class="dropdown-item" href="Home/Register">Register</a>
+                            <a class="dropdown-item" href="/Home/Login">Sign in</a>
+                            <a class="dropdown-item" href="/Home/Register">Register</a>
                         }
                         else
                         {
@@ -115,14 +107,14 @@
                             {
                                 if (Session["role"].ToString() == "true")
                                 {
-                                    <p>Welcome <a class="dropdown-item" href="Admin/Index">@Session["username"]</a></p>
+                                    <p>Welcome <a class="dropdown-item" href="/Admin/Index">@Session["username"]</a></p>
                                 }
                                 else
                                 {
-                                    <p>Welcome <a class="dropdown-item" href="User/Index">@Session["username"]</a></p>
+                                    <p>Welcome <a class="dropdown-item" href="/User/Index">@Session["username"]</a></p>
                                 }
                             }
-                            <a class="dropdown-item" href="Home/Logout">Sign out</a>
+                            <a class="dropdown-item" href="/Home/Logout">Sign out</a>
                         }
                     </div>
                 </li>
@@ -134,6 +126,7 @@
     <!--/.Navbar-->
 
     <div class="container body-content" style="padding-top: 30px; padding-bottom: 30px">
+        @Html.Partial("_NotificationPanel")
         @RenderBody()
     </div>
 
@@ -142,9 +135,19 @@
         <!-- Footer Links -->
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">
-            <a href="Home/Index">&copy; @DateTime.Now.Year - eGreeting Online</a>
+            <a href="/Home/Index">&copy; @DateTime.Now.Year - eGreeting Online</a>
         </div>
         <!-- Copyright -->
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
+
+        <script src="~/Scripts/modernizr-2.6.2.js"></script>
 
     </footer>
     <!-- Footer -->

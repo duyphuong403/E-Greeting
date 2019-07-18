@@ -65,21 +65,6 @@
 
 
 <script>
-    $('#submit').click(function () {
-        if ($('#file').val() === "") {
-            //alert("File not empty");
-            //sweetAlert("File not be empty !!", "Please select file", "error");
-            swal({
-                title: 'Error!',
-                text: 'Image not be empty - Please choose a image.',
-                type: 'error',
-                confirmButtonText: 'OK'
-            })
-            return false;
-        } else {
-            return true;
-        }
-    });
     $('#file').on("change", function () {
         if (this.files && this.files[0]) {
             var fr = new FileReader();
