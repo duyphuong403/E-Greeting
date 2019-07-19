@@ -43,15 +43,41 @@ namespace Application.eGreeting.Controllers
         [HttpPost]
         public ActionResult Create(User newUser)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (UserDAO.Create(newUser))
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Index");
+                    if (newUser.Password != newUser.RePassword)
+                    {
+                        ModelState.AddModelError("", "RePassword not match.");
+                        return View();
+                    }
+                    var model = new User
+                    {
+                        UserName = newUser.UserName
+                    };
+                    var search = UserDAO.GetUserByUsername(model);
+                    if (search == null)
+                    {
+                        if (UserDAO.Create(newUser))
+                        {
+                            return RedirectToAction("Index");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Username is existed");
+                        return View();
+                    }
                 }
-                ModelState.AddModelError("", "Duplicate ID!!!");
+                ModelState.AddModelError("", "Create new User failed .");
+                return View();
             }
-            return View();
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View();
+            }
         }
 
         // GET: User/Edit/5
@@ -89,6 +115,5 @@ namespace Application.eGreeting.Controllers
                 return View();
             }
         }
-
     }
 }

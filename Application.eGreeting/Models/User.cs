@@ -17,6 +17,7 @@ namespace Application.eGreeting.Models
         [Required]
         [StringLength(50, MinimumLength = 3)]
         [Display(Name = "User Name")]
+        [RegularExpression(@"[^\s]+", ErrorMessage = "Cannot use special character!")]        
         public string UserName { get; set; }
 
         [Required]
