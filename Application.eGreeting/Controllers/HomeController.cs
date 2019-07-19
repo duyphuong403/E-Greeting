@@ -72,10 +72,6 @@ namespace Application.eGreeting.Controllers
             {
                 if (UserDAO.Create(regisUser))
                 {
-                    //    if (Session["username"]!=null)
-                    //    {
-                    //        return View();
-                    //    }
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("", "Duplicate ID!!!");
