@@ -52,11 +52,11 @@ namespace Application.eGreeting.Controllers
                         ModelState.AddModelError("", "RePassword not match.");
                         return View();
                     }
-                    var model = new User
-                    {
-                        UserName = newUser.UserName
-                    };
-                    var search = UserDAO.GetUserByUsername(model);
+                    //var model = new User
+                    //{
+                    //    UserName = newUser.UserName
+                    //};
+                    var search = UserDAO.GetUserByUsername(newUser.UserName);
                     if (search == null)
                     {
                         if (UserDAO.Create(newUser))
@@ -114,6 +114,24 @@ namespace Application.eGreeting.Controllers
                 ViewBag.Message = "Delete error, cannot find this User!!!";
                 return View();
             }
+        }
+
+
+       
+
+
+        public void Alert(string message, NotificationType notificationType)
+        {
+            var msg = "<script language='javascript'>swal('" + notificationType.ToString().ToUpper() + "', '" + message + "','" + notificationType + "')" + "</script>";
+            TempData["notification"] = msg;
+        }
+
+        public enum NotificationType
+        {
+            error,
+            success,
+            warning,
+            info
         }
     }
 }

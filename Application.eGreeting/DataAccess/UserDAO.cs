@@ -23,9 +23,9 @@ namespace Application.eGreeting.DataAccess
             return db.Users.Find(id);
         }
 
-        public static User GetUserByUsername(User user)
+        public static User GetUserByUsername(string username)
         {
-            return db.Users.FirstOrDefault(item => item.UserName == user.UserName);
+            return db.Users.FirstOrDefault(item => item.UserName == username);
         }
 
         public static bool Create(User newUser)
