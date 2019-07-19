@@ -13,19 +13,15 @@ namespace Application.eGreeting.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TransId { get; set; }
 
-        //foreign key with Users
-        public int UserId { get; set; }
-
-        public User User { get; set; }
+        [Required]
+        [Display(Name ="Sender")]
+        [StringLength(50, ErrorMessage = "Sender cannot more than 50 characters")]
+        public string Username { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage ="Receiver cannot more than 50 characters")]
-        public string Receiver { get; set; }
-
-        // foreign key with Cards
-        public int CardId { get; set; }
-        public Card Card { get; set; }
-
+        public string Receiver { get; set; }      
+     
         [Required]
         [StringLength(100, ErrorMessage ="Subject cannot more than 100 characters.")]
         public string Subject { get; set; }
@@ -34,7 +30,15 @@ namespace Application.eGreeting.Models
         [StringLength(1000, ErrorMessage ="Content cannot more than 1000 characters.")]
         public string Content { get; set; }
 
+        [Required]
+        [StringLength(50, ErrorMessage = "NameCard cannot more than 50 characters")]
+        public string NameCard { get; set; }
+
+        [Required]
+        [StringLength(50, ErrorMessage = "ImageName cannot more than 50 characters")]
+        public string ImageName { get; set; }
+
         [DataType(DataType.Date)]
-        public DateTime? TimeSend { get; set; }
+        public DateTime TimeSend { get; set; }
     }
 }

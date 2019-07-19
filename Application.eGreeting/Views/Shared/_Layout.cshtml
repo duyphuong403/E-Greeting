@@ -18,7 +18,7 @@
     <script src="~/Scripts/sweetalert.min.js"></script>
 </head>
 <body class="container-fluid">
-  
+    <!-- Layout -->
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark primary-color">
 
@@ -67,7 +67,6 @@
                 </li>
             </ul>
             <!-- Links -->
-
             <!-- Form Search -->
             <form class="form-inline" action="/Home/Search">
                 <div class="md-form my-0">
@@ -76,7 +75,6 @@
                 </div>
             </form>
             <!-- Form Search -->
-
             <!-- Login/Register -->
             <ul class="navbar-nav ml-auto nav-flex-icons">
                 <li class="nav-item">
@@ -111,7 +109,7 @@
                                 }
                                 else
                                 {
-                                    <p>Welcome <a class="dropdown-item" href="/User/Index">@Session["username"]</a></p>
+                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/User/Index" style="font-weight:900">@Session["username"]</a></p>
                                 }
                             }
                             <a class="dropdown-item" href="/Home/Logout" style="text-align:center;padding-top:0">Sign out</a>
@@ -149,7 +147,7 @@
 
         <script src="~/Scripts/modernizr-2.6.2.js"></script>
 
-        
+
 
     </footer>
     <!-- Footer -->

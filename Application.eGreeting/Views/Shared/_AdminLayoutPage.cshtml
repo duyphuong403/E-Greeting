@@ -23,7 +23,7 @@
 
 </head>
 <body class="container-fluid">
-
+    <!-- Admin Layout -->
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark secondary-color">
 
@@ -85,11 +85,11 @@
                                 }
                                 else
                                 {
-                                    <p>Welcome <a class="dropdown-item" href="/User/Index">@Session["username"]</a></p>
+                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/User/Index" style="font-weight:900">@Session["username"]</a></p>
                                 }
                             }
                             <a class="dropdown-item" href="/Home/Logout" style="text-align:center;padding-top:0">Sign out</a>
-                            
+
                         }
                     </div>
                 </li>

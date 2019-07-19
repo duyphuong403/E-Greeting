@@ -222,12 +222,8 @@ namespace Application.eGreeting.Controllers
                     {
                         ModelState.AddModelError("", "RePassword not match.");
                         return View();
-                    }
-                    var model = new User
-                    {
-                        UserName = newUser.UserName
-                    };
-                    var search = UserDAO.GetUserByUsername(model);
+                    }                   
+                    var search = UserDAO.GetUserByUsername(newUser.UserName);
                     if (search == null)
                     {
                         if (UserDAO.Create(newUser))
