@@ -228,7 +228,7 @@ namespace Application.eGreeting.Controllers
                     {
                         if (UserDAO.Create(newUser))
                         {
-                            return RedirectToAction("Index");
+                            return RedirectToAction("ManageUser");
                         }                        
                     }
                     else
@@ -260,7 +260,7 @@ namespace Application.eGreeting.Controllers
             if (ModelState.IsValid)
             {
                 UserDAO.EditUser(editU);
-                return RedirectToAction("Index");
+                return RedirectToAction("ManageUser");
             }
             else
             {
