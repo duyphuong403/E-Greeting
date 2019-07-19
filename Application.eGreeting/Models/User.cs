@@ -52,7 +52,7 @@ namespace Application.eGreeting.Models
         [Required]
         [RegularExpression("[0-9]{8,10}", ErrorMessage ="Phone Number must be from 8 - 10 digits")]
         [Display(Name ="Phone Number")]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
 
         [Required]
         [EmailAddress]

@@ -97,5 +97,23 @@ namespace Application.eGreeting.Controllers
             warning,
             info
         }
+
+        public ActionResult SelectCard(int id)
+        {
+            if (Session["username"] != null && Session["role"] != null)
+            {
+                if (id != 0)
+                {
+                    var search = CardDAO.GetCard(id);
+                    if (search != null)
+                    {
+                        return View(search);
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            Alert("You need Log in to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
+        }
     }
 }
