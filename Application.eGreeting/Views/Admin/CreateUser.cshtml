@@ -82,7 +82,11 @@
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.Gender)
-                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                <div class="col-md-10">
+                    <label><input type="radio" name="Gender" value="true">Male</label>
+                    <label><input type="radio" name="Gender" value="false">Female</label>
+                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
     </div>

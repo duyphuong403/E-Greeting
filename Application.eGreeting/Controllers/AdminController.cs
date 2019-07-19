@@ -251,6 +251,41 @@ namespace Application.eGreeting.Controllers
             }
         }
 
+        public ActionResult EditUser(int id)
+        {
+            var edi = UserDAO.GetUser(id);
+            return View(edi);
+        }
+
+        // POST: User/Edit/5
+        [HttpPost]
+        public ActionResult EditUser(User editU)
+        {
+            if (ModelState.IsValid)
+            {
+                UserDAO.EditUser(editU);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        // GET: User/Delete/5
+        public ActionResult DeleteUser(int id)
+        {
+            if (UserDAO.DeleteUser(id))
+            {
+                return RedirectToAction("ManageUser");
+            }
+            else
+            {
+                ViewBag.Message = "Delete error, cannot find this User!!!";
+                return View();
+            }
+        }
+
         public void Alert(string message, NotificationType notificationType)
         {
             var msg = "<script language='javascript'>swal('" + notificationType.ToString().ToUpper() + "', '" + message + "','" + notificationType + "')" + "</script>";
