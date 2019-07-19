@@ -21,10 +21,10 @@ namespace Application.eGreeting.Controllers
                 {
                     return View();
                 }
-                ModelState.AddModelError("", "You not permit to access this page");
+                Alert("You not permit to access that page", NotificationType.warning);
                 return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "You need login to access this page");
+            Alert("You not permit to access that page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
         }
 
@@ -37,10 +37,10 @@ namespace Application.eGreeting.Controllers
                 {
                     return View(CardDAO.GetAllCard);
                 }
-                ModelState.AddModelError("", "You not permit to access this page");
+                Alert("You not permit to access that page", NotificationType.warning);
                 return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "You need login to access this page");
+            Alert("You not permit to access that page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
         }
 
@@ -53,10 +53,10 @@ namespace Application.eGreeting.Controllers
                 {
                     return View(UserDAO.GetAllUser);
                 }
-                ModelState.AddModelError("", "You not permit to access this page");
+                Alert("You not permit to access that page", NotificationType.warning);
                 return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "You need login to access this page");
+            Alert("You not permit to access that page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
         }
 
@@ -70,10 +70,10 @@ namespace Application.eGreeting.Controllers
                 {
                     return View();
                 }
-                ModelState.AddModelError("", "You not permit to access this page");
+                Alert("You not permit to access that page", NotificationType.warning);
                 return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "You need login to access this page");
+            Alert("You not permit to access that page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
         }
 
@@ -132,7 +132,7 @@ namespace Application.eGreeting.Controllers
         }
 
         // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EditCard(int id)
         {
             return View();
         }
@@ -155,7 +155,7 @@ namespace Application.eGreeting.Controllers
               
 
         // GET: Admin/Delete/5
-        public ActionResult DeleteCard(int id)
+        public ActionResult DeleteCard(int id, string ImageName)
         {
             try
             {
@@ -167,15 +167,22 @@ namespace Application.eGreeting.Controllers
                         {
                             if (CardDAO.DeleteCard(id))
                             {
-
+                                if (ImageName != null)
+                                {
+                                    string PathImage = Request.MapPath("~/ImageCard/" + ImageName);
+                                    if (System.IO.File.Exists(PathImage))
+                                    {
+                                        System.IO.File.Delete(PathImage);
+                                    }
+                                }
                             }
                         }
                         return RedirectToAction("ManageCard");
                     }
-                    Alert("You not permit to access that page", NotificationType.error);
+                    Alert("You not permit to access that page", NotificationType.warning);
                     return RedirectToAction("Index", "Home");
                 }
-                Alert("You not permit to access that page", NotificationType.error);
+                Alert("You not permit to access that page", NotificationType.warning);
                 return RedirectToAction("Login", "Home");               
             }
             catch
@@ -196,10 +203,10 @@ namespace Application.eGreeting.Controllers
                 {
                     return View();
                 }
-                ModelState.AddModelError("", "You not permit to access this page");
+               Alert("You not permit to access this page", NotificationType.warning);
                 return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "You need login to access this page");
+            Alert("You need login to access this page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
         }
 

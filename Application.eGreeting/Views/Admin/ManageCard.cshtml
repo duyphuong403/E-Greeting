@@ -47,7 +47,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "EditCard", new { id = item.CardId }, new { @class="btn btn-warning" }) 
-                @Html.ActionLink("Delete", "DeleteCard", new { id = item.CardId }, new {@onclick="return confirm('Are you sure ?')", @id = "btnDelete", @class = "btn btn-danger" })
+                @Html.ActionLink("Delete", "DeleteCard", new { id = item.CardId, ImageName = item.ImageName }, new {@onclick="return confirm('Are you sure ?')", @id = "btnDelete", @class = "btn btn-danger" })
             </td>
         </tr>
         i++;
