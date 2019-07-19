@@ -30,6 +30,7 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Gender)
+
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Phone)
@@ -60,7 +61,15 @@
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Gender)
+                
+                @if (item.Gender)
+                {
+                    <label>Male</label>
+                }
+                else
+                {
+                    <label>Female</label>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)
