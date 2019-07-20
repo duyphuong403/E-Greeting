@@ -268,7 +268,7 @@ namespace Application.eGreeting.Controllers
                 {
                     if (newUser.Password != newUser.RePassword)
                     {
-                        ModelState.AddModelError("", "RePassword not match.");
+                        Alert("RePassword not match!", NotificationType.error);
                         return View();
                     }                   
                     var search = UserDAO.GetUserByUsername(newUser.UserName);
@@ -276,12 +276,13 @@ namespace Application.eGreeting.Controllers
                     {
                         if (UserDAO.CreateUser(newUser))
                         {
+                            Alert("Create User successfully!", NotificationType.success);
                             return RedirectToAction("ManageUser");
                         }                        
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Username is existed");
+                        Alert("Username already exist!!", NotificationType.error);
                         return View();
                     }
                 }
@@ -308,6 +309,7 @@ namespace Application.eGreeting.Controllers
             if (ModelState.IsValid)
             {
                 UserDAO.EditUser(editU);
+                Alert("Edit User successfully!", NotificationType.success);
                 return RedirectToAction("ManageUser");
             }
             else
@@ -321,6 +323,7 @@ namespace Application.eGreeting.Controllers
         {
             if (UserDAO.DeleteUser(id))
             {
+                Alert("User has been remove!", NotificationType.success);
                 return RedirectToAction("ManageUser");
             }
             else
