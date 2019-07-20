@@ -111,21 +111,6 @@ namespace Application.eGreeting.Controllers
             }
         }
 
-        // GET: User/Delete/5
-        public ActionResult Delete(int id)
-        {
-            if (UserDAO.DeleteUser(id))
-            {
-                Alert("User has been deteled!!", NotificationType.success);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                ViewBag.Message = "Delete error, cannot find this User!!!";
-                return View();
-            }
-        }
-
         // GET: User/CreateFeedback
         public ActionResult FeedbackIndex(int id)
         {
