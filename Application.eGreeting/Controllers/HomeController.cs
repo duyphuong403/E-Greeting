@@ -3,15 +3,24 @@ using Application.eGreeting.Models;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using PagedList.Mvc;
+using PagedList;
 
 namespace Application.eGreeting.Controllers
 {
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult Index(string name)
+        public ActionResult Index(string name, int? page) 
         {
-            return View(CardDAO.GetAllCard);
+            if (page==null)
+            {
+                page = 1;
+            }
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+           
+            return View(CardDAO.GetAllCard.ToPagedList(pageNumber,pageSize));
         }
 
         public ActionResult Search(string txtSearch)
