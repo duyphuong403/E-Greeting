@@ -49,13 +49,34 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Role)
+                @if (item.Role)
+                {
+                    <label>Admin</label>
+                }
+                else
+                {
+                    <label>User</label>
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsSubcribeSend)
+                @if (item.IsSubcribeSend)
+                {
+                    <label>Yes</label>
+                }
+                else
+                {
+                    <label>No</label>
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsSubcribeReceive)
+                @if (item.IsSubcribeReceive)
+                {
+                    <label>Yes</label>
+                }
+                else
+                {
+                    <label>No</label>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FullName)
