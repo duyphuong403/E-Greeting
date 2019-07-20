@@ -9,6 +9,16 @@
 {
     <span class="success sweet-alert"> @ViewBag.Message</span>
 }
+@*<div>
+    @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+    {
+
+        <div class="form-inline">
+            <input type="text" name="txtSearch" class="form-control" placeholder="Enter name card" />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    }
+</div>*@
 <table class="table">
     <tr>
         <th>
@@ -37,7 +47,7 @@
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td width="20%">
-                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width:100%"/>
+                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width:100%" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)

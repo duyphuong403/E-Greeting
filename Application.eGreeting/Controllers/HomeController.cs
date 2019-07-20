@@ -1,6 +1,7 @@
 ﻿using Application.eGreeting.DataAccess;
 using Application.eGreeting.Models;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Application.eGreeting.Controllers
@@ -8,11 +9,19 @@ namespace Application.eGreeting.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult Index()
+        public ActionResult Index(string name)
         {
             return View(CardDAO.GetAllCard);
         }
-       
+
+        public ActionResult Search(string txtSearch)
+        {
+            if (string.IsNullOrEmpty(txtSearch))
+            {
+                return View("Index", CardDAO.GetAllCard);
+            }
+            return View("Index", CardDAO.GetCards(txtSearch));
+        }
         //GET: Home/Login
         public ActionResult Login()
         {

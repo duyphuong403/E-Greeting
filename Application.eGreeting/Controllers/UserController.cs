@@ -11,17 +11,27 @@ namespace Application.eGreeting.Controllers
 {
     public class UserController : Controller
     {
+        private static eGreetingDB db = new eGreetingDB();
         // GET: User
-        public ActionResult Index()
+        public ActionResult Index(string name)
         {
             if (Session["username"] != null)
             {
-                return View();
+                return RedirectToAction("Login", "Home");
             }
-            ModelState.AddModelError("", "You need login to access this page");
-            return RedirectToAction("Login", "Home");
+            var model = db.Users.ToList();
+            if (!string.IsNullOrEmpty(name))
+            {
+                model = model.Where(p => p.UserName.ToUpper().Contains(name)
+                                    || p.UserName.ToLower().Contains(name)).ToList();
+                return View(model);
+            }
+            else
+            {
+                ModelState.AddModelError("", "You need login to access this page");
+                return View(model);
+            }
         }
-
         // GET: User/Details/5
         public ActionResult Details(int id)
         {
@@ -117,7 +127,7 @@ namespace Application.eGreeting.Controllers
         }
 
 
-       
+
 
 
         public void Alert(string message, NotificationType notificationType)
