@@ -60,6 +60,54 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+        // GET: Admin/ManageFeedback
+        public ActionResult ManageFeedback()
+        {
+            if (Session["username"] != null && Session["role"] != null)
+            {
+                if (Session["role"].ToString().ToLower() == "true")
+                {
+                    return View(FeedbackDAO.GetAllFeedback.OrderByDescending(o => o.Id));
+                }
+                Alert("You not permit to access that page", NotificationType.warning);
+                return RedirectToAction("Index", "Home");
+            }
+            Alert("You not permit to access that page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteFeedback(int id)
+        {
+            try
+            {
+                if (Session["username"] != null && Session["role"] != null)
+                {
+                    if (Session["role"].ToString().ToLower() == "true")
+                    {
+                        if (id >= 0)
+                        {
+                            if (CardDAO.DeleteCard(id))
+                            {
+                                Alert("Delete feedback successfully", NotificationType.success);
+                                return RedirectToAction("ManageFeedback");
+                            }
+                        }
+                        return RedirectToAction("ManageFeedback");
+                    }
+                    Alert("You not permit to access that page", NotificationType.warning);
+                    return RedirectToAction("Index", "Home");
+                }
+                Alert("You not permit to access that page", NotificationType.warning);
+                return RedirectToAction("Login", "Home");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return RedirectToAction("ManageFeedback");
+            }
+        }
+
 
         // GET: Admin/CreateCard
         public ActionResult CreateCard()

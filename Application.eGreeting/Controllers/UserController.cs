@@ -126,8 +126,47 @@ namespace Application.eGreeting.Controllers
             }
         }
 
+        // GET: User/CreateFeedback
+        public ActionResult FeedbackIndex(int id)
+        {
+            if (Session["username"] != null)
+            {
+                if (id != 0)
+                {
+                    var search = CardDAO.GetCard(id);
+                    if (search != null)
+                    {
+                        var model = new Transaction
+                        {
+                            NameCard = search.NameCard,
+                            Username = Session["username"].ToString(),
+                            ImageName = search.ImageName,
+                            TimeSend = DateTime.Now
+                        };
+                        return View(model);
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            Alert("You need Log in to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
+        }
 
-
+        public ActionResult SaveFeedback(Feedback feedback)
+        {
+            feedback.DataCreated = DateTime.Now;
+            if (FeedbackDAO.Insert(feedback))
+            {
+                Alert("Send feedback successfully!", NotificationType.success);
+                return RedirectToAction("Index", "Home");
+                
+            }
+            else
+            {
+                Alert("Send feedback failed!", NotificationType.error);
+                return View();
+            }
+        }
 
 
         public void Alert(string message, NotificationType notificationType)

@@ -26,6 +26,8 @@ namespace Application.eGreeting.Models
 
         public virtual DbSet<Transaction> Transactions { get; set; }
 
+        public virtual DbSet<Feedback> Feedbacks { get; set; }
+
     }
 
     public class DBInit : DropCreateDatabaseIfModelChanges<eGreetingDB>
