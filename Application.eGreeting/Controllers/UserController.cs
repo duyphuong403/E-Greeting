@@ -68,7 +68,8 @@ namespace Application.eGreeting.Controllers
                     {
                         if (UserDAO.CreateUser(newUser))
                         {
-                            return RedirectToAction("Index");
+                            Alert("Register Successfully!!", NotificationType.success);
+                            return RedirectToAction("Index", "Home");
                         }
                     }
                     else
@@ -101,6 +102,7 @@ namespace Application.eGreeting.Controllers
             if (ModelState.IsValid)
             {
                 UserDAO.EditUser(editU);
+                Alert("Edited successfully!!", NotificationType.error);
                 return RedirectToAction("Index");
             }
             else
@@ -114,6 +116,7 @@ namespace Application.eGreeting.Controllers
         {
             if (UserDAO.DeleteUser(id))
             {
+                Alert("User has been deteled!!", NotificationType.success);
                 return RedirectToAction("Index");
             }
             else
