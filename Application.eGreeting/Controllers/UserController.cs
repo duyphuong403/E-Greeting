@@ -44,6 +44,7 @@ namespace Application.eGreeting.Controllers
             }
             else
             {
+                Alert("You must logout first to register new account!", NotificationType.warning);
                 return RedirectToAction("Index", "Home");
             }
         }
