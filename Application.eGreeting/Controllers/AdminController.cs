@@ -87,7 +87,7 @@ namespace Application.eGreeting.Controllers
                     {
                         if (id >= 0)
                         {
-                            if (CardDAO.DeleteCard(id))
+                            if (FeedbackDAO.Delete(id))
                             {
                                 Alert("Delete feedback successfully", NotificationType.success);
                                 return RedirectToAction("ManageFeedback");

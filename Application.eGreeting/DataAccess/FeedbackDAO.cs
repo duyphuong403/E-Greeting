@@ -12,7 +12,7 @@ namespace Application.eGreeting.DataAccess
 
         public static IEnumerable<Feedback> GetAllFeedback { get => db.Feedbacks; }
 
-        public Feedback GetById(int id)
+        public static Feedback GetById(int id)
         {
             return db.Feedbacks.Find(id);
         }
@@ -30,7 +30,7 @@ namespace Application.eGreeting.DataAccess
             }
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
             var b = GetById(id);
             if (b != null)

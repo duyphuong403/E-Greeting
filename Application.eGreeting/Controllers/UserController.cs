@@ -124,45 +124,39 @@ namespace Application.eGreeting.Controllers
         }
 
         // GET: User/CreateFeedback
-        public ActionResult FeedbackIndex(int id)
+        public ActionResult FeedbackIndex()
         {
-            if (Session["username"] != null)
+            if (Session["username"] != null && Session["role"] != null)
             {
-                if (id != 0)
+                var model = new Feedback
                 {
-                    var search = CardDAO.GetCard(id);
-                    if (search != null)
-                    {
-                        var model = new Transaction
-                        {
-                            NameCard = search.NameCard,
-                            Username = Session["username"].ToString(),
-                            ImageName = search.ImageName,
-                            TimeSend = DateTime.Now
-                        };
-                        return View(model);
-                    }
-                }
-                return RedirectToAction("Index");
+                    Username = Session["username"].ToString(),
+                };
+                return View(model);
             }
             Alert("You need Log in to access this page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SaveFeedback(Feedback feedback)
         {
-            feedback.DataCreated = DateTime.Now;
-            if (FeedbackDAO.Insert(feedback))
+            if (ModelState.IsValid)
             {
-                Alert("Send feedback successfully!", NotificationType.success);
-                return RedirectToAction("Index", "Home");
-                
+                feedback.DataCreated = DateTime.Now;
+                if (FeedbackDAO.Insert(feedback))
+                {
+                    Alert("Send feedback successfully!", NotificationType.success);
+                    return RedirectToAction("FeedbackIndex", "User");
+                }
+                else
+                {
+                    Alert("Send feedback failed!", NotificationType.error);
+                    return View();
+                }
             }
-            else
-            {
-                Alert("Send feedback failed!", NotificationType.error);
-                return View();
-            }
+            return View();
         }
 
 

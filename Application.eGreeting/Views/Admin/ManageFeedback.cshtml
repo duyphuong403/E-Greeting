@@ -24,7 +24,7 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>i</td>
+                            <td>@i</td>
                             <td>@item.Username</td>
                             <td>@item.Subject</td>
                             <td>@item.Content</td>
@@ -43,39 +43,51 @@
     </div>
 </div>
 
-
-
-@*<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Subject)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataCreated)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Subject)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataCreated)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>*@
+<script>
+    // delete
+    // idData là biến truyền vào (đặt tên là gì cũng được)
+    function doDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "/Admin/DeleteFeedback", // Yêu cầu lấy dữ liệu: /controller/tên hàm
+                    type: "POST",
+                    data: { id: id }, // id phải giống id truyền vào trong TinTucController Delete
+                    success: function (res) {
+                        // success là hàm được gọi khi yêu cầu thành công
+                        // res là giá trị trả về đặt tên là gì cũng được()
+                        if (res) {
+                            Swal.fire({
+                                title: 'Delete success',
+                                text: 'Successfully deleted!',
+                                type: 'success'
+                            }).then((res2) => {
+                                location.reload();
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Delete failed',
+                                text: 'An error occurred while deleting!',
+                                type: 'error'
+                            })
+                        }
+                    }
+                })
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted!',
+                    'success'
+                )
+            }
+        })
+    }
+</script>
