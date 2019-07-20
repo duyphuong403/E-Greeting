@@ -49,13 +49,34 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Role)
+                @if (item.Role)
+                {
+                    <label>Admin</label>
+                }
+                else
+                {
+                    <label>User</label>
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsSubcribeSend)
+                @if (item.IsSubcribeSend)
+                {
+                    <label>Yes</label>
+                }
+                else
+                {
+                    <label>No</label>
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsSubcribeReceive)
+                @if (item.IsSubcribeReceive)
+                {
+                    <label>Yes</label>
+                }
+                else
+                {
+                    <label>No</label>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FullName)
@@ -78,9 +99,9 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }) |
-                @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId },
-    new { onclick = "return confirm('Are you sure you wish to delete this User?');" })
+                @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }, new { @class ="btn btn-warning"})
+                @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId }, new {@class = "btn btn-danger",
+                onclick = "return confirm('Are you sure you wish to delete this User?');" })
             </td>
         </tr>
         i++;
