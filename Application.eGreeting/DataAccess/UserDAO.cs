@@ -28,7 +28,7 @@ namespace Application.eGreeting.DataAccess
             return db.Users.FirstOrDefault(item => item.UserName == username);
         }
 
-        public static bool Create(User newUser)
+        public static bool CreateUser(User newUser)
         {
             var b = GetUser(newUser.UserId);
             if (b == null)
