@@ -17,20 +17,11 @@ namespace Application.eGreeting.Controllers
         {
             if (Session["username"] != null)
             {
-                return RedirectToAction("Login", "Home");
+                return View();
             }
-            var model = db.Users.ToList();
-            if (!string.IsNullOrEmpty(name))
-            {
-                model = model.Where(p => p.UserName.ToUpper().Contains(name)
-                                    || p.UserName.ToLower().Contains(name)).ToList();
-                return View(model);
-            }
-            else
-            {
-                ModelState.AddModelError("", "You need login to access this page");
-                return View(model);
-            }
+            ModelState.AddModelError("", "You need login to access this page");
+            return RedirectToAction("Login", "Home");
+
         }
         // GET: User/Details/5
         public ActionResult Details(int id)
@@ -44,14 +35,22 @@ namespace Application.eGreeting.Controllers
         }
 
         // GET: User/Create
-        public ActionResult Create()
+        public ActionResult Register()
         {
-            return View();
+            if (Session["username"] == null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: User/Create
         [HttpPost]
-        public ActionResult Create(User newUser)
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(User newUser)
         {
             try
             {
@@ -59,17 +58,13 @@ namespace Application.eGreeting.Controllers
                 {
                     if (newUser.Password != newUser.RePassword)
                     {
-                        ModelState.AddModelError("", "RePassword not match.");
+                        Alert("RePassword does not match", NotificationType.error);
                         return View();
                     }
-                    //var model = new User
-                    //{
-                    //    UserName = newUser.UserName
-                    //};
                     var search = UserDAO.GetUserByUsername(newUser.UserName);
                     if (search == null)
                     {
-                        if (UserDAO.Create(newUser))
+                        if (UserDAO.CreateUser(newUser))
                         {
                             return RedirectToAction("Index");
                         }

@@ -274,7 +274,7 @@ namespace Application.eGreeting.Controllers
                     var search = UserDAO.GetUserByUsername(newUser.UserName);
                     if (search == null)
                     {
-                        if (UserDAO.Create(newUser))
+                        if (UserDAO.CreateUser(newUser))
                         {
                             return RedirectToAction("ManageUser");
                         }                        
