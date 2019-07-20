@@ -11,7 +11,7 @@ namespace Application.eGreeting.DataAccess
     {
         private static eGreetingDB db = new eGreetingDB();
 
-        public static IEnumerable<Card> GetAllCard { get => db.Cards; }
+        public static List<Card> GetAllCard { get => db.Cards.ToList(); }
 
         public static Card GetCard(int id)
         {

@@ -80,7 +80,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-                    <label><input type="radio" name="Gender" value="true">Male</label>
+                    <label><input type="radio" name="Gender" value="true" checked="checked">Male</label>
                     <label><input type="radio" name="Gender" value="false">Female</label>
                     @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
         </div>
