@@ -11,7 +11,7 @@ namespace Application.eGreeting.Controllers
 {
     public class UserController : Controller
     {
-        private static eGreetingDB db = new eGreetingDB();
+        
         // GET: User
         public ActionResult Index(string name)
         {
@@ -19,7 +19,8 @@ namespace Application.eGreeting.Controllers
             {
                 return View();
             }
-            ModelState.AddModelError("", "You need login to access this page");
+            Alert("You need login to access this page", NotificationType.warning);
+           
             return RedirectToAction("Login", "Home");
 
         }
