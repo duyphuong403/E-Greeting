@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList.Mvc;
+using PagedList;
 
 namespace Application.eGreeting.Controllers
 {
@@ -29,29 +31,46 @@ namespace Application.eGreeting.Controllers
         }
 
         // GET: Admin/ManageCard
-        public ActionResult ManageCard()
+        public ActionResult ManageCard(int? page)
         {
-            if (Session["username"] != null && Session["role"] != null)
+           
             {
-                if (Session["role"].ToString().ToLower() == "true")
+                if (Session["username"] != null && Session["role"] != null)
                 {
-                    return View(CardDAO.GetAllCard);
+                    if (Session["role"].ToString().ToLower() == "true")
+                    {
+                        if (page == null)
+                        {
+                            page = 1;
+                        }
+                        int pageSize = 3;
+                        int pageNumber = (page ?? 1);
+
+                        return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
+                    }
+                    Alert("You not permit to access that page", NotificationType.warning);
+                    return RedirectToAction("Index", "Home");
                 }
                 Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Home");
             }
-            Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Login", "Home");
         }
 
         // GET: Admin/ManageUser
-        public ActionResult ManageUser()
+        public ActionResult ManageUser(int? page)
         {
             if (Session["username"] != null && Session["role"] != null)
             {
                 if (Session["role"].ToString().ToLower() == "true")
                 {
-                    return View(UserDAO.GetAllUser);
+                    if (page == null)
+                    {
+                        page = 1;
+                    }
+                    int pageSize = 3;
+                    int pageNumber = (page ?? 1);
+
+                    return View(UserDAO.GetAllUser.ToPagedList(pageNumber, pageSize));
                 }
                 Alert("You not permit to access that page", NotificationType.warning);
                 return RedirectToAction("Index", "Home");

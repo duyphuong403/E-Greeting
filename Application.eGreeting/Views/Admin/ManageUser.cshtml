@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Application.eGreeting.Models.User>
+﻿@model PagedList.IPagedList<Application.eGreeting.Models.User>
 @{
     ViewBag.Title = "Manage User";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
@@ -7,39 +7,15 @@
 
 <h2>Manage User</h2>
 
+
+@using PagedList.Mvc;
+@using PagedList;
+
 <p>
     @Html.ActionLink("Create New User", "CreateUser", "Admin", new { @class = "btn btn-primary" })
 </p>
 <table class="table">
-    <tr>
-        <th>No.</th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Role)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsSubcribeSend)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsSubcribeReceive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
 
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th></th>
-    </tr>
 
     @foreach (var item in Model)
     {
@@ -82,7 +58,7 @@
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-                
+
                 @if (item.Gender)
                 {
                     <label>Male</label>
@@ -99,7 +75,7 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }, new { @class ="btn btn-warning"})
+                @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserId }, new {@class = "btn btn-danger",
                 onclick = "return confirm('Are you sure you wish to delete this User?');" })
             </td>
@@ -108,3 +84,11 @@
     }
 
 </table>
+
+<center>
+
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page }))
+</center>

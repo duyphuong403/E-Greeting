@@ -11,7 +11,7 @@ namespace Application.eGreeting.DataAccess
     {
         private static eGreetingDB db = new eGreetingDB();
 
-        public static IEnumerable<User> GetAllUser { get => db.Users; }
+        public static List<User> GetAllUser { get => db.Users.ToList(); }
 
         public static User CheckLogin(User user)
         {
