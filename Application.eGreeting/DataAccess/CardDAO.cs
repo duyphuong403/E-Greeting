@@ -17,11 +17,13 @@ namespace Application.eGreeting.DataAccess
         {
             return db.Cards.Find(id);
         }
-        public static IEnumerable<Card> GetCards(string name)
+
+        public static List<Card> GetCards(string name)
         {
             name = name.ToLower();
-            return db.Cards.Where(item => item.NameCard.ToLower().Contains(name));
+            return db.Cards.Where(item => item.NameCard.ToLower().Contains(name)).ToList();
         }
+
         public static bool Create(Card newCard)
         {
             var b = GetCard(newCard.CardId);
