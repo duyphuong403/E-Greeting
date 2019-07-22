@@ -32,7 +32,7 @@
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
-                @Html.ActionLink("Select", "CreateTrans", new { id = item.CardId }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Select", "CreateTrans","User", new { id = item.CardId }, new { @class = "btn btn-primary" })
             </td>
         </tr>
     }

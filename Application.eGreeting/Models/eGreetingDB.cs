@@ -1,5 +1,6 @@
 namespace Application.eGreeting.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.ModelConfiguration.Conventions;
@@ -41,6 +42,14 @@ namespace Application.eGreeting.Models
             };
             ds.ForEach(item => context.Cards.Add(item));
             //context.SaveChanges();
+
+            // Seed for Trans
+            var dsTrans = new List<Transaction>
+            {
+                new Transaction { Username = "test", Receiver="receiver@gmail.com", Subject = "Happy Birthday my friend", Content ="Hello your 30! Wish you see many many lucky with this old, happiness and healthy", ImageName="image1.jpg", TimeSend = DateTime.Now, NameCard="eGreeting-Birthday-001" }
+            };
+            dsTrans.ForEach(item => context.Transactions.Add(item));
+
 
             // Seed some record for Users
             var dsUser = new List<User>

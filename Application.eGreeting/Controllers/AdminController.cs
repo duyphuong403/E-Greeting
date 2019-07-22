@@ -33,7 +33,7 @@ namespace Application.eGreeting.Controllers
         // GET: Admin/ManageCard
         public ActionResult ManageCard(int? page)
         {
-           
+
             {
                 if (Session["username"] != null && Session["role"] != null)
                 {
@@ -160,7 +160,7 @@ namespace Application.eGreeting.Controllers
                             var fileName = Path.GetFileName(file.FileName);
                             var imagePath = Server.MapPath("~/ImageCard/" + fileName);
                             newCard.ImageName = fileName;
-                           
+
                             if (CardDAO.Create(newCard))
                             {
                                 file.SaveAs(imagePath);
@@ -219,7 +219,7 @@ namespace Application.eGreeting.Controllers
                 return View();
             }
         }
-              
+
 
         // GET: Admin/Delete/5
         public ActionResult DeleteCard(int id, string ImageName)
@@ -243,6 +243,7 @@ namespace Application.eGreeting.Controllers
                                     }
                                 }
                             }
+                            Alert("Delete Card Successfully", NotificationType.success);
                         }
                         return RedirectToAction("ManageCard");
                     }
@@ -250,7 +251,7 @@ namespace Application.eGreeting.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Login", "Home");               
+                return RedirectToAction("Login", "Home");
             }
             catch
             {
@@ -261,7 +262,7 @@ namespace Application.eGreeting.Controllers
 
         // Manage User
 
-          // GET: Admin/CreateCard
+        // GET: Admin/CreateCard
         public ActionResult CreateUser()
         {
             if (Session["username"] != null && Session["role"] != null)
@@ -270,7 +271,7 @@ namespace Application.eGreeting.Controllers
                 {
                     return View();
                 }
-               Alert("You not permit to access this page", NotificationType.warning);
+                Alert("You not permit to access this page", NotificationType.warning);
                 return RedirectToAction("Index", "Home");
             }
             Alert("You need login to access this page", NotificationType.warning);
@@ -289,7 +290,7 @@ namespace Application.eGreeting.Controllers
                     {
                         Alert("RePassword not match!", NotificationType.error);
                         return View();
-                    }                   
+                    }
                     var search = UserDAO.GetUserByUsername(newUser.UserName);
                     if (search == null)
                     {
@@ -297,7 +298,7 @@ namespace Application.eGreeting.Controllers
                         {
                             Alert("Create User successfully!", NotificationType.success);
                             return RedirectToAction("ManageUser");
-                        }                        
+                        }
                     }
                     else
                     {
@@ -317,8 +318,18 @@ namespace Application.eGreeting.Controllers
 
         public ActionResult EditUser(int id)
         {
-            var edi = UserDAO.GetUser(id);
-            return View(edi);
+            if (Session["username"] != null && Session["role"] != null)
+            {
+                if (Session["role"].ToString().ToLower() == "true")
+                {
+                    var result = UserDAO.GetUser(id);
+                    return View(result);
+                }
+                Alert("You not permit to access this page", NotificationType.warning);
+                return RedirectToAction("Index", "Home");
+            }
+            Alert("You need login to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
         }
 
         // POST: User/Edit/5
@@ -337,18 +348,41 @@ namespace Application.eGreeting.Controllers
             }
         }
 
-        // GET: User/Delete/5
+        // POST: User/Delete/5
+        [HttpPost]
         public ActionResult DeleteUser(int id)
         {
-            if (UserDAO.DeleteUser(id))
+            try
             {
-                Alert("User has been remove!", NotificationType.success);
-                return RedirectToAction("ManageUser");
+                if (Session["username"] != null && Session["role"] != null)
+                {
+                    if (Session["role"].ToString().ToLower() == "true")
+                    {
+                        if (id >= 0)
+                        {
+                            if (UserDAO.DeleteUser(id))
+                            {
+                                Alert("Delete User Successfully .", NotificationType.success);
+                                return RedirectToAction("ManageUser");
+                            }
+                            else
+                            {
+                                Alert("Delete error, cannot find this User!!!", NotificationType.error);
+                                return RedirectToAction("ManageUser");
+                            }
+                        }
+                        return RedirectToAction("ManageCard");
+                    }
+                    Alert("You not permit to access that page", NotificationType.warning);
+                    return RedirectToAction("Index", "Home");
+                }
+                Alert("You not permit to access that page", NotificationType.warning);
+                return RedirectToAction("Login", "Home");
             }
-            else
+            catch (Exception e)
             {
-                ViewBag.Message = "Delete error, cannot find this User!!!";
-                return View();
+                Console.WriteLine(e.Message);
+                return RedirectToAction("ManageCard");
             }
         }
 
@@ -363,7 +397,8 @@ namespace Application.eGreeting.Controllers
             error,
             success,
             warning,
-            info
+            info,
+            question
         }
     }
 }
