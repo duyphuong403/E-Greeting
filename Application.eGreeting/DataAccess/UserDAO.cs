@@ -45,7 +45,6 @@ namespace Application.eGreeting.DataAccess
             var b = GetUser(editUser.UserId);
             if (b != null)
             {
-                b.Password = editUser.Password;
                 b.IsSubcribeSend = editUser.IsSubcribeSend;
                 b.IsSubcribeReceive = editUser.IsSubcribeReceive;
                 b.FullName = editUser.FullName;
@@ -64,6 +63,18 @@ namespace Application.eGreeting.DataAccess
             if (b != null)
             {
                 db.Users.Remove(b);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool ChangePassword(User changePassword)
+        {
+            var c = GetUser(changePassword.UserId);
+            if (c!=null)
+            {
+                c.Password = changePassword.Password;
                 db.SaveChanges();
                 return true;
             }

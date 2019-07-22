@@ -2390,6 +2390,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\ChangePassword.cs" />
     <Compile Include="Models\eGreetingDB.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Transaction.cs" />
