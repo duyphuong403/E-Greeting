@@ -19,10 +19,27 @@
         <div class="form-group">
             @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @readonly =true } })
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
             </div>
-        </div>        
+        </div>
+
+        <input type="button" value="Change Password" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("ChangePassword", "UserController") + "'");" />
+
+        @if (Session["username"].ToString().ToLower() != "admin")
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+
+                        @Html.EditorFor(model => model.Role)
+                        @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        }
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.IsSubcribeSend, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -55,10 +72,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Gender)
-                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-                </div>
+                <label><input type="radio" name="Gender" value="true" checked="checked">Male</label>
+                <label><input type="radio" name="Gender" value="false">Female</label>
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
             </div>
         </div>
 
