@@ -15,7 +15,37 @@
     @Html.ActionLink("Create New User", "CreateUser", "Admin", new { @class = "btn btn-primary" })
 </p>
 <table class="table">
+    <tr>
+        <th>No.</th>
+        <th>
+            UserName
+        </th>
+        <th>
+            Role
+        </th>
+        <th>
+            Subcribe Send
+        </th>
+        <th>
+            Subcribe Receive
+        </th>
+        <th>
+            FullName
+        </th>
+        <th>
+            Gender
 
+        </th>
+        <th>
+            Phone Number
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
 
     @foreach (var item in Model)
     {
