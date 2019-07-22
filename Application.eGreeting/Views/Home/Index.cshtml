@@ -13,8 +13,23 @@
 @using PagedList;
 
 <table class="table">
-
-
+    <tr>
+        <th>
+            NameCard
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Image
+        </th>
+        <th>
+            DateCreated
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
     @foreach (var item in Model)
     {
         <tr>
@@ -42,9 +57,10 @@
 <center>
 
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+   
 
-    @Html.PagedListPager(Model, page => Url.Action("Index",
-        new { page }))
 </center>
 
 @*<nav aria-label="Page navigation example">
