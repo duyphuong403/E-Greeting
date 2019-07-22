@@ -117,6 +117,34 @@ namespace Application.eGreeting.Controllers
                 return View();
             }
         }
+        public ActionResult ChangePassword(int id)
+        {
+            if (id >0)
+            {
+                var changePass = UserDAO.GetUser(id);
+                return View(changePass);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(User changePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                UserDAO.ChangePassword(changePassword);
+                Alert("Change Password successfully!!", NotificationType.success);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
 
         // GET: User/CreateFeedback
         public ActionResult FeedbackIndex()

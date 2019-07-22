@@ -12,7 +12,7 @@ namespace Application.eGreeting.Models
         [StringLength(50, MinimumLength = 8)]
         [Display(Name = "Old Password")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string OldPassword { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 8)]
