@@ -2384,6 +2384,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataAccess\CardDAO.cs" />
     <Compile Include="DataAccess\FeedbackDAO.cs" />
+    <Compile Include="DataAccess\PaymentDAO.cs" />
     <Compile Include="DataAccess\TransDAO.cs" />
     <Compile Include="DataAccess\UserDAO.cs" />
     <Compile Include="Global.asax.cs">
@@ -2392,6 +2393,7 @@
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\eGreetingDB.cs" />
     <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\PaymentInfo.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2409,7 +2411,6 @@
     <Content Include="Views\Admin\CreateCard.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Admin\ManageUser.cshtml" />
     <Content Include="Views\Admin\ManageCard.cshtml" />
@@ -2420,6 +2421,7 @@
     <Content Include="Views\User\FeedbackIndex.cshtml" />
     <Content Include="Views\Shared\_Error.cshtml" />
     <Content Include="Views\Error\Notfound.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Application.eGreeting.DataAccess;
+﻿using Application.eGreeting.DataAccess;
 using Application.eGreeting.Models;
-using System.ComponentModel.DataAnnotations;
+using System;
+using System.Web.Mvc;
 
 namespace Application.eGreeting.Controllers
 {
@@ -13,11 +9,12 @@ namespace Application.eGreeting.Controllers
     {
         
         // GET: User
-        public ActionResult Index(string name)
+        public ActionResult Index()
         {
             if (Session["username"] != null)
             {
-                return View();
+                var result = UserDAO.GetUserByUsername(Session["username"].ToString());
+                return View(result);
             }
             Alert("You need login to access this page", NotificationType.warning);
            
@@ -121,7 +118,7 @@ namespace Application.eGreeting.Controllers
         // GET: User/CreateFeedback
         public ActionResult FeedbackIndex()
         {
-            if (Session["username"] != null && Session["role"] != null)
+            if (Session["username"] != null)
             {
                 var model = new Feedback
                 {
@@ -204,6 +201,32 @@ namespace Application.eGreeting.Controllers
                 return View();
                 throw;
             }
+        }
+
+        //GET: User/SubscribeSend
+        public ActionResult SubscribeSend()
+        {
+            // Check login or not ?
+            if (Session["username"] != null)
+            {
+                var search = UserDAO.GetUserByUsername(Session["username"].ToString());
+                // get info user
+                if (search != null)
+                {
+                    // check user purchase or not ?
+                    if (search.IsSubcribeSend)
+                    {
+
+                    }
+                }
+                var model = new Feedback
+                {
+                    Username = Session["username"].ToString(),
+                };
+                return View(model);
+            }
+            Alert("You need Log in to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
         }
 
 
