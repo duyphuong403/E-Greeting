@@ -118,9 +118,12 @@ namespace Application.eGreeting.Controllers
         {
             if (id >0)
             {
-                var changePass = UserDAO.GetUser(id);
-          
-                return View(changePass);
+                var search = UserDAO.GetUser(id);
+                var model = new ChangePassword
+                {
+                    OldPassword = search.Password,
+                };
+                return View(model);
             }
             else
             {
