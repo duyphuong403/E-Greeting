@@ -16,66 +16,48 @@ namespace Application.eGreeting.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            if (Session["username"] != null && Session["role"] != null)
+            if (IsAdmin())
             {
-                if (Session["role"].ToString().ToLower() == "true")
-                {
-                    return View();
-                }
-                Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Index", "Home");
+                return View();
             }
             Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Admin/ManageCard
         public ActionResult ManageCard(int? page)
         {
-
+            if (IsAdmin())
             {
-                if (Session["username"] != null && Session["role"] != null)
+                if (page == null)
                 {
-                    if (Session["role"].ToString().ToLower() == "true")
-                    {
-                        if (page == null)
-                        {
-                            page = 1;
-                        }
-                        int pageSize = 3;
-                        int pageNumber = (page ?? 1);
-
-                        return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
-                    }
-                    Alert("You not permit to access that page", NotificationType.warning);
-                    return RedirectToAction("Index", "Home");
+                    page = 1;
                 }
-                Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Login", "Home");
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+
+                return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
             }
+            Alert("You not permit to access that page", NotificationType.warning);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Admin/ManageUser
         public ActionResult ManageUser(int? page)
         {
-            if (Session["username"] != null && Session["role"] != null)
+            if (IsAdmin())
             {
-                if (Session["role"].ToString().ToLower() == "true")
+                if (page == null)
                 {
-                    if (page == null)
-                    {
-                        page = 1;
-                    }
-                    int pageSize = 3;
-                    int pageNumber = (page ?? 1);
-
-                    return View(UserDAO.GetAllUser.ToPagedList(pageNumber, pageSize));
+                    page = 1;
                 }
-                Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Index", "Home");
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+
+                return View(UserDAO.GetAllUser.ToPagedList(pageNumber, pageSize));
             }
             Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -94,8 +76,8 @@ namespace Application.eGreeting.Controllers
         }
 
         [HttpPost]
-        public bool UpdateFeedback(FeedbackModel model) {
-            
+        public bool UpdateFeedback(FeedbackModel model)
+        {
             try
             {
                 Feedback item = FeedbackDAO.GetById(model.Id);
@@ -113,7 +95,6 @@ namespace Application.eGreeting.Controllers
         [HttpPost]
         public bool DeleteFeedbackv2(int id)
         {
-
             try
             {
                 return FeedbackDAO.Delete(id);
@@ -122,21 +103,21 @@ namespace Application.eGreeting.Controllers
             {
                 return false;
             }
-
         }
 
 
 
         [HttpPost]
-        public string getManagerFeedback(int page = 1 ) {
+        public string getManagerFeedback(int page = 1)
+        {
             IList<FeedbackModel> list = new List<FeedbackModel>();
             MyResponse<IList<FeedbackModel>> myResponse = new MyResponse<IList<FeedbackModel>>();
-            
-            if (IsAuthoration())
+
+            if (IsLoggedIn())
             {
                 try
                 {
-                    list = FeedbackDAO.GetList(new Pagination() { currentPage = page});
+                    list = FeedbackDAO.GetList(new Pagination() { currentPage = page });
                     myResponse.success = true;
                     myResponse.data = list;
                 }
@@ -144,7 +125,7 @@ namespace Application.eGreeting.Controllers
                 {
                     myResponse.message = ex.Message;
                 }
-                
+
             }
             return JsonConvert.SerializeObject(myResponse);
         }
@@ -152,7 +133,7 @@ namespace Application.eGreeting.Controllers
         // GET: Admin/ManageFeedback
         public ActionResult ManageFeedback(int page = 1, int pageSize = 2)
         {
-            if (IsAuthoration())
+            if (IsLoggedIn())
             {
                 return View(FeedbackDAO.GetAllFeedbackPaging(page, pageSize));
             }
@@ -160,8 +141,9 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Login", "Home");
         }
 
-       
-        public ActionResult DetailFeedback(int id) {
+
+        public ActionResult DetailFeedback(int id)
+        {
             var s = FeedbackDAO.GetById(id);
             return View(s);
         }
@@ -171,24 +153,19 @@ namespace Application.eGreeting.Controllers
         {
             try
             {
-                if (Session["username"] != null && Session["role"] != null)
+                if (IsAdmin())
                 {
-                    if (Session["role"].ToString().ToLower() == "true")
+                    if (id > 0)
                     {
-                        if (id > 0)
+                        if (FeedbackDAO.Delete(id))
                         {
-                            if (FeedbackDAO.Delete(id))
-                            {
-                                Alert("Delete feedback successfully", NotificationType.success);
-                                return RedirectToAction("ManageFeedback");
-                            }
+                            Alert("Delete feedback successfully", NotificationType.success);
+                            return RedirectToAction("ManageFeedback");
                         }
-                        return RedirectToAction("ManageFeedback");
                     }
-                    
                 }
                 Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("ManageFeedback");
             }
             catch (Exception e)
             {
@@ -201,17 +178,12 @@ namespace Application.eGreeting.Controllers
         // GET: Admin/CreateCard
         public ActionResult CreateCard()
         {
-            if (Session["username"] != null && Session["role"] != null)
+            if (IsAdmin())
             {
-                if (Session["role"].ToString().ToLower() == "true")
-                {
-                    return View();
-                }
-                Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Index", "Home");
+                return View();
             }
             Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Admin/CreateCard
@@ -220,39 +192,43 @@ namespace Application.eGreeting.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (IsAdmin())
                 {
-                    if (file != null && file.ContentLength > 0)
+                    if (ModelState.IsValid)
                     {
-                        var ext = Path.GetExtension(file.FileName);
-                        if (CheckExtImg(ext))
+                        if (file != null && file.ContentLength > 0)
                         {
-                            var fileName = Path.GetFileName(file.FileName);
-                            var imagePath = Server.MapPath("~/ImageCard/" + fileName);
-                            newCard.ImageName = fileName;
-
-                            if (CardDAO.Create(newCard))
+                            var ext = Path.GetExtension(file.FileName);
+                            if (CheckExtImg(ext))
                             {
-                                file.SaveAs(imagePath);
-                                return RedirectToAction("ManageCard");
+                                var fileName = Path.GetFileName(file.FileName);
+                                var imagePath = Server.MapPath("~/ImageCard/" + fileName);
+                                newCard.ImageName = fileName;
+
+                                if (CardDAO.Create(newCard))
+                                {
+                                    file.SaveAs(imagePath);
+                                    return RedirectToAction("ManageCard");
+                                }
+                                ModelState.AddModelError("", "Create new card failed.");
+                                return View();
                             }
-                            ModelState.AddModelError("", "Create new card failed.");
-                            return View();
+                            else
+                            {
+                                ModelState.AddModelError("", "Format image invalid");
+                                return View();
+                            }
                         }
                         else
                         {
-                            ModelState.AddModelError("", "Format image invalid");
+                            ModelState.AddModelError("", "Please choose Image");
                             return View();
                         }
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Please choose Image");
-                        return View();
-                    }
+                    return RedirectToAction("Index");
                 }
-
-                return RedirectToAction("Index");
+                Alert("You not permit to access that page", NotificationType.warning);
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception e)
             {
@@ -296,32 +272,27 @@ namespace Application.eGreeting.Controllers
         {
             try
             {
-                if (Session["username"] != null && Session["role"] != null)
+                if (IsAdmin())
                 {
-                    if (Session["role"].ToString().ToLower() == "true")
+                    if (id >= 0)
                     {
-                        if (id >= 0)
+                        if (CardDAO.DeleteCard(id))
                         {
-                            if (CardDAO.DeleteCard(id))
+                            if (ImageName != null)
                             {
-                                if (ImageName != null)
+                                string PathImage = Request.MapPath("~/ImageCard/" + ImageName);
+                                if (System.IO.File.Exists(PathImage))
                                 {
-                                    string PathImage = Request.MapPath("~/ImageCard/" + ImageName);
-                                    if (System.IO.File.Exists(PathImage))
-                                    {
-                                        System.IO.File.Delete(PathImage);
-                                    }
+                                    System.IO.File.Delete(PathImage);
                                 }
                             }
-                            Alert("Delete Card Successfully", NotificationType.success);
                         }
-                        return RedirectToAction("ManageCard");
+                        Alert("Delete Card Successfully", NotificationType.success);
                     }
-                    Alert("You not permit to access that page", NotificationType.warning);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ManageCard");
                 }
                 Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
@@ -335,17 +306,12 @@ namespace Application.eGreeting.Controllers
         // GET: Admin/CreateCard
         public ActionResult CreateUser()
         {
-            if (Session["username"] != null && Session["role"] != null)
+            if (IsAdmin())
             {
-                if (Session["role"].ToString().ToLower() == "true")
-                {
-                    return View();
-                }
-                Alert("You not permit to access this page", NotificationType.warning);
-                return RedirectToAction("Index", "Home");
+                return View();
             }
-            Alert("You need login to access this page", NotificationType.warning);
-            return RedirectToAction("Login", "Home");
+            Alert("You not permit to access this page", NotificationType.warning);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Admin/CreateCard
@@ -388,18 +354,13 @@ namespace Application.eGreeting.Controllers
 
         public ActionResult EditUser(int id)
         {
-            if (Session["username"] != null && Session["role"] != null)
+            if (IsAdmin())
             {
-                if (Session["role"].ToString().ToLower() == "true")
-                {
-                    var result = UserDAO.GetUser(id);
-                    return View(result);
-                }
-                Alert("You not permit to access this page", NotificationType.warning);
-                return RedirectToAction("Index", "Home");
+                var result = UserDAO.GetUser(id);
+                return View(result);
             }
-            Alert("You need login to access this page", NotificationType.warning);
-            return RedirectToAction("Login", "Home");
+            Alert("You not permit to access this page", NotificationType.warning);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: User/Edit/5
@@ -424,30 +385,25 @@ namespace Application.eGreeting.Controllers
         {
             try
             {
-                if (Session["username"] != null && Session["role"] != null)
+                if (IsAdmin())
                 {
-                    if (Session["role"].ToString().ToLower() == "true")
+                    if (id >= 0)
                     {
-                        if (id >= 0)
+                        if (UserDAO.DeleteUser(id))
                         {
-                            if (UserDAO.DeleteUser(id))
-                            {
-                                Alert("Delete User Successfully .", NotificationType.success);
-                                return RedirectToAction("ManageUser");
-                            }
-                            else
-                            {
-                                Alert("Delete error, cannot find this User!!!", NotificationType.error);
-                                return RedirectToAction("ManageUser");
-                            }
+                            Alert("Delete User Successfully .", NotificationType.success);
+                            return RedirectToAction("ManageUser");
                         }
-                        return RedirectToAction("ManageCard");
+                        else
+                        {
+                            Alert("Delete error, cannot find this User!!!", NotificationType.error);
+                            return RedirectToAction("ManageUser");
+                        }
                     }
-                    Alert("You not permit to access that page", NotificationType.warning);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ManageCard");
                 }
                 Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception e)
             {

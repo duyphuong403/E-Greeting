@@ -8,7 +8,7 @@ namespace Application.eGreeting.Controllers
 {
     public class BaseController : Controller
     {
-        public bool IsAuthoration() {
+        public bool IsAdmin() {
             if (Session["username"] != null && Session["role"] != null)
             {
                 if (Session["role"].ToString().ToLower() == "true")
@@ -16,9 +16,18 @@ namespace Application.eGreeting.Controllers
                     //return View(FeedbackDAO.GetAllFeedback.OrderByDescending(o => o.Id));
                     return true;
                 }
-
             }
             return false;
         }
+
+        public bool IsLoggedIn()
+        {
+            if (Session["username"] != null)
+            {
+                return true;                
+            }
+            return false;
+        }
+
     }
 }
