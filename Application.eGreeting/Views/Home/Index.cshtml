@@ -13,23 +13,23 @@
 @using PagedList;
 
 <table class="table">
-    @*<tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NameCard)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th></th>
-
-        </tr>*@
-
+    <tr>
+        <th>
+            NameCard
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Image
+        </th>
+        <th>
+            DateCreated
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
     @foreach (var item in Model)
     {
         <tr>
@@ -47,25 +47,28 @@
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
-                @Html.ActionLink("Select", "CreateTrans", new { id = item.CardId }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Select", "CreateTrans","User", new { id = item.CardId }, new { @class = "btn btn-primary" })
             </td>
         </tr>
     }
 
 </table>
 
-<nav aria-label="Page navigation example">
-    <ul class="pagination">
+<center>
 
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+   
 
-        @Html.PagedListPager(Model, page => Url.Action("Index",
-            new { page }))
-        <br />  
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-</nav>
+</center>
+
+@*<nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>*@

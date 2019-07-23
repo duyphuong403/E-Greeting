@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Application.eGreeting.DataAccess;
+﻿using Application.eGreeting.DataAccess;
 using Application.eGreeting.Models;
-using System.ComponentModel.DataAnnotations;
+using System;
+using System.Web.Mvc;
 
 namespace Application.eGreeting.Controllers
 {
@@ -13,11 +9,12 @@ namespace Application.eGreeting.Controllers
     {
         
         // GET: User
-        public ActionResult Index(string name)
+        public ActionResult Index()
         {
             if (Session["username"] != null)
             {
-                return View();
+                var result = UserDAO.GetUserByUsername(Session["username"].ToString());
+                return View(result);
             }
             Alert("You need login to access this page", NotificationType.warning);
            
@@ -91,8 +88,15 @@ namespace Application.eGreeting.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(int id)
         {
-            var edi = UserDAO.GetUser(id);
-            return View(edi);
+            if (id > 0)
+            {
+                var edi = UserDAO.GetUser(id);
+                return View(edi);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: User/Edit/5
@@ -110,11 +114,39 @@ namespace Application.eGreeting.Controllers
                 return View();
             }
         }
+        public ActionResult ChangePassword(int id)
+        {
+            if (id >0)
+            {
+                var changePass = UserDAO.GetUser(id);
+                return View(changePass);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(User changePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                UserDAO.ChangePassword(changePassword);
+                Alert("Change Password successfully!!", NotificationType.success);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
 
         // GET: User/CreateFeedback
         public ActionResult FeedbackIndex()
         {
-            if (Session["username"] != null && Session["role"] != null)
+            if (Session["username"] != null)
             {
                 var model = new Feedback
                 {
@@ -145,6 +177,84 @@ namespace Application.eGreeting.Controllers
                 }
             }
             return View();
+        }
+
+        //GET: User/CreateTrans
+        public ActionResult CreateTrans(int id)
+        {
+            if (Session["username"] != null && Session["role"] != null)
+            {
+                if (id != 0)
+                {
+                    var search = CardDAO.GetCard(id);
+                    if (search != null)
+                    {
+                        var model = new Transaction
+                        {
+                            NameCard = search.NameCard,
+                            Username = Session["username"].ToString(),
+                            ImageName = search.ImageName,
+                            TimeSend = DateTime.Now
+                        };
+                        return View(model);
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+            Alert("You need Log in to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
+        }
+
+        //POST: User/CreateTrans
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateTrans(Transaction newTrans)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (TransDAO.CreateTrans(newTrans))
+                    {
+                        Alert("Send eGreeting card successfully.", NotificationType.success);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    Alert("Send card failed. Please contact your Admin", NotificationType.error);
+                }
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View();
+                throw;
+            }
+        }
+
+        //GET: User/SubscribeSend
+        public ActionResult SubscribeSend()
+        {
+            // Check login or not ?
+            if (Session["username"] != null)
+            {
+                var search = UserDAO.GetUserByUsername(Session["username"].ToString());
+                // get info user
+                if (search != null)
+                {
+                    // check user purchase or not ?
+                    if (search.IsSubcribeSend)
+                    {
+
+                    }
+                }
+                var model = new Feedback
+                {
+                    Username = Session["username"].ToString(),
+                };
+                return View(model);
+            }
+            Alert("You need Log in to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
         }
 
 

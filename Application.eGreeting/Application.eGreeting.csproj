@@ -2201,8 +2201,10 @@
     <Content Include="Content\Admin\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\bg.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\style404.css" />
     <Content Include="Content\sweetalert.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Admin\js\ckeditor\CHANGES.md" />
@@ -2386,19 +2388,23 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataAccess\CardDAO.cs" />
     <Compile Include="DataAccess\FeedbackDAO.cs" />
+    <Compile Include="DataAccess\PaymentDAO.cs" />
     <Compile Include="DataAccess\TransDAO.cs" />
     <Compile Include="DataAccess\UserDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\ChangePassword.cs" />
     <Compile Include="Models\eGreetingDB.cs" />
     <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\PaymentInfo.cs" />
     <Compile Include="Models\Pagination.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\User.cs" />
@@ -2417,15 +2423,18 @@
     <Content Include="Views\Admin\CreateCard.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Admin\ManageUser.cshtml" />
     <Content Include="Views\Admin\ManageCard.cshtml" />
     <Content Include="Views\Shared\_NotificationPanel.cshtml" />
-    <Content Include="Views\Home\CreateTrans.cshtml" />
+    <Content Include="Views\User\CreateTrans.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\ManageFeedback.cshtml" />
     <Content Include="Views\User\FeedbackIndex.cshtml" />
+    <Content Include="Views\Shared\_Error.cshtml" />
+    <Content Include="Views\Error\Notfound.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Admin\DetailFeedback.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
