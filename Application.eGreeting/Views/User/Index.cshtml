@@ -7,7 +7,7 @@
 
     <h2>Information User</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "User", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     
@@ -24,7 +24,8 @@
             </div>
         </div>
 
-        <input type="button" value="Change Password" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("ChangePassword", "UserController") + "'");" />
+        @*<input type="button" value="Change Password" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("ChangePassword", "User") + "'");" />*@
+        @Html.ActionLink("Change Password", "ChangePassword", new { id = Model.UserId}, new { @class = "btn btn-default" })
 
         @if (Session["username"].ToString().ToLower() != "admin")
         {
