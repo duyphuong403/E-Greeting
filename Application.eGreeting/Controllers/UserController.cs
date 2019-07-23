@@ -119,6 +119,7 @@ namespace Application.eGreeting.Controllers
             if (id >0)
             {
                 var changePass = UserDAO.GetUser(id);
+          
                 return View(changePass);
             }
             else
@@ -133,6 +134,7 @@ namespace Application.eGreeting.Controllers
             if (ModelState.IsValid)
             {
                 UserDAO.ChangePassword(changePassword);
+
                 Alert("Change Password successfully!!", NotificationType.success);
                 return RedirectToAction("Index");
             }
