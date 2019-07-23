@@ -7,10 +7,12 @@
 .navigation {
     text-align: center
 }
-
-    .pagination > li {
-        display: inline;
-    }
+.pagination > .page-item > a{
+    color: black
+}
+.pagination > li {
+    display: inline;
+}
 
         .pagination > li > a,
         .pagination > li > span {
@@ -43,8 +45,7 @@
         box-shadow: none;
     }
 
-    .pagination > .active > a:hover,
-    .pagination > .active > span:hover {
+    .pagination > .page-item > a:hover{
         -webkit-transition: all .3s linear;
         -o-transition: all .3s linear;
         transition: all .3s linear;
