@@ -1,5 +1,6 @@
 ﻿using Application.eGreeting.DataAccess;
 using Application.eGreeting.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Application.eGreeting.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         // Manage Card
         // GET: Admin
@@ -37,8 +38,6 @@ namespace Application.eGreeting.Controllers
                 {
                     return View(CardDAO.GetAllCard);
                 }
-                Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Index", "Home");
             }
             Alert("You not permit to access that page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
@@ -60,20 +59,92 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Login", "Home");
         }
 
-        // GET: Admin/ManageFeedback
-        public ActionResult ManageFeedback()
+        //
+        [HttpPost]
+        public bool InsertFeedback(Feedback model)
         {
-            if (Session["username"] != null && Session["role"] != null)
+            try
             {
-                if (Session["role"].ToString().ToLower() == "true")
+                return FeedbackDAO.Insert(model);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+        [HttpPost]
+        public bool UpdateFeedback(FeedbackModel model) {
+            
+            try
+            {
+                Feedback item = FeedbackDAO.GetById(model.Id);
+                item.Content = model.Content;
+                item.Subject = model.Subject;
+                return FeedbackDAO.Update(item);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+        [HttpPost]
+        public bool DeleteFeedbackv2(int id)
+        {
+
+            try
+            {
+                return FeedbackDAO.Delete(id);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+
+
+
+        [HttpPost]
+        public string getManagerFeedback(int page = 1 ) {
+            IList<FeedbackModel> list = new List<FeedbackModel>();
+            MyResponse<IList<FeedbackModel>> myResponse = new MyResponse<IList<FeedbackModel>>();
+            
+            if (IsAuthoration())
+            {
+                try
                 {
-                    return View(FeedbackDAO.GetAllFeedback.OrderByDescending(o => o.Id));
+                    list = FeedbackDAO.GetList(new Pagination() { currentPage = page});
+                    myResponse.success = true;
+                    myResponse.data = list;
                 }
-                Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Index", "Home");
+                catch (Exception ex)
+                {
+                    myResponse.message = ex.Message;
+                }
+                
+            }
+            return JsonConvert.SerializeObject(myResponse);
+        }
+
+        // GET: Admin/ManageFeedback
+        public ActionResult ManageFeedback(int page = 1, int pageSize = 2)
+        {
+            if (IsAuthoration())
+            {
+                return View(FeedbackDAO.GetAllFeedbackPaging(page, pageSize));
             }
             Alert("You not permit to access that page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
+        }
+
+       
+        public ActionResult DetailFeedback(int id) {
+            var s = FeedbackDAO.GetById(id);
+            return View(s);
         }
 
         [HttpPost]
@@ -85,7 +156,7 @@ namespace Application.eGreeting.Controllers
                 {
                     if (Session["role"].ToString().ToLower() == "true")
                     {
-                        if (id >= 0)
+                        if (id > 0)
                         {
                             if (FeedbackDAO.Delete(id))
                             {
@@ -95,8 +166,7 @@ namespace Application.eGreeting.Controllers
                         }
                         return RedirectToAction("ManageFeedback");
                     }
-                    Alert("You not permit to access that page", NotificationType.warning);
-                    return RedirectToAction("Index", "Home");
+                    
                 }
                 Alert("You not permit to access that page", NotificationType.warning);
                 return RedirectToAction("Login", "Home");

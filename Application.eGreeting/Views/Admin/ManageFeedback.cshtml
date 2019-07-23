@@ -1,10 +1,13 @@
-﻿@model IEnumerable<Application.eGreeting.Models.Feedback>
-
+﻿@*@model IEnumerable<Application.eGreeting.Models.Feedback>*@
+@model PagedList.IPagedList<Application.eGreeting.Models.Feedback>
+@using PagedList.Mvc; 
 @{
     ViewBag.Title = "ManageFeedback";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
     int i = 1;
 }
+@*<div id="gridContainer"></div>
+<div id="my-pagination"></div>*@
 
 <div class="card shadow mb-4">
     <div class="card-body">
@@ -12,7 +15,7 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>No.</th>
+                        @*<th>No.</th>*@
                         <th>Username</th>
                         <th>Subject</th>
                         <th>Content</th>
@@ -24,26 +27,150 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@i</td>
+                            @*<td>@i</td>*@
                             <td>@item.Username</td>
                             <td>@item.Subject</td>
                             <td>@item.Content</td>
                             <td>@item.DataCreated</td>
                             <td>
+
+                                <a class="btn btn-warning" href="/Admin/DetailFeedback/@item.Id"><i style="color: #fff" class="fas fa-info"></i></a>
                                 <a onClick="doDelete(@item.Id)" href="#" class="btn btn-danger btn-circle">
                                     <i style="color: #fff" class="fas fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
-                        i++;
+                        //i++;
                     }
                 </tbody>
             </table>
         </div>
+        @Html.PagedListPager(Model, page => Url.Action("ManageFeedback", new { page }))
     </div>
 </div>
 
+
+
 <script>
+    $(document).ready(function () {
+        
+        grid_func.init(1);
+    });
+    var grid_func = {
+        init: function (page) {
+            var list = this.getData(page);
+            $("#gridContainer").dxDataGrid({
+                dataSource: list,
+                keyExpr: "Id",
+                selection: {
+                    mode: "single"
+                },
+                editing: {
+                    mode: "row",
+                    allowUpdating: true, //
+                    allowDeleting: true, //
+                    allowAdding: true //
+                },
+                hoverStateEnabled: true,
+                showBorders: true,
+                columns: [{
+                    caption: "No.",
+                    dataField: "myIndex",
+                     width: 80
+                }, {
+                        dataField: "Username",
+                        caption: 'Username',
+                        width: 120,
+                    },
+                    {
+                        dataField: "Subject",
+                        caption: 'Subject',
+                        width: 150,
+                    },
+                    {
+                        dataField: "Content",
+                        caption: 'Content'
+                    },
+                    {
+                        dataField: "DataCreated",
+                        caption: 'DataCreated',
+                        width: 100
+                    }],
+                onRowInserted: function (e) {
+                    console.log(e);
+                    $.ajax({
+                        url: '/Admin/InsertFeedback',
+                        type: "POST",
+                        data: { model: e.key }, // model giong ben controller
+                        async: false,
+                        success: function (res) {
+                            if (res) {
+                                grid_func.init(page);
+                            }
+                        }
+                    })
+                },
+                onRowUpdated: function (e) {
+                    console.log(e);
+                    $.ajax({
+                        url: '/Admin/UpdateFeedback',
+                        type: "POST",
+                        data: { model: e.data },
+                        async: false,
+                        success: function (res) {
+                            if (res) {
+                                grid_func.init(page);
+                            }
+                        }
+                    })
+                },
+                onRowRemoved: function (e) {
+                    console.log(e);
+                    $.ajax({
+                        url: '/Admin/DeleteFeedbackv2',
+                        type: "POST",
+                        data: { id: e.key },
+                        async: false,
+                        success: function (res) {
+                            if (!res) {
+                                grid_func.init(page);
+                            }
+                        }
+                    })
+                }
+            });
+        },
+        getData: function (page) {
+            var list = [];
+            $.ajax({
+                url: '/Admin/getManagerFeedback',
+                type: "POST",
+                data: { page: page },
+                async: false,
+                success: function (res) {
+                    console.log(res);
+                    if (res != null && res != "") {
+                        var respone = JSON.parse(res);
+                        if (respone.success) {
+                            list = respone.data;
+                            $("#my-pagination").pagination({
+                                items: list.length > 0 ? list[0].total : 0,
+                                itemsOnPage: 2,
+                                currentPage: page,
+                                cssStyle: 'light-theme',
+                                onPageClick: function (page, e) {
+                                    grid_func.init(page);
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+            return list;
+        }
+    }
+
+
     // delete
     // idData là biến truyền vào (đặt tên là gì cũng được)
     function doDelete(id) {
