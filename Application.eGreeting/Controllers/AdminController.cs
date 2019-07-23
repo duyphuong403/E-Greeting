@@ -1,14 +1,12 @@
 ﻿using Application.eGreeting.DataAccess;
 using Application.eGreeting.Models;
 using Newtonsoft.Json;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PagedList.Mvc;
-using PagedList;
 
 namespace Application.eGreeting.Controllers
 {
