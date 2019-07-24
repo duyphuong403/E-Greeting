@@ -57,7 +57,7 @@ namespace Application.eGreeting.Models
             var dsUser = new List<User>
             {
                 new User { UserName = "admin" ,Password = "admin1234",RePassword = "admin1234", FullName = "Admin", Gender = true, Email ="admin@egreeting.com",Phone = "0762327226", Role = true},
-                new User { UserName = "test" ,Password = "12345678",RePassword = "12345678", FullName = "test", Gender = true, Email ="test@gmail.com",Phone = "0762371254"}
+                new User { UserName = "test" ,Password = "123123123",RePassword = "123123123", FullName = "test", Gender = true, Email ="test@gmail.com",Phone = "0762371254"}
             };
             dsUser.ForEach(item => context.Users.Add(item));
             context.SaveChanges();

@@ -1,0 +1,62 @@
+﻿@model PagedList.IPagedList<Application.eGreeting.Models.PaymentInfo>
+
+@{
+    ViewBag.Title = "ManagePurchase";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+@using PagedList.Mvc
+@using PagedList
+
+<h2>Manage Purchase</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Bank Name
+        </th>
+        <th>
+            Bank Account
+        </th>
+        <th>
+            Expired Date
+        </th>
+        <th>
+            Date Created
+        </th>
+        <th>Active</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="/Admin/EditUser/@item.UserId">@Html.DisplayFor(modelItem => item.UserName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankAccount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateExpire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                <input type="checkbox" name="active" value="" class="form-check-inline" />
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("ManagePurchase", new { page, @class = "page-link" }), new PagedListRenderOptions()
+    {
+        ContainerDivClasses = new[] { "Page", "navigation" },
+        LiElementClasses = new List<string> { "page-item" }
+    })
+

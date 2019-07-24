@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
 
-<h2>Welcome <b>@Session["username"]</b></h2>
+<h2>Welcome <b>@Session["fullname"]</b></h2>
 
 @using (Html.BeginForm("Edit", "User", FormMethod.Post))
 {
@@ -16,9 +16,6 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.UserId)
 
-
-
-    @*<input type="button" value="Change Password" class="btn btn-default" onclick="@("window.location.href='" + @Url.Action("ChangePassword", "User") + "'");" />*@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             @Html.ActionLink("Change Password", "ChangePassword", new { id = Model.UserId }, new { @class = "btn btn-default" })

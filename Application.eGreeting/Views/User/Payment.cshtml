@@ -5,17 +5,26 @@
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
 }
 
-<h2>Payment</h2>
+<h2>Payment Info</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>PaymentInfo</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.UserName)
+    @Html.HiddenFor(model => model.UserId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BankName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.BankName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.BankName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(model => model.BankAccount, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -34,7 +43,9 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <a onClick="doPayment({Payid:@Model.PayId,UserId:'@Model.UserId',Username: @Model.UserName, BankAccount: @Model.BankAccount, DateExpire: @Model.DateExpire})" class="btn btn-primary btn-circle">
+                <i style="color: #fff" class="fas fa-money">Payment</i>
+            </a>
         </div>
     </div>
 </div>
@@ -43,3 +54,56 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script>
+    // delete
+    // không thể truyên 2 parameter mà phải truyền = 1 object
+    function doPayment(obj) {
+        Swal.fire({
+            title: 'Confirm',
+            text: "By click OK, you'll accept pay $10 per month. Are you sure ?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, pay it!',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "/Admin/Payment",
+                    type: "POST",
+                    data: {
+                        Payid: obj.Payid,
+                        UserId: obj.UserId,
+                        Username: obj.Username,
+                        BankAccount: obj.BankAccount,
+                        DateExpire: obj.DateExpire
+                    },
+                    success: function (res) {                     
+                        if (res) {
+                            Swal.fire({
+                                title: 'Success',
+                                text: 'Successfully payment. Please wait us confirm your payment. Thanks',
+                                type: 'success'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Payment failed',
+                                text: 'An error occurred while deleting!',
+                                type: 'error'
+                            })
+                        }
+                    }
+                })
+                //Swal.fire(
+                //    'Deleted!',
+                //    'Your file has been deleted!',
+                //    'success'
+                //)
+            }
+        })
+    }
+</script>

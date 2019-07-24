@@ -9,7 +9,7 @@ namespace Application.eGreeting.DataAccess
 {
     public class CardDAO
     {
-        private static eGreetingDB db = new eGreetingDB();
+        private static readonly eGreetingDB db = new eGreetingDB();
 
         public static List<Card> GetAllCard { get => db.Cards.ToList(); }
 

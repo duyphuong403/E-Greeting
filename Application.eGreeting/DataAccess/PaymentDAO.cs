@@ -8,7 +8,7 @@ namespace Application.eGreeting.DataAccess
 {
     public class PaymentDAO
     {
-        private static eGreetingDB db = new eGreetingDB();
+        private static readonly eGreetingDB db = new eGreetingDB();
 
         public static List<PaymentInfo> GetAllPayment { get => db.PaymentInfos.ToList(); }
 

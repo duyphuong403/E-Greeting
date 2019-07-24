@@ -66,6 +66,9 @@ namespace Application.eGreeting.Controllers
                         if (UserDAO.CreateUser(newUser))
                         {
                             Alert("Register Successfully!!", NotificationType.success);
+                            Session["username"] = newUser.UserName;
+                            Session["fullname"] = newUser.FullName;
+                            Session["role"] = newUser.Role;
                             return RedirectToAction("Index", "Home");
                         }
                     }
@@ -206,24 +209,33 @@ namespace Application.eGreeting.Controllers
         {
             if (IsLoggedIn())
             {
-                var result = UserDAO.GetUser(id);
-                if (result != null && result.IsVIP)
+                var searchUser = UserDAO.GetUser(id);
+                var searchPayment = PaymentDAO.GetPaymentByUsername(Session["username"].ToString());
+                if (searchPayment != null)
                 {
-                    var search = CardDAO.GetCard(id);
-                    if (search != null)
+                    if (searchUser != null && !searchUser.IsVIP)
                     {
-                        var model = new Transaction
-                        {
-                            NameCard = search.NameCard,
-                            Username = Session["username"].ToString(),
-                            ImageName = search.ImageName,
-                            TimeSend = DateTime.Now
-                        };
-                        return View(model);
+                        Alert("Your Info Payment not active. Please contact Administrator", NotificationType.error);
+                        return RedirectToAction("Index");
                     }
-                    return RedirectToAction("Index");
+                    else
+                    {
+                        var searchCard = CardDAO.GetCard(id);
+                        if (searchCard != null)
+                        {
+                            var model = new Transaction
+                            {
+                                NameCard = searchCard.NameCard,
+                                Username = Session["username"].ToString(),
+                                ImageName = searchCard.ImageName,
+                                TimeSend = DateTime.Now
+                            };
+                            return View(model);
+                        }
+                        return RedirectToAction("Index");
+                    }
                 }
-                Alert("Please Register Information to purchase to use this feature. Thanks", NotificationType.info);
+                Alert("Please purchase to use this feature. Thanks", NotificationType.info);
                 return RedirectToAction("Payment");
             }
             Alert("You need Log in to access this page", NotificationType.warning);
@@ -288,15 +300,45 @@ namespace Application.eGreeting.Controllers
         {
             if (IsLoggedIn())
             {
-                var search = UserDAO.GetUserByUsername(Session["username"].ToString());
+                var searchUser = UserDAO.GetUserByUsername(Session["username"].ToString());
                 var model = new PaymentInfo
                 {
-                    UserName = search.UserName,
+                    UserId = searchUser.UserId,
+                    UserName = searchUser.UserName,
                 };
                 return View(model);
             }
             Alert("You need Log in to access this page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
+        }
+
+        //POST: User/Payment
+        [HttpPost]
+        public ActionResult Payment(PaymentInfo addPayment)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    addPayment.DateCreated = DateTime.Now;
+                    if (addPayment.DateExpire > addPayment.DateCreated)
+                    {
+                        if (PaymentDAO.CreatePayment(addPayment))
+                        {
+                            Alert("Register Payment Account Successfully. Please wait us active your payment. Thanks. ", NotificationType.success);
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+                    Alert("Expire Date must be date in future", NotificationType.error);
+                }
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return View();
+                throw;
+            }
         }
 
         public void Alert(string message, NotificationType notificationType)

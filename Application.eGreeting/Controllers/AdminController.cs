@@ -108,7 +108,7 @@ namespace Application.eGreeting.Controllers
 
 
         [HttpPost]
-        public string getManagerFeedback(int page = 1)
+        public string GetManagerFeedback(int page = 1)
         {
             IList<FeedbackModel> list = new List<FeedbackModel>();
             MyResponse<IList<FeedbackModel>> myResponse = new MyResponse<IList<FeedbackModel>>();
@@ -237,7 +237,7 @@ namespace Application.eGreeting.Controllers
             }
         }
 
-        List<string> ImageExtension = new List<string> { ".png", ".jpg", ".jpeg" };
+        private readonly List<string> ImageExtension = new List<string> { ".png", ".jpg", ".jpeg" };
 
         bool CheckExtImg(string ext)
         {
@@ -245,26 +245,26 @@ namespace Application.eGreeting.Controllers
         }
 
         // GET: Admin/Edit/5
-        public ActionResult EditCard(int id)
-        {
-            return View();
-        }
+        //public ActionResult EditCard(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: Admin/Edit/5
-        [HttpPost]
-        public ActionResult EditCard(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
+        //// POST: Admin/Edit/5
+        //[HttpPost]
+        //public ActionResult EditCard(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add update logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
 
         // GET: Admin/Delete/5
@@ -367,15 +367,27 @@ namespace Application.eGreeting.Controllers
         [HttpPost]
         public ActionResult EditUser(User editU)
         {
-            if (ModelState.IsValid)
+            try
             {
-                UserDAO.EditUser(editU);
-                Alert("Edit User successfully!", NotificationType.success);
-                return RedirectToAction("ManageUser");
-            }
-            else
-            {
+                if (editU.Password == null || editU.RePassword == null)
+                {
+                    var searchUser = UserDAO.GetUser(editU.UserId);
+                    editU.Password = searchUser.Password;
+                    editU.RePassword = searchUser.RePassword;
+                }
+                if (UserDAO.EditUser(editU))
+                {
+                    Alert("Edit User successfully!", NotificationType.success);
+                    return RedirectToAction("ManageUser");
+                }
+                Alert("Edit User failed!", NotificationType.error);
                 return View();
+            }
+            catch (Exception e)
+            {
+                Alert(e.Message, NotificationType.error);
+                return View();
+                throw;
             }
         }
 
@@ -410,6 +422,19 @@ namespace Application.eGreeting.Controllers
                 Console.WriteLine(e.Message);
                 return RedirectToAction("ManageCard");
             }
+        }
+
+        // GET: /Admin/ManagePurchase
+        public ActionResult ManagePurchase(int? page)
+        {
+            if (page == null)
+            {
+                page = 1;
+            }
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            return View(PaymentDAO.GetAllPayment.ToPagedList(pageNumber, pageSize));
         }
 
         public void Alert(string message, NotificationType notificationType)

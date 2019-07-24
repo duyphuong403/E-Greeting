@@ -45,6 +45,10 @@ namespace Application.eGreeting.DataAccess
             var b = GetUser(editUser.UserId);
             if (b != null)
             {
+                b.Password = editUser.Password;
+                b.RePassword = editUser.RePassword;
+                b.Role = editUser.Role;
+                b.IsVIP = editUser.IsVIP;
                 b.IsSubcribeSend = editUser.IsSubcribeSend;
                 b.IsSubcribeReceive = editUser.IsSubcribeReceive;
                 b.FullName = editUser.FullName;

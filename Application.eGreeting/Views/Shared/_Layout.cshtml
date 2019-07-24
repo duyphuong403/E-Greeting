@@ -20,7 +20,7 @@
     <!--CDN Swal -->
     <script src="~/Scripts/sweetalert.min.js"></script>
 </head>
-<body class="container-fluid">
+<body class="container-fluid" style="padding: 0">
     <!-- Layout -->
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark primary-color">
@@ -61,8 +61,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Subscribe</a>
-                    @*@Html.ActionLink("Subscribe", "Subscribe", "Home", null, new { @class = "nav-link" })*@
-
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/Home/SubscribeSend">Subscribe Send Card</a>
                         <a class="dropdown-item" href="/Home/SubscribeReceive">Subscribe Receive New Card</a>
@@ -74,7 +72,7 @@
             <form class="form-inline" action="/Home/Search">
                 <div class="md-form my-0">
                     <input class="form-control mr-sm-2"  name="txtSearch" type="text" placeholder="Search" aria-label="Search">
-                    <button type="submit"  class="nav-item" style="color:blue" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <button type="submit"  class="nav-item" style="color: white;background: none;border: none;" ><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
             </form>
             <!-- Form Search -->
@@ -104,15 +102,15 @@
                         }
                         else
                         {
-                            if (Session["role"] != null)
+                            if (Session["role"] != null && Session["fullname"] !=null )
                             {
                                 if (Session["role"].ToString() == "true")
                                 {
-                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/Admin/Index" style="font-weight:900">@Session["username"]</a></p>
+                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/Admin/Index" style="font-weight:900">@Session["fullname"]</a></p>
                                 }
                                 else
                                 {
-                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/User/Index" style="font-weight:900">@Session["username"]</a></p>
+                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/User/Index" style="font-weight:900">@Session["fullname"]</a></p>
                                 }
                             }
                             <a class="dropdown-item" href="/Home/Logout" style="text-align:center;padding-top:0">Sign out</a>

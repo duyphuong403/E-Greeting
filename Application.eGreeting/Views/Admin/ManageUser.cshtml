@@ -23,6 +23,7 @@
         <th>
             Role
         </th>
+        <th>Is VIP</th>
         <th>
             Subcribe Send
         </th>
@@ -62,6 +63,16 @@
                 else
                 {
                     <label>User</label>
+                }
+            </td>
+            <td>
+                @if (item.IsVIP)
+                {
+                    <label>Yes</label>
+                }
+                else
+                {
+                    <label>No</label>
                 }
             </td>
             <td>
@@ -159,13 +170,13 @@
                                 location.reload();
                             });
                         }
-                    //    else {
-                    //        Swal.fire({
-                    //            title: 'Delete failed',
-                    //            text: 'An error occurred while deleting!',
-                    //            type: 'error'
-                    //        })
-                    //    }
+                        //    else {
+                        //        Swal.fire({
+                        //            title: 'Delete failed',
+                        //            text: 'An error occurred while deleting!',
+                        //            type: 'error'
+                        //        })
+                        //    }
                     }
                 })
                 //Swal.fire(

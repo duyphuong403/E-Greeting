@@ -12,7 +12,7 @@ namespace Application.eGreeting.Controllers
     {
         [HandleError]
         // GET: Home
-        public ActionResult Index(string name, int? page) 
+        public ActionResult Index(int? page) 
         {
             if (page==null)
             {
@@ -63,7 +63,8 @@ namespace Application.eGreeting.Controllers
             var search = UserDAO.CheckLogin(model);
             if (search != null)
             {
-                Session["username"] = search.FullName;
+                Session["username"] = search.UserName;
+                Session["fullname"] = search.FullName;
                 Session["role"] = search.Role.ToString().ToLower();
                 if (Session["role"].ToString() == "true")
                 {
