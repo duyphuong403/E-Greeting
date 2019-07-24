@@ -41,7 +41,6 @@ namespace Application.eGreeting.DataAccess
             if (b != null)
             {
                 b.BankAccount = editPayment.BankAccount;
-                b.IsPurchased = editPayment.IsPurchased;
                 db.SaveChanges();
                 return true;
             }

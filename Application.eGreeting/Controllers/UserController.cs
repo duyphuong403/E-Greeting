@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace Application.eGreeting.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         
         // GET: User
@@ -121,6 +121,7 @@ namespace Application.eGreeting.Controllers
                 var search = UserDAO.GetUser(id);
                 var model = new ChangePassword
                 {
+                    UserId = id,
                     OldPassword = search.Password,
                 };
                 return View(model);
@@ -132,14 +133,30 @@ namespace Application.eGreeting.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangePassword(User changePassword)
+        public ActionResult ChangePassword(ChangePassword changePassword)
         {
             if (ModelState.IsValid)
             {
-                UserDAO.ChangePassword(changePassword);
+                var searchUser = UserDAO.GetUser(changePassword.UserId);
+                if (searchUser != null)
+                {
+                    if (searchUser.Password == changePassword.OldPassword)
+                    {
+                        var model = new User
+                        {
+                            UserId = changePassword.UserId,
+                            Password = changePassword.NewPassword,
+                        };
+                        UserDAO.ChangePassword(model);
 
-                Alert("Change Password successfully!!", NotificationType.success);
-                return RedirectToAction("Index");
+                        Alert("Change Password successfully!!", NotificationType.success);
+                        return RedirectToAction("Index");
+                    }
+                    Alert("Old Password invalid.", NotificationType.warning);
+                    return View();
+                }
+                Alert("Not found this user.", NotificationType.error);
+                return View();
             }
             else
             {
@@ -187,9 +204,10 @@ namespace Application.eGreeting.Controllers
         //GET: User/CreateTrans
         public ActionResult CreateTrans(int id)
         {
-            if (Session["username"] != null && Session["role"] != null)
+            if (IsLoggedIn())
             {
-                if (id != 0)
+                var result = UserDAO.GetUser(id);
+                if (result != null && result.IsVIP)
                 {
                     var search = CardDAO.GetCard(id);
                     if (search != null)
@@ -203,8 +221,10 @@ namespace Application.eGreeting.Controllers
                         };
                         return View(model);
                     }
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index");
+                Alert("Please Register Information to purchase to use this feature. Thanks", NotificationType.info);
+                return RedirectToAction("Payment");
             }
             Alert("You need Log in to access this page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
@@ -262,6 +282,22 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+
+        //GET: User/Payment
+        public ActionResult Payment()
+        {
+            if (IsLoggedIn())
+            {
+                var search = UserDAO.GetUserByUsername(Session["username"].ToString());
+                var model = new PaymentInfo
+                {
+                    UserName = search.UserName,
+                };
+                return View(model);
+            }
+            Alert("You need Log in to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
+        }
 
         public void Alert(string message, NotificationType notificationType)
         {

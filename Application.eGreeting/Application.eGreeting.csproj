@@ -2437,6 +2437,7 @@
     <Content Include="Views\User\ChangePassword.cshtml" />
     <Content Include="Views\Admin\DetailFeedback.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Payment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

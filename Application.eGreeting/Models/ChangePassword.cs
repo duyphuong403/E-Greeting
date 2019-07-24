@@ -9,6 +9,9 @@ namespace Application.eGreeting.Models
     public class ChangePassword
     {
         [Required]
+        public int UserId { get; set; }
+
+        [Required]
         [StringLength(50, MinimumLength = 8)]
         [Display(Name = "Old Password")]
         [DataType(DataType.Password)]
