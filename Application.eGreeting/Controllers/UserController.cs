@@ -213,7 +213,7 @@ namespace Application.eGreeting.Controllers
                 var searchPayment = PaymentDAO.GetPaymentByUsername(Session["username"].ToString());
                 if (searchPayment != null)
                 {
-                    if (searchUser != null && !searchUser.IsVIP)
+                    if (searchUser != null && !searchPayment.IsActive)
                     {
                         Alert("Your Info Payment not active. Please contact Administrator", NotificationType.error);
                         return RedirectToAction("Index");
@@ -236,7 +236,7 @@ namespace Application.eGreeting.Controllers
                     }
                 }
                 Alert("Please purchase to use this feature. Thanks", NotificationType.info);
-                return RedirectToAction("Payment");
+                return RedirectToAction("DescriptionPayment");
             }
             Alert("You need Log in to access this page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
@@ -292,6 +292,12 @@ namespace Application.eGreeting.Controllers
             }
             Alert("You need Log in to access this page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
+        }
+
+        //GET: User/DescriptionPayment
+        public ActionResult DescriptionPayment()
+        {
+            return View();
         }
 
 

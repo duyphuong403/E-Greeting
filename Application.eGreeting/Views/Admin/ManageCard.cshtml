@@ -55,8 +55,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "EditCard", new { id = item.CardId }, new { @class = "btn btn-warning" })
-                @*@Html.ActionLink("Delete", "DeleteCard", new { id = item.CardId, ImageName = item.ImageName }, new { @onclick = "doDelete(" + item.CardId + ")", @id = "btnDelete", @class = "btn btn-danger" })*@
-                <a onClick="doDelete({id:@item.CardId,ImageName:'@item.ImageName'})" class="btn btn-danger btn-circle">
+                <a onClick="doDelete(@item.CardId)" class="btn btn-danger btn-circle">
                     <i style="color: #fff" class="fas fa-trash"></i>
                 </a>
             </td>
@@ -77,7 +76,7 @@
 <script>
     // delete
     // không thể truyên 2 parameter mà phải truyền = 1 object
-    function doDelete(obj) {
+    function doDelete(id) {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -92,8 +91,7 @@
                     url: "/Admin/DeleteCard", // Yêu cầu lấy dữ liệu: /controller/tên hàm
                     type: "POST",
                     data: {
-                        id: obj.id,
-                        ImageName: obj.ImageName
+                        id: id,
                     }, // id phải giống id truyền vào trong TinTucController Delete
                     success: function (res) {
                         // success là hàm được gọi khi yêu cầu thành công

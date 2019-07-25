@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - eGreeting Online</title>
+    <title>@ViewBag.Title - Admin page eGreeting Online</title>
 
     <!-- CDN mdbootstrap -->
     <!-- Font Awesome -->
@@ -43,7 +43,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark secondary-color">
 
         <!-- Navbar brand -->
-        @Html.ActionLink("eGreeting Online", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        @Html.ActionLink("Administrator Page", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
 
         <!-- Collapse button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -95,15 +95,15 @@
                         }
                         else
                         {
-                            if (Session["role"] != null)
+                            if (Session["role"] != null && Session["fullname"] != null)
                             {
                                 if (Session["role"].ToString() == "true")
                                 {
-                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/Admin/Index" style="font-weight:900">@Session["username"]</a></p>
+                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/Admin/Index" style="font-weight:900">@Session["fullname"]</a></p>
                                 }
                                 else
                                 {
-                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/User/Index" style="font-weight:900">@Session["username"]</a></p>
+                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/User/Index" style="font-weight:900">@Session["fullname"]</a></p>
                                 }
                             }
                             <a class="dropdown-item" href="/Home/Logout" style="text-align:center;padding-top:0">Sign out</a>

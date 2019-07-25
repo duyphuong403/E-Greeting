@@ -12,7 +12,6 @@ namespace Application.eGreeting.Controllers
 {
     public class AdminController : BaseController
     {
-        // Manage Card
         // GET: Admin
         public ActionResult Index()
         {
@@ -22,45 +21,10 @@ namespace Application.eGreeting.Controllers
             }
             Alert("You not permit to access that page", NotificationType.warning);
             return RedirectToAction("Index", "Home");
-        }
+        }       
 
-        // GET: Admin/ManageCard
-        public ActionResult ManageCard(int? page)
-        {
-            if (IsAdmin())
-            {
-                if (page == null)
-                {
-                    page = 1;
-                }
-                int pageSize = 3;
-                int pageNumber = (page ?? 1);
+        //================================================ Manage Feedback ====================================================//
 
-                return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
-            }
-            Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Index", "Home");
-        }
-
-        // GET: Admin/ManageUser
-        public ActionResult ManageUser(int? page)
-        {
-            if (IsAdmin())
-            {
-                if (page == null)
-                {
-                    page = 1;
-                }
-                int pageSize = 3;
-                int pageNumber = (page ?? 1);
-
-                return View(UserDAO.GetAllUser.ToPagedList(pageNumber, pageSize));
-            }
-            Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Index", "Home");
-        }
-
-        //
         [HttpPost]
         public bool InsertFeedback(Feedback model)
         {
@@ -174,6 +138,25 @@ namespace Application.eGreeting.Controllers
             }
         }
 
+        //================================================ Manage Card ====================================================//
+
+        // GET: Admin/ManageCard
+        public ActionResult ManageCard(int? page)
+        {
+            if (IsAdmin())
+            {
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+
+                return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
+            }
+            Alert("You not permit to access that page", NotificationType.warning);
+            return RedirectToAction("Index", "Home");
+        }
 
         // GET: Admin/CreateCard
         public ActionResult CreateCard()
@@ -268,7 +251,7 @@ namespace Application.eGreeting.Controllers
 
 
         // GET: Admin/Delete/5
-        public ActionResult DeleteCard(int id, string ImageName)
+        public ActionResult DeleteCard(int id)
         {
             try
             {
@@ -278,17 +261,19 @@ namespace Application.eGreeting.Controllers
                     {
                         if (CardDAO.DeleteCard(id))
                         {
-                            if (ImageName != null)
-                            {
-                                string PathImage = Request.MapPath("~/ImageCard/" + ImageName);
-                                if (System.IO.File.Exists(PathImage))
-                                {
-                                    System.IO.File.Delete(PathImage);
-                                }
-                            }
+                            //if (ImageName != null)
+                            //{
+                            //    string PathImage = Request.MapPath("~/ImageCard/" + ImageName);
+                            //    if (System.IO.File.Exists(PathImage))
+                            //    {
+                            //        System.IO.File.Delete(PathImage);
+                            //    }
+                            //}
+                            Alert("Delete Card Successfully", NotificationType.success);
+                            return RedirectToAction("ManageCard");
                         }
-                        Alert("Delete Card Successfully", NotificationType.success);
                     }
+                    Alert("Delete Card failed", NotificationType.error);
                     return RedirectToAction("ManageCard");
                 }
                 Alert("You not permit to access that page", NotificationType.warning);
@@ -301,7 +286,25 @@ namespace Application.eGreeting.Controllers
         }
 
 
-        // Manage User
+        //================================================ Manage User ====================================================//
+
+        // GET: Admin/ManageUser
+        public ActionResult ManageUser(int? page)
+        {
+            if (IsAdmin())
+            {
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+
+                return View(UserDAO.GetAllUser.ToPagedList(pageNumber, pageSize));
+            }
+            Alert("You not permit to access that page", NotificationType.warning);
+            return RedirectToAction("Index", "Home");
+        }
 
         // GET: Admin/CreateCard
         public ActionResult CreateUser()
@@ -424,6 +427,7 @@ namespace Application.eGreeting.Controllers
             }
         }
 
+        //================================================ Manage Payment ====================================================//
         // GET: /Admin/ManagePurchase
         public ActionResult ManagePurchase(int? page)
         {
@@ -435,6 +439,18 @@ namespace Application.eGreeting.Controllers
             int pageNumber = (page ?? 1);
 
             return View(PaymentDAO.GetAllPayment.ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpPost]
+        public ActionResult EditPayment(int id,string IsActive)
+        {
+            if (PaymentDAO.ChangeStatusActivation(id, Boolean.Parse(IsActive)))
+            {
+                Alert("Change status activation successfully", NotificationType.success);
+                return RedirectToAction("ManagePurchase");
+            }
+            Alert("Change status activation failed.", NotificationType.error);
+            return View();
         }
 
         public void Alert(string message, NotificationType notificationType)

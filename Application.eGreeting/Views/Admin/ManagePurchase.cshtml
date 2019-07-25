@@ -26,7 +26,8 @@
         <th>
             Date Created
         </th>
-        <th>Active</th>
+        <th>Status</th>
+        <th>Action</th>
     </tr>
 
     @foreach (var item in Model)
@@ -48,7 +49,24 @@
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
-                <input type="checkbox" name="active" value="" class="form-check-inline" />
+                @if (item.IsActive)
+                {
+                    <span>Activated</span>
+                }
+                else
+                {
+                    <span>Not Activated</span>
+                }
+            </td>
+            <td>
+                @if (item.IsActive)
+                {
+                    <input type="button" value="Deactivate" class="btn btn-warning "/>
+                }
+                else
+                {
+                    <input type="button" value="Activate" class="btn btn-warning" onclick="active({Id:@item.PayId,IsActive:'@item.IsActive.ToString()'})"/>
+                }
             </td>
         </tr>
     }
@@ -60,3 +78,50 @@
         LiElementClasses = new List<string> { "page-item" }
     })
 
+<script>
+    function active(obj) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Active for User can use Subcribe services. ",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Active it!',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "/Admin/EditPayment/",
+                    type: "POST",
+                    data: {
+                        Id: obj.Id,
+                        IsActive: obj.IsActive,
+                    },
+                    //success: function (res) {
+                    //    if (res) {
+                    //        Swal.fire({
+                    //            title: 'Delete success',
+                    //            text: 'Successfully deleted!',
+                    //            type: 'success'
+                    //        }).then(() => {
+                    //            location.reload();
+                    //        });
+                    //    }
+                    //    else {
+                    //        Swal.fire({
+                    //            title: 'Delete failed',
+                    //            text: 'An error occurred while deleting!',
+                    //            type: 'error'
+                    //        })
+                    //    }
+                    //}
+                })
+                //Swal.fire(
+                //    'Deleted!',
+                //    'Your file has been deleted!',
+                //    'success'
+                //)
+            }
+        })
+    }
+</script>

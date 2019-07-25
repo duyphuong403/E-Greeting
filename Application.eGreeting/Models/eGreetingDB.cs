@@ -37,13 +37,26 @@ namespace Application.eGreeting.Models
     {
         protected override void Seed(eGreetingDB context)
         {
+            // Seed some record for Payment
+            var dsPayment = new List<PaymentInfo>
+            {
+                new PaymentInfo {UserId = 2, UserName = "test", BankName = "ACB", BankAccount=9405123465478545, DateExpire = DateTime.ParseExact("2022-01-12","yyyy-MM-dd",null), DateCreated = DateTime.Now}
+            };
+            dsPayment.ForEach(item => context.PaymentInfos.Add(item));
+
+            // Seed some record for Feedback
+            var dsFeedback = new List<Feedback>
+            {
+                new Feedback {Subject="test", Content = "Hello Handsome Guys", Username = "test", DataCreated = DateTime.Now}
+            };
+            dsFeedback.ForEach(item => context.Feedbacks.Add(item));
+
             // Seed some record for Cards
             var ds = new List<Card>
             {
                 new Card { NameCard="eGreeting-Birthday-001",Category="Birthday",ImageName="image1.jpg"},
             };
             ds.ForEach(item => context.Cards.Add(item));
-            //context.SaveChanges();
 
             // Seed for Trans
             var dsTrans = new List<Transaction>
