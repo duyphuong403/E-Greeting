@@ -37,9 +37,6 @@ namespace Application.eGreeting.Models
         [Display(Name = "Is Subcribe Receive")]
         public bool IsSubcribeReceive { get; set; }
 
-        [Display(Name = "Is VIP")]
-        public bool IsVIP { get; set; }
-
         [Required]
         [StringLength(50)]
         [Display(Name = "Full Name")]

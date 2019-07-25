@@ -41,6 +41,9 @@ namespace Application.eGreeting.DataAccess
             if (b != null)
             {
                 b.BankAccount = editPayment.BankAccount;
+                b.BankName = editPayment.BankName;
+                b.DateExpire = editPayment.DateExpire;
+                b.IsActive = editPayment.IsActive;
                 db.SaveChanges();
                 return true;
             }
@@ -54,6 +57,17 @@ namespace Application.eGreeting.DataAccess
             {
                 db.PaymentInfos.Remove(b);
                 db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool ChangeStatusActivation(int id, bool check)
+        {
+            var search = GetPayment(id);
+            if (search != null)
+            {
+                search.IsActive = check;
                 return true;
             }
             return false;

@@ -9,7 +9,7 @@ namespace Application.eGreeting.DataAccess
 {
     public class UserDAO
     {
-        private static eGreetingDB db = new eGreetingDB();
+        private static readonly eGreetingDB db = new eGreetingDB();
 
         public static List<User> GetAllUser { get => db.Users.ToList(); }
 
@@ -48,7 +48,6 @@ namespace Application.eGreeting.DataAccess
                 b.Password = editUser.Password;
                 b.RePassword = editUser.RePassword;
                 b.Role = editUser.Role;
-                b.IsVIP = editUser.IsVIP;
                 b.IsSubcribeSend = editUser.IsSubcribeSend;
                 b.IsSubcribeReceive = editUser.IsSubcribeReceive;
                 b.FullName = editUser.FullName;

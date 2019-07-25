@@ -17,6 +17,7 @@ namespace Application.eGreeting.Models
         public string UserName { get; set; }
 
         [Required]
+        [Display(Name = "Bank Name")]
         [StringLength(50, ErrorMessage = "Bank Name can't more than 50 characters")]
         public string BankName { get; set; }
 
@@ -28,12 +29,16 @@ namespace Application.eGreeting.Models
         [Required]
         [Display(Name = "Expired")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DateExpire { get; set; }
 
         [Required]
         [Display(Name = "Date Created")]
         [DataType(DataType.Date)]
         public DateTime DateCreated { get; set; }
+
+        [Display(Name = "Status Activation")]
+        public bool IsActive { get; set; }
 
 
 
