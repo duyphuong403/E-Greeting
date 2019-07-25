@@ -42,7 +42,7 @@
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td width="20%">
-                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width:100%" />
+                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width:100%" title="This is Happy Birthday" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)
@@ -60,15 +60,3 @@
         ContainerDivClasses = new[] { "Page", "navigation" },
         LiElementClasses = new List<string> { "page-item" }
     })
-
-
-
-@*<nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-    </nav>*@

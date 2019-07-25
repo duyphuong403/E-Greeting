@@ -216,7 +216,7 @@ namespace Application.eGreeting.Controllers
                     if (searchUser != null && !searchPayment.IsActive)
                     {
                         Alert("Your Info Payment not active. Please contact Administrator", NotificationType.error);
-                        return RedirectToAction("Index");
+                        return RedirectToAction("FeedbackIndex");
                     }
                     else
                     {
