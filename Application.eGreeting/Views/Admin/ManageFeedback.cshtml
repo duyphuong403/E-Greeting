@@ -1,13 +1,15 @@
-﻿@*@model IEnumerable<Application.eGreeting.Models.Feedback>*@
-@model PagedList.IPagedList<Application.eGreeting.Models.Feedback>
-@using PagedList.Mvc; 
+﻿@model PagedList.IPagedList<Application.eGreeting.Models.Feedback>
+
+@using PagedList.Mvc;
+@using PagedList;
+
 @{
     ViewBag.Title = "ManageFeedback";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
     int i = 1;
 }
 @*<div id="gridContainer"></div>
-<div id="my-pagination"></div>*@
+    <div id="my-pagination"></div>*@
 
 <div class="card shadow mb-4">
     <div class="card-body">
@@ -45,7 +47,13 @@
                 </tbody>
             </table>
         </div>
-        @Html.PagedListPager(Model, page => Url.Action("ManageFeedback", new { page }))
+        @*@Html.PagedListPager(Model, page => Url.Action("ManageFeedback", new { page }))*@
+
+        @Html.PagedListPager(Model, page => Url.Action("ManageFeedback", new { page, @class = "page-link" }), new PagedListRenderOptions()
+        {
+            ContainerDivClasses = new [] { "Page", "navigation" },
+            LiElementClasses = new List<string> { "page-item" }
+        })
     </div>
 </div>
 
@@ -53,7 +61,7 @@
 
 <script>
     $(document).ready(function () {
-        
+
         grid_func.init(1);
     });
     var grid_func = {
@@ -76,26 +84,26 @@
                 columns: [{
                     caption: "No.",
                     dataField: "myIndex",
-                     width: 80
+                    width: 80
                 }, {
-                        dataField: "Username",
-                        caption: 'Username',
-                        width: 120,
-                    },
-                    {
-                        dataField: "Subject",
-                        caption: 'Subject',
-                        width: 150,
-                    },
-                    {
-                        dataField: "Content",
-                        caption: 'Content'
-                    },
-                    {
-                        dataField: "DataCreated",
-                        caption: 'DataCreated',
-                        width: 100
-                    }],
+                    dataField: "Username",
+                    caption: 'Username',
+                    width: 120,
+                },
+                {
+                    dataField: "Subject",
+                    caption: 'Subject',
+                    width: 150,
+                },
+                {
+                    dataField: "Content",
+                    caption: 'Content'
+                },
+                {
+                    dataField: "DataCreated",
+                    caption: 'DataCreated',
+                    width: 100
+                }],
                 onRowInserted: function (e) {
                     console.log(e);
                     $.ajax({

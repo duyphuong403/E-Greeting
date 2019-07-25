@@ -2204,6 +2204,7 @@
     <Content Include="Content\img\bg.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\Phuc.css" />
     <Content Include="Content\style404.css" />
     <Content Include="Content\sweetalert.min.css" />
     <Content Include="Global.asax" />
