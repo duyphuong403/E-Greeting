@@ -12,7 +12,7 @@ namespace Application.eGreeting.Controllers
     {
         [HandleError]
         // GET: Home
-        public ActionResult Index(int? page) 
+        public ActionResult Index(string txtSearch, int? page) 
         {
             if (page==null)
             {
@@ -39,6 +39,18 @@ namespace Application.eGreeting.Controllers
             }
             return View("Index", CardDAO.GetCards(txtSearch)    .ToPagedList(pageNumber, pageSize));
         }
+
+        //public ActionResult Search(string txtSearch, int? page)
+        //{
+        //    if (page == null)
+        //    {
+        //        page = 1;
+        //    }
+        //    int pageSize = 3;
+        //    int pageNumber = (page ?? 1);
+
+           
+        //}
 
         //GET: Home/Login
         public ActionResult Login()

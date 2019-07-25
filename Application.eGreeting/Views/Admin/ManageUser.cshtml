@@ -23,7 +23,6 @@
         <th>
             Role
         </th>
-        <th>Is VIP</th>
         <th>
             Subcribe Send
         </th>
@@ -35,7 +34,6 @@
         </th>
         <th>
             Gender
-
         </th>
         <th>
             Phone Number
@@ -64,17 +62,7 @@
                 {
                     <label>User</label>
                 }
-            </td>
-            <td>
-                @if (item.IsVIP)
-                {
-                    <label>Yes</label>
-                }
-                else
-                {
-                    <label>No</label>
-                }
-            </td>
+            </td>          
             <td>
                 @if (item.IsSubcribeSend)
                 {

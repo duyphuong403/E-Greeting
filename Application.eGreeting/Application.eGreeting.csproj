@@ -2439,6 +2439,7 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Payment.cshtml" />
     <Content Include="Views\Admin\ManagePurchase.cshtml" />
+    <Content Include="Views\User\DescriptionPayment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

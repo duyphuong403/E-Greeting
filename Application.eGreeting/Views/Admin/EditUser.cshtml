@@ -53,15 +53,6 @@
                 </div>
             </div>
         }
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsVIP, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsVIP)
-                    @Html.ValidationMessageFor(model => model.IsVIP, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.IsSubcribeSend, htmlAttributes: new { @class = "control-label col-md-2" })
