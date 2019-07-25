@@ -25,10 +25,11 @@ namespace Application.eGreeting.Controllers
         }
 
         // GET: Admin/ManageCard
-        public ActionResult ManageCard(int? page)
+        public ActionResult ManageCard(int? page, string txtSearch)
         {
             if (IsAdmin())
             {
+                
                 if (page == null)
                 {
                     page = 1;
@@ -36,8 +37,15 @@ namespace Application.eGreeting.Controllers
                 int pageSize = 3;
                 int pageNumber = (page ?? 1);
 
+                if (string.IsNullOrEmpty(txtSearch))
+                {
+                    return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
+                }
+
                 return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
+
             }
+           
             Alert("You not permit to access that page", NotificationType.warning);
             return RedirectToAction("Index", "Home");
         }

@@ -20,7 +20,7 @@ namespace Application.eGreeting.Controllers
             }
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-           
+
             return View(CardDAO.GetAllCard.ToPagedList(pageNumber,pageSize));
         }
 
@@ -37,7 +37,7 @@ namespace Application.eGreeting.Controllers
             {
                 return View("Index", CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
             }
-            return View("Index", CardDAO.GetCards(txtSearch).ToPagedList(pageNumber, pageSize));
+            return View("Index", CardDAO.GetCards(txtSearch)    .ToPagedList(pageNumber, pageSize));
         }
 
         //GET: Home/Login

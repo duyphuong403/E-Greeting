@@ -130,13 +130,11 @@
 
 </table>
 
-<center>
-
-    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount*@
-
-    @Html.PagedListPager(Model, page => Url.Action("ManageUser",
-        new { page }))
-</center>
+@Html.PagedListPager(Model, page => Url.Action("ManageUser", new { page, @class = "page-link" }), new PagedListRenderOptions()
+   {
+       ContainerDivClasses = new [] { "Page", "navigation" },
+       LiElementClasses = new List<string> { "page-item" }
+   })
 
 
 <script>
