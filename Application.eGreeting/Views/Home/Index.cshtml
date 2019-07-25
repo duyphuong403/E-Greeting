@@ -14,23 +14,6 @@
 @using PagedList;
 
 <table class="table">
-    <tr>
-        <th>
-            NameCard
-        </th>
-        <th>
-            Category
-        </th>
-        <th>
-            Image
-        </th>
-        <th>
-            DateCreated
-        </th>
-        <th>
-            Action
-        </th>
-    </tr>
     @foreach (var item in Model)
     {
         <tr>
@@ -55,8 +38,10 @@
 
 </table>
 
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions()
-    {
-        ContainerDivClasses = new[] { "Page", "navigation" },
-        LiElementClasses = new List<string> { "page-item" }
-    })
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, @class = "page-link" }), new PagedListRenderOptions()
+   {
+       ContainerDivClasses = new [] { "Page", "navigation" },
+       LiElementClasses = new List<string> { "page-item" }
+   })
+
+
