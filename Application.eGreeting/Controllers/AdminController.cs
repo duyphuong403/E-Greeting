@@ -136,15 +136,51 @@ namespace Application.eGreeting.Controllers
             return JsonConvert.SerializeObject(myResponse);
         }
 
+
+        //public ActionResult ManageCard(int? page)
+        //{
+        //    if (IsAdmin())
+        //    {
+        //        if (page == null)
+        //        {
+        //            page = 1;
+        //        }
+        //        int pageSize = 3;
+        //        int pageNumber = (page ?? 1);
+
+        //        return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
+        //    }
+        //    Alert("You not permit to access that page", NotificationType.warning);
+        //    return RedirectToAction("Index", "Home");
+        //}
+
+
         // GET: Admin/ManageFeedback
-        public ActionResult ManageFeedback(int page = 1, int pageSize = 2)
+        public ActionResult ManageFeedback(int? page)
         {
-            if (IsLoggedIn())
+            if (IsAdmin())
             {
-                return View(FeedbackDAO.GetAllFeedbackPaging(page, pageSize));
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
+
+                return View(FeedbackDAO.GetAllFeedback.ToPagedList(pageNumber, pageSize));
             }
             Alert("You not permit to access that page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
+
+
+            //=============== khong xoa ============
+
+            //if (IsLoggedIn())
+            //{
+            //    return View(FeedbackDAO.GetAllFeedbackPaging(page, pageSize));
+            //}
+            //Alert("You not permit to access that page", NotificationType.warning);
+            //return RedirectToAction("Login", "Home");
         }
 
 

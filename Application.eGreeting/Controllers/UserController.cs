@@ -185,7 +185,7 @@ namespace Application.eGreeting.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveFeedback(Feedback feedback)
+        public ActionResult FeedbackIndex(Feedback feedback)
         {
             if (ModelState.IsValid)
             {
