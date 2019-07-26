@@ -23,50 +23,7 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Index", "Home");
         }       
 
-        // GET: Admin/ManageCard
-        public ActionResult ManageCard(int? page, string txtSearch)
-        {
-            if (IsAdmin())
-            {
-                
-                if (page == null)
-                {
-                    page = 1;
-                }
-                int pageSize = 3;
-                int pageNumber = (page ?? 1);
-
-                if (string.IsNullOrEmpty(txtSearch))
-                {
-                    return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
-                }
-
-                return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
-
-            }
-           
-            Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Index", "Home");
-        }
-
-        // GET: Admin/ManageUser
-        public ActionResult ManageUser(int? page)
-        {
-            if (IsAdmin())
-            {
-                if (page == null)
-                {
-                    page = 1;
-                }
-                int pageSize = 3;
-                int pageNumber = (page ?? 1);
-
-                return View(UserDAO.GetAllUser.ToPagedList(pageNumber, pageSize));
-            }
-            Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Index", "Home");
-        }
-
+      
         [HttpPost]
         public bool InsertFeedback(Feedback model)
         {
