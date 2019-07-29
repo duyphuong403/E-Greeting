@@ -36,9 +36,9 @@ namespace Application.eGreeting.Models
 
         [Required]
         [StringLength(50, ErrorMessage = "ImageName cannot more than 50 characters")]
-        public string ImageName { get; set; }
+        public string ImageNameTrans { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime TimeSend { get; set; }
     }
 }

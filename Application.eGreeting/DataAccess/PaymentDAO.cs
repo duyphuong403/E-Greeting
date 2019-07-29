@@ -68,6 +68,7 @@ namespace Application.eGreeting.DataAccess
             if (search != null)
             {
                 search.IsActive = check;
+                db.SaveChanges();
                 return true;
             }
             return false;

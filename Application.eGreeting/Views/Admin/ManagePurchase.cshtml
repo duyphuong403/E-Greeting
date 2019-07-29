@@ -51,21 +51,21 @@
             <td>
                 @if (item.IsActive)
                 {
-                    <span>Activated</span>
+                    <span style="color: green; font-weight: 900">Activated</span>
                 }
                 else
                 {
-                    <span>Not Activated</span>
+                    <span style="color: red; font-weight: 900">Not Activated</span>
                 }
             </td>
             <td>
                 @if (item.IsActive)
                 {
-                    <input type="button" value="Deactivate" class="btn btn-warning "/>
+                    <input type="button" value="Deactivate" class="btn btn-danger" onClick="Deactive(@item.PayId)"/>
                 }
                 else
                 {
-                    <input type="button" value="Activate" class="btn btn-warning" onclick="active({Id:@item.PayId,IsActive:'@item.IsActive.ToString()'})"/>
+                    <input type="button" value="Activate" class="btn btn-warning" onClick="active(@item.PayId)"/>
                 }
             </td>
         </tr>
@@ -79,7 +79,7 @@
     })
 
 <script>
-    function active(obj) {
+    function active(Id) {
         Swal.fire({
             title: 'Are you sure?',
             text: "Active for User can use Subcribe services. ",
@@ -94,33 +94,69 @@
                     url: "/Admin/EditPayment/",
                     type: "POST",
                     data: {
-                        Id: obj.Id,
-                        IsActive: obj.IsActive,
+                        Id: Id,
+                        IsActive: true,
                     },
-                    //success: function (res) {
-                    //    if (res) {
-                    //        Swal.fire({
-                    //            title: 'Delete success',
-                    //            text: 'Successfully deleted!',
-                    //            type: 'success'
-                    //        }).then(() => {
-                    //            location.reload();
-                    //        });
-                    //    }
-                    //    else {
-                    //        Swal.fire({
-                    //            title: 'Delete failed',
-                    //            text: 'An error occurred while deleting!',
-                    //            type: 'error'
-                    //        })
-                    //    }
-                    //}
+                    success: function (res) {
+                        if (res) {
+                            Swal.fire({
+                                title: 'Active success',
+                                text: 'Successfully Activated!',
+                                type: 'success'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Activated failed',
+                                text: 'An error occurred while Activating!',
+                                type: 'error'
+                            })
+                        }
+                    }
+                })                
+            }
+        })
+    };
+
+    function Deactive(Id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Deactivate User will cannot use Subcribe services. ",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Deactivate it!',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "/Admin/EditPayment/",
+                    type: "POST",
+                    data: {
+                        Id: Id,
+                        IsActive: false,
+                    },
+                    success: function (res) {
+                        if (res) {
+                            Swal.fire({
+                                title: 'Deactivate success',
+                                text: 'Successfully Deactivate!',
+                                type: 'success'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Deactivated failed',
+                                text: 'An error occurred while Deactivating!',
+                                type: 'error'
+                            })
+                        }
+                    }
                 })
-                //Swal.fire(
-                //    'Deleted!',
-                //    'Your file has been deleted!',
-                //    'success'
-                //)
             }
         })
     }

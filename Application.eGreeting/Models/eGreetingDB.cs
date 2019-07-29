@@ -61,7 +61,7 @@ namespace Application.eGreeting.Models
             // Seed for Trans
             var dsTrans = new List<Transaction>
             {
-                new Transaction { Username = "test", Receiver="receiver@gmail.com", Subject = "Happy Birthday my friend", Content ="Hello your 30! Wish you see many many lucky with this old, happiness and healthy", ImageName="image1.jpg", TimeSend = DateTime.Now, NameCard="eGreeting-Birthday-001" }
+                new Transaction { Username = "test", Receiver="receiver@gmail.com", Subject = "Happy Birthday my friend", Content ="Hello your 30! Wish you see many many lucky with this old, happiness and healthy", ImageNameTrans="image1.jpg", TimeSend = DateTime.Now, NameCard="eGreeting-Birthday-001" }
             };
             dsTrans.ForEach(item => context.Transactions.Add(item));
 

@@ -227,8 +227,8 @@ namespace Application.eGreeting.Controllers
                             {
                                 NameCard = searchCard.NameCard,
                                 Username = Session["username"].ToString(),
-                                ImageName = searchCard.ImageName,
-                                TimeSend = DateTime.Now
+                                ImageNameTrans = searchCard.ImageName,
+                                //TimeSend = DateTime.Now
                             };
                             return View(model);
                         }
@@ -244,13 +244,13 @@ namespace Application.eGreeting.Controllers
 
         //POST: User/CreateTrans
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult CreateTrans(Transaction newTrans)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    newTrans.TimeSend = DateTime.UtcNow;
                     if (TransDAO.CreateTrans(newTrans))
                     {
                         Alert("Send eGreeting card successfully.", NotificationType.success);

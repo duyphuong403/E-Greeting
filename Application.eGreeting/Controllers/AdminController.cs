@@ -466,14 +466,19 @@ namespace Application.eGreeting.Controllers
         // GET: /Admin/ManagePurchase
         public ActionResult ManagePurchase(int? page)
         {
-            if (page == null)
+            if (IsAdmin())
             {
-                page = 1;
-            }
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
 
-            return View(PaymentDAO.GetAllPayment.ToPagedList(pageNumber, pageSize));
+                return View(PaymentDAO.GetAllPayment.ToPagedList(pageNumber, pageSize));
+            }
+            Alert("You not permit to access this page", NotificationType.error);
+            return RedirectToAction("Login", "Home");
         }
 
         [HttpPost]
@@ -487,6 +492,28 @@ namespace Application.eGreeting.Controllers
             Alert("Change status activation failed.", NotificationType.error);
             return View();
         }
+
+        //================================================ Manage Payment ====================================================//
+        // GET: /Admin/ManageTrans
+
+        public ActionResult ManageTrans(int? page)
+        {
+            if (IsAdmin())
+            {
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+
+                return View(TransDAO.GetAllTrans.ToPagedList(pageNumber, pageSize));
+            }
+            Alert("You not permit to access this page", NotificationType.error);
+            return RedirectToAction("Login", "Home");
+        }
+
+
 
         public void Alert(string message, NotificationType notificationType)
         {
