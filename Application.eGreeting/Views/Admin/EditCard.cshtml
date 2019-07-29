@@ -1,21 +1,23 @@
 ﻿@model Application.eGreeting.Models.Card
 
 @{
-    ViewBag.Title = "Create New Card";
+    ViewBag.Title = "EditCard";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
-<h2>Create New Card</h2>
+<h2>Edit Card</h2>
 
 
-@using (Html.BeginForm("CreateCard", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditCard","Admin", FormMethod.Post, new { @enctype = "multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
-        <h4>Card</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CardId)
+        @Html.HiddenFor(model => model.DateCreated)
+
         <div class="form-group">
             @Html.LabelFor(model => model.NameCard, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -35,29 +37,25 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" name="file" id="file" class="form-control" required />
-                <br />
-                <center><img class="img-responsive" width="200" id="imgPreview" /></center>
+                <img src="~/ImageCard/@Model.ImageName" alt="@Model.ImageName" style="width:50%" id="imgPreview" class="img-responsive"/>
+                <input type="file" name="file" id="file" value="Change Image" class="form-control-file"/>
                 @Html.ValidationMessageFor(model => model.ImageName, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @Html.ActionLink("Back to List", "ManageCard", null, new { @class="btn btn-default"})
-                <input type="submit" id="submit" value="Create" class="btn btn-primary" style="float:right"/>
+                @Html.ActionLink("Back to List", "ManageCard", null, new { @class="btn btn-default" })
+                <input type="submit" value="Save" class="btn btn-success" style="float:right"/>
             </div>
         </div>
     </div>
 }
 
-<div>
-    
-</div>
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
-
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script>
     $('#file').on("change", function () {
         if (this.files && this.files[0]) {

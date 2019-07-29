@@ -22,7 +22,8 @@ namespace Application.eGreeting.Models
 
         public string ImageName { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy hh:mm tt}")]
         public DateTime? DateCreated { get; set; }
 
         //[DataType(DataType.Date)]

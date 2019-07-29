@@ -16,3 +16,6 @@ textarea {
     max-width: 280px;
 }
 
+table > tbody > tr > td {
+    vertical-align: middle !important;
+}

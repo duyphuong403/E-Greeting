@@ -4,8 +4,6 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
 @if (ViewBag.Message != null)
 {
     <span class="success sweet-alert"> @ViewBag.Message</span>
@@ -25,7 +23,7 @@
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td width="20%">
-                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width:100%" title="This is Happy Birthday" />
+                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width:100%" title="@item.ImageName" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)

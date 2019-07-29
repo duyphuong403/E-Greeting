@@ -54,7 +54,7 @@ namespace Application.eGreeting.Models
             // Seed some record for Cards
             var ds = new List<Card>
             {
-                new Card { NameCard="eGreeting-Birthday-001",Category="Birthday",ImageName="image1.jpg"},
+                new Card { NameCard="eGreeting-Birthday-001",Category="Birthday",ImageName="image1.jpg", DateCreated = DateTime.Now},
             };
             ds.ForEach(item => context.Cards.Add(item));
 
