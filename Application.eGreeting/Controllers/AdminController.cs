@@ -549,8 +549,8 @@ namespace Application.eGreeting.Controllers
         }
 
         //================================================ Manage Payment ====================================================//
-        // GET: /Admin/ManagePurchase
-        public ActionResult ManagePurchase(int? page)
+        // GET: /Admin/ManagePaymentInfo
+        public ActionResult ManagePaymentInfo(int? page)
         {
             if (IsAdmin())
             {
@@ -573,7 +573,7 @@ namespace Application.eGreeting.Controllers
             if (PaymentDAO.ChangeStatusActivation(id, Boolean.Parse(IsActive)))
             {
                 Alert("Change status activation successfully", NotificationType.success);
-                return RedirectToAction("ManagePurchase");
+                return RedirectToAction("ManagePaymentInfo");
             }
             Alert("Change status activation failed.", NotificationType.error);
             return View();
