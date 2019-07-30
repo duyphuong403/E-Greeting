@@ -2454,6 +2454,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\AvatarTeam\" />
     <Folder Include="ImageCard\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

@@ -390,7 +390,7 @@ namespace Application.eGreeting.Controllers
                             //        System.IO.File.Delete(PathImage);
                             //    }
                             //}
-                            Alert("Delete Card Successfully", NotificationType.success);
+                            //Alert("Delete Card Successfully", NotificationType.success);
                             return RedirectToAction("ManageCard");
                         }
                     }
