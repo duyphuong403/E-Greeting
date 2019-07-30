@@ -2201,6 +2201,7 @@
     <Content Include="Content\Admin\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\compiled-4.8.7.min.css" />
     <Content Include="Content\img\bg.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
