@@ -30,7 +30,7 @@ namespace Application.eGreeting.Controllers
 
             if (string.IsNullOrEmpty(txtSearch))
             {
-                Alert("Not Found Any Result", NotificationType.warning);
+                Alert("Not Found", NotificationType.warning);
                 return View("Index");
 
             }

@@ -24,9 +24,12 @@
     <link href="~/Content/PagedList.css" rel="stylesheet" />
 
     <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
     <!--CDN Swal -->
-    @*<script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>*@
     <script src="~/Content/Admin/js/jquery.min.js"></script>
+
     <script src="~/Content/Admin/js/jquery.simplePagination.js"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
@@ -41,6 +44,10 @@
 </head>
 <body class="container-fluid" style="padding: 0">
     <!-- Admin Layout -->
+
+    <!-- Back to top button -->
+    <a id="button" style="background-color:#a6c"></a>
+
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark secondary-color">
 
@@ -137,8 +144,25 @@
         </div>
         <!-- Copyright -->
         <!-- JQuery -->
- 
+
     </footer>
     <!-- Footer -->
+
+    <script>
+        var btn = $('#button');
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass('show');
+        } else {
+            btn.removeClass('show');
+        }
+    });
+
+    btn.on('click', function (e) {
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: 0 }, '300');
+    });
+    </script>
 </body>
 </html>
