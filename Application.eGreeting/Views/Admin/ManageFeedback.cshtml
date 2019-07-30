@@ -7,8 +7,6 @@
     ViewBag.Title = "ManageFeedback";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
-@*<div id="gridContainer"></div>
-    <div id="my-pagination"></div>*@
 
 <div class="card shadow mb-4">
     <div class="card-body">
@@ -16,7 +14,6 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        @*<th>No.</th>*@
                         <th>Username</th>
                         <th>Subject</th>
                         <th>Content</th>
@@ -28,7 +25,6 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            @*<td>@i</td>*@
                             <td>@item.Username</td>
                             <td>@item.Subject</td>
                             <td id="Content">@item.Content</td>
@@ -46,7 +42,6 @@
                 </tbody>
             </table>
         </div>
-
         @Html.PagedListPager(Model, page => Url.Action("ManageFeedback", new { page, @class = "page-link" }), new PagedListRenderOptions()
         {
             ContainerDivClasses = new [] { "Page", "navigation" },
