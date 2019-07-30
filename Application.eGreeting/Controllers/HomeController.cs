@@ -12,7 +12,7 @@ namespace Application.eGreeting.Controllers
     {
         [HandleError]
         // GET: Home
-        public ActionResult Index(string txtSearch, int? page) 
+        public ActionResult Index(int? page) 
         {
             if (page==null)
             {
@@ -35,9 +35,9 @@ namespace Application.eGreeting.Controllers
 
             if (string.IsNullOrEmpty(txtSearch))
             {
-                return View("Index", CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
+                return View("Search", CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
             }
-            return View("Index", CardDAO.GetCards(txtSearch)    .ToPagedList(pageNumber, pageSize));
+            return View("Search", CardDAO.GetCards(txtSearch).ToPagedList(pageNumber, pageSize));
         }
 
         //public ActionResult Search(string txtSearch, int? page)

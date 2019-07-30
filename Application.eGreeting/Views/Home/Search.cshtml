@@ -1,0 +1,55 @@
+﻿@model PagedList.IPagedList<Application.eGreeting.Models.Card>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+@using PagedList.Mvc;
+@using PagedList;
+<table class="table">
+    @*<tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NameCard)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th></th>
+        </tr>*@
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.NameCard)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td width="20%">
+                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width:100%" title="This is Happy Birthday" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.ActionLink("Select", "CreateTrans", "User", new { id = item.CardId }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Search", new { page, @class = "page-link" }), new PagedListRenderOptions()
+   {
+       ContainerDivClasses = new [] { "Page", "navigation" },
+       LiElementClasses = new List<string> { "page-item" }
+   })
