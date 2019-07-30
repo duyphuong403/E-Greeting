@@ -62,10 +62,16 @@
                 @if (item.IsActive)
                 {
                     <input type="button" value="Deactivate" class="btn btn-danger" onClick="Deactive(@item.PayId)" />
+                    <a onClick="doDelete(@item.PayId)" href="#" class="btn btn-danger btn-circle">
+                        <i style="color: #fff" class="fas fa-trash"></i>
+                    </a>
                 }
                 else
                 {
                     <input type="button" value="Activate" class="btn btn-warning" onClick="active(@item.PayId)" />
+                    <a onClick="doDelete(@item.PayId)" href="#" class="btn btn-danger btn-circle">
+                        <i style="color: #fff" class="fas fa-trash"></i>
+                    </a>
                 }
             </td>
         </tr>
