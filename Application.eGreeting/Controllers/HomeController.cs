@@ -12,25 +12,30 @@ namespace Application.eGreeting.Controllers
     {
         [HandleError]
         // GET: Home
-        public ActionResult Index() 
-        {        
-            return View();
-        }
-
-        public ActionResult Search(string txtSearch, int? page)
+        public ActionResult Index(int? page)
         {
             if (page == null)
             {
                 page = 1;
             }
-            int pageSize = 9;
+            int pageSize = 3;
             int pageNumber = (page ?? 1);
+
+            return View();
+        }
+
+        public ActionResult Search(string txtSearch)
+        {
+           
 
             if (string.IsNullOrEmpty(txtSearch))
             {
-                return View("Index", CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
+                Alert("Not Found Any Result", NotificationType.warning);
+                return View("Index");
+
             }
-            return View("Index", CardDAO.GetCards(txtSearch).ToPagedList(pageNumber, pageSize));
+            return View("Search", CardDAO.GetCards(txtSearch));
+            
         }
 
         //GET: Home/Birthday

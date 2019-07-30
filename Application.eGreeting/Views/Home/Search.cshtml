@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Application.eGreeting.Models.Card>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+
+
+<table class="table">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.NameCard)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td width="20%">
+                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width:100%" title="This is Happy Birthday" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.ActionLink("Select", "CreateTrans", "User", new { id = item.CardId }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+    }
+
+</table>
+
