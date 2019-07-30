@@ -1,13 +1,13 @@
 ﻿@model PagedList.IPagedList<Application.eGreeting.Models.PaymentInfo>
 
 @{
-    ViewBag.Title = "ManagePurchase";
+    ViewBag.Title = "Manage Payment Info";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 @using PagedList.Mvc
 @using PagedList
 
-<h2>Manage Purchase</h2>
+<h2>Manage Payment Info</h2>
 
 <table class="table">
     <tr>
@@ -61,11 +61,11 @@
             <td>
                 @if (item.IsActive)
                 {
-                    <input type="button" value="Deactivate" class="btn btn-danger" onClick="Deactive(@item.PayId)"/>
+                    <input type="button" value="Deactivate" class="btn btn-danger" onClick="Deactive(@item.PayId)" />
                 }
                 else
                 {
-                    <input type="button" value="Activate" class="btn btn-warning" onClick="active(@item.PayId)"/>
+                    <input type="button" value="Activate" class="btn btn-warning" onClick="active(@item.PayId)" />
                 }
             </td>
         </tr>
@@ -115,7 +115,7 @@
                             })
                         }
                     }
-                })                
+                })
             }
         })
     };

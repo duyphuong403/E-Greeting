@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.eGreeting.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -29,5 +30,14 @@ namespace Application.eGreeting.Controllers
             return false;
         }
 
+        public bool IsPurchased(int id)
+        {
+            var search = PaymentDAO.GetPayment(id);
+            if (search != null)
+            {
+                return search.IsActive;
+            }
+            return false;
+        }
     }
 }
