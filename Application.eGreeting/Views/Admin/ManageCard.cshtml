@@ -79,8 +79,6 @@
 
 
 <script>
-    // delete
-    // không thể truyên 2 parameter mà phải truyền = 1 object
     function doDelete(id) {
         Swal.fire({
             title: 'Are you sure?',
@@ -93,37 +91,30 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "/Admin/DeleteCard", // Yêu cầu lấy dữ liệu: /controller/tên hàm
+                    url: "/Admin/DeleteCard", 
                     type: "POST",
                     data: {
                         id: id,
-                    }, // id phải giống id truyền vào trong TinTucController Delete
-                //    success: function (res) {
-                //        // success là hàm được gọi khi yêu cầu thành công
-                //        // res là giá trị trả về đặt tên là gì cũng được()
-                //        if (res) {
-                //            Swal.fire({
-                //                title: 'Delete success',
-                //                text: 'Successfully deleted!',
-                //                type: 'success'
-                //            }).then(() => {
-                //                location.reload();
-                //            });
-                //        }
-                //        else {
-                //            Swal.fire({
-                //                title: 'Delete failed',
-                //                text: 'An error occurred while deleting!',
-                //                type: 'error'
-                //            })
-                //        }
-                //    }
-                //})
-                //Swal.fire(
-                //    'Deleted!',
-                //    'Your file has been deleted!',
-                //    'success'
-                //)
+                    },
+                    success: function (res) {
+                        if (res) {
+                            Swal.fire({
+                                title: 'Delete success',
+                                text: 'Successfully deleted!',
+                                type: 'success'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Delete failed',
+                                text: 'An error occurred while deleting!',
+                                type: 'error'
+                            })
+                        }
+                    }
+                })
             }
         })
     }

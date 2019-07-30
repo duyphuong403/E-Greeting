@@ -2202,6 +2202,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\banner.jpg" />
+    <Content Include="Content\compiled-4.8.7.min.css" />
     <Content Include="Content\img\bg.jpg" />
     <Content Include="Content\img\card.jpg" />
     <Content Include="Content\Light-slider\css\lightslider.min.css" />
@@ -2450,6 +2451,7 @@
     <Content Include="Views\Admin\ManageTrans.cshtml" />
     <Content Include="Views\Admin\EditCard.cshtml" />
     <Content Include="Views\User\SubscribeSend.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2459,6 +2461,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\AvatarTeam\" />
     <Folder Include="ImageCard\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
