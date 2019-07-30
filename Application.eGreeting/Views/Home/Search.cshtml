@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<Application.eGreeting.Models.Card>
+﻿@model IEnumerable<Application.eGreeting.Models.Card>
 
 @{
     ViewBag.Title = "Search";
@@ -6,24 +6,9 @@
 
 <h2>Search</h2>
 
-@using PagedList.Mvc;
-@using PagedList;
+
+
 <table class="table">
-    @*<tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NameCard)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th></th>
-        </tr>*@
 
     @foreach (var item in Model)
     {
@@ -48,8 +33,4 @@
     }
 
 </table>
-@Html.PagedListPager(Model, page => Url.Action("Search", new { page, @class = "page-link" }), new PagedListRenderOptions()
-   {
-       ContainerDivClasses = new [] { "Page", "navigation" },
-       LiElementClasses = new List<string> { "page-item" }
-   })
+
