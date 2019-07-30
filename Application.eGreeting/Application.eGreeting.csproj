@@ -2201,7 +2201,13 @@
     <Content Include="Content\Admin\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\banner.jpg" />
+    <Content Include="Content\compiled-4.8.7.min.css" />
     <Content Include="Content\img\bg.jpg" />
+    <Content Include="Content\img\card.jpg" />
+    <Content Include="Content\Light-slider\css\lightslider.min.css" />
+    <Content Include="Content\Light-slider\img\controls.png" />
+    <Content Include="Content\Light-slider\js\lightslider.min.js" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Phuc.css" />
