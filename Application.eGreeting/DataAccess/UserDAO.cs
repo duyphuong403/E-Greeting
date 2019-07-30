@@ -60,6 +60,30 @@ namespace Application.eGreeting.DataAccess
             return false;
         }
 
+        public static bool UpdateSubscribeReceive(User editUser)
+        {
+            var b = GetUser(editUser.UserId);
+            if (b != null)
+            {
+                b.IsSubcribeReceive = editUser.IsSubcribeReceive;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool UpdateSubscribeSend(User editUser)
+        {
+            var b = GetUser(editUser.UserId);
+            if (b != null)
+            {
+                b.IsSubcribeSend = editUser.IsSubcribeSend;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         public static bool DeleteUser(int id)
         {
             var b = GetUser(id);

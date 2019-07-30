@@ -21,16 +21,6 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Login", "Home");
 
         }
-        //// GET: User/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    var d = UserDAO.GetUser(id);
-        //    if (d != null)
-        //    {
-        //        return View(d);
-        //    }
-        //    return View("Index");
-        //}
 
         // GET: User/Create
         public ActionResult Register()
@@ -334,7 +324,71 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+        //GET: User/SubscribeReceive
+        public ActionResult SubscribeReceive()
+        {
+            if (IsLoggedIn())
+            {
+                var searchUser = UserDAO.GetUserByUsername(Session["username"].ToString().ToLower());
+                if (searchUser != null)
+                {                   
+                   return View(searchUser);
+                }
+                Alert("Not found this Username", NotificationType.error);
+                return RedirectToAction("Index", "Home");
+            }
+            Alert("You need Log in to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
+        }
 
+        //POST: User/SubscribeReceive
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubscribeReceive(User editUser)
+        {
+            var search = PaymentDAO.GetPaymentByUsername(Session["username"].ToString().ToLower());
+            if (search != null)
+            {
+                if (search.IsActive)
+                {
+                    var searchUser = UserDAO.GetUser(search.UserId);
+                    if (searchUser != null)
+                    {                        
+                        searchUser.IsSubcribeReceive = true;
+                        if (UserDAO.UpdateSubscribeReceive(searchUser))
+                        {
+                            Alert("Subscribe Daily Receive New Card Successfully", NotificationType.success);
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+                    Alert("Not found Username", NotificationType.error);
+                    return RedirectToAction("SubscribeReceive");
+                }
+                Alert("Sorry Your Payment not activate. Please contact Administrator", NotificationType.error);
+                return RedirectToAction("FeedbackIndex");
+            }
+            Alert("Sorry You not Register Payment Info. Please Register Payment Info", NotificationType.error);
+            return RedirectToAction("Payment");
+        }
+
+        //POST: User/UnSubscribeReceive
+        public ActionResult UnSubscribeReceive(User editUser)
+        {
+            var search = UserDAO.GetUser(editUser.UserId);
+            if (search != null)
+            {
+                search.IsSubcribeReceive = false;
+                if (UserDAO.UpdateSubscribeReceive(search))
+                {
+                    Alert("UnSubscribe Daily Receive New Card Successfully", NotificationType.success);
+                    return RedirectToAction("Index", "Home");
+                }
+                Alert("UnSubscribe Daily Receive New Card Failed", NotificationType.error);
+                return RedirectToAction("SubscribeReceive");
+            }
+            Alert("Not found Username", NotificationType.error);
+            return RedirectToAction("SubscribeReceive");
+        }
 
         public void Alert(string message, NotificationType notificationType)
         {

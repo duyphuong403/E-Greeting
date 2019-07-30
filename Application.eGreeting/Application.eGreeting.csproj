@@ -2464,6 +2464,7 @@
     <Content Include="Views\Admin\EditCard.cshtml" />
     <Content Include="Views\User\SubscribeSend.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\User\SubscribeReceive.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -52,4 +52,34 @@
         document.getElementById("Content").innerText = newStr + "...";
         $('br').remove();
     }
+
+    function DoDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "/Admin/DeleteTrans",
+                    type: "POST",
+                    data: { id: id },
+                    success: function (res) {
+                        if (res) {                            
+                            location.reload();
+                        }                      
+                    }
+                })
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted!',
+                    'success'
+                )
+            }
+        })
+    }
 </script>

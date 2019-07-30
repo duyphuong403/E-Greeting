@@ -12,15 +12,8 @@ namespace Application.eGreeting.Controllers
     {
         [HandleError]
         // GET: Home
-        public ActionResult Index(int? page)
-        {
-            if (page == null)
-            {
-                page = 1;
-            }
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-
+        public ActionResult Index()
+        {        
             return View();
         }
 

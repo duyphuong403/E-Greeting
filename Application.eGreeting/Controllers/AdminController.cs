@@ -424,7 +424,7 @@ namespace Application.eGreeting.Controllers
                 return View(UserDAO.GetAllUser.ToPagedList(pageNumber, pageSize));
             }
             Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Home");
         }
 
         // GET: Admin/CreateCard
@@ -476,28 +476,26 @@ namespace Application.eGreeting.Controllers
             }
         }
 
-        public ActionResult EditUser(int id)
-        {
-            if (IsAdmin())
-            {
-                var result = UserDAO.GetUser(id);
-                return View(result);
-            }
-            Alert("You not permit to access this page", NotificationType.warning);
-            return RedirectToAction("Index", "Home");
-        }
-
-        // POST: User/Edit/5
+        // POST: Admin/EditUser
         [HttpPost]
         public ActionResult EditUser(User editU)
         {
             try
             {
+                var searchUser = UserDAO.GetUser(editU.UserId);
+                if (searchUser == null)
+                {
+                    Alert("Not found This User", NotificationType.error);
+                    return View();
+                }
                 if (editU.Password == null || editU.RePassword == null)
                 {
-                    var searchUser = UserDAO.GetUser(editU.UserId);
                     editU.Password = searchUser.Password;
                     editU.RePassword = searchUser.RePassword;
+                }
+                if (Session["username"].ToString() == "admin")
+                {
+                    editU.Role = true;
                 }
                 if (UserDAO.EditUser(editU))
                 {
@@ -579,7 +577,32 @@ namespace Application.eGreeting.Controllers
             return View();
         }
 
-        //================================================ Manage Payment ====================================================//
+        //POST: /Admin/DeletePayment
+        [HttpPost]
+        public ActionResult DeletePayment(int id)
+        {
+            try
+            {
+                if (PaymentDAO.DeletePayment(id))
+                {
+                    Alert("Delete Payment Successfully .", NotificationType.success);
+                    return RedirectToAction("ManagePaymentInfo");
+                }
+                else
+                {
+                    Alert("Delete error, cannot find this User!!!", NotificationType.error);
+                    return RedirectToAction("ManagePaymentInfo");
+                }
+            }
+            catch (Exception e)
+            {
+                Alert(e.Message, NotificationType.error);
+                return RedirectToAction("ManagePaymentInfo");
+                throw;
+            }
+        }
+        
+        //================================================ Manage Transaction====================================================//
         // GET: /Admin/ManageTrans
 
         public ActionResult ManageTrans(int? page)
@@ -599,7 +622,28 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Login", "Home");
         }
 
-
+        public ActionResult DeleteTrans(int id)
+        {
+            try
+            {
+                if (TransDAO.DeleteTrans(id))
+                {
+                    Alert("Delete Transaction Successfully .", NotificationType.success);
+                    return RedirectToAction("ManageTrans");
+                }
+                else
+                {
+                    Alert("Delete Transaction error, cannot find this User!!!", NotificationType.error);
+                    return RedirectToAction("ManageTrans");
+                }
+            }
+            catch (Exception e)
+            {
+                Alert(e.Message, NotificationType.error);
+                return RedirectToAction("ManageTrans");
+                throw;
+            }
+        }
 
         public void Alert(string message, NotificationType notificationType)
         {
