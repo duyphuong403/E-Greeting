@@ -16,93 +16,37 @@
 </p>
 <table class="table">
     <tr>
-        <th>No.</th>
-        <th>
-            UserName
-        </th>
-        <th>
-            Role
-        </th>
-        <th>
-            Subcribe Send
-        </th>
-        <th>
-            Subcribe Receive
-        </th>
-        <th>
-            FullName
-        </th>
-        <th>
-            Gender
-        </th>
-        <th>
-            Phone Number
-        </th>
-        <th>
-            Email
-        </th>
-        <th>
-            Action
-        </th>
+        <th>No.</th><th>UserName</th><th>Role</th><th>Subcribe Send</th><th>Subcribe Receive</th><th>FullName</th><th>Gender</th><th>Phone Number</th><th>Email</th><th>Action</th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
             <td>@i</td>
+            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @if (item.Role)
-                {
-                    <label>Admin</label>
-                }
-                else
-                {
-                    <label>User</label>
-                }
+                @if (item.Role){<label>Admin</label>}
+                else{<label>User</label>}
             </td>          
             <td>
                 @if (item.IsSubcribeSend)
-                {
-                    <label>Yes</label>
-                }
-                else
-                {
-                    <label>No</label>
-                }
+                {<label>Yes</label>}
+                else{<label>No</label>}
             </td>
             <td>
                 @if (item.IsSubcribeReceive)
-                {
-                    <label>Yes</label>
-                }
-                else
-                {
-                    <label>No</label>
-                }
+                {<label>Yes</label>}
+                else{<label>No</label>}
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-
-                @if (item.Gender)
-                {
-                    <label>Male</label>
-                }
-                else
-                {
-                    <label>Female</label>
-                }
+                @if (item.Gender){<label>Male</label>}
+                else{<label>Female</label>}
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
+            <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+            <td> @Html.DisplayFor(modelItem => item.Email)</td>
             <td>
                 @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }, new { @class = "btn btn-warning" })
                 @if (item.UserId != 1)
@@ -124,7 +68,6 @@
        LiElementClasses = new List<string> { "page-item" }
    })
 
-
 <script>
     // delete
     function doDelete(id) {
@@ -139,14 +82,12 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "/Admin/DeleteUser", // Yêu cầu lấy dữ liệu: /controller/tên hàm
+                    url: "/Admin/DeleteUser",
                     type: "POST",
                     data: {
                         id: id,
-                    }, // id phải giống id truyền vào trong TinTucController Delete
+                    },
                     success: function (res) {
-                        // success là hàm được gọi khi yêu cầu thành công
-                        // res là giá trị trả về đặt tên là gì cũng được()
                         if (res) {
                             Swal.fire({
                                 title: 'Delete success',
@@ -156,20 +97,8 @@
                                 location.reload();
                             });
                         }
-                        //    else {
-                        //        Swal.fire({
-                        //            title: 'Delete failed',
-                        //            text: 'An error occurred while deleting!',
-                        //            type: 'error'
-                        //        })
-                        //    }
                     }
                 })
-                //Swal.fire(
-                //    'Deleted!',
-                //    'Your file has been deleted!',
-                //    'success'
-                //)
             }
         })
     }
