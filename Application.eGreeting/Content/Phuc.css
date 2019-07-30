@@ -1,6 +1,6 @@
 .box-card {
     position: relative;
-    width: 80%;
+    width: 100%;
     margin-bottom: 40px;
 }
 
@@ -37,8 +37,8 @@
     text-align: center;
 }
 
-.name-card h5 {
-    font-weight: 500;
+.name-card h6 {
+    /*font-weight: 500;*/
 }
 
 .btn-select {
