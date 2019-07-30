@@ -11,43 +11,22 @@
 
 <table class="table">
     <tr>
-        <th>
-            Username
-        </th>
-        <th>
-            Bank Name
-        </th>
-        <th>
-            Bank Account
-        </th>
-        <th>
-            Expired Date
-        </th>
-        <th>
-            Date Created
-        </th>
+        <th>Username</th>
+        <th>Bank Name</th>
+        <th>Bank Account</th>
+        <th>Expired Date</th>
+        <th>Date Created</th>
         <th>Status</th>
         <th>Action</th>
     </tr>
-
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                <a href="/Admin/EditUser/@item.UserId">@Html.DisplayFor(modelItem => item.UserName)</a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BankName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BankAccount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateExpire)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
+            <td><a href="/Admin/EditUser/@item.UserId">@Html.DisplayFor(modelItem => item.UserName)</a></td>
+            <td>@Html.DisplayFor(modelItem => item.BankName)</td>
+            <td>@Html.DisplayFor(modelItem => item.BankAccount)</td>
+            <td>@Html.DisplayFor(modelItem => item.DateExpire)</td>
+            <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
             <td>
                 @if (item.IsActive)
                 {
@@ -63,21 +42,19 @@
                 {
                     <input type="button" value="Deactivate" class="btn btn-danger" onClick="Deactive(@item.PayId)" />
                     <a onClick="doDelete(@item.PayId)" href="#" class="btn btn-danger btn-circle">
-                        <i style="color: #fff" class="fas fa-trash"></i>
-                    </a>
+                        <i style="color: #fff" class="fas fa-trash"></i></a>
                 }
                 else
                 {
                     <input type="button" value="Activate" class="btn btn-warning" onClick="active(@item.PayId)" />
                     <a onClick="doDelete(@item.PayId)" href="#" class="btn btn-danger btn-circle">
-                        <i style="color: #fff" class="fas fa-trash"></i>
-                    </a>
+                        <i style="color: #fff" class="fas fa-trash"></i></a>
                 }
             </td>
         </tr>
     }
-
 </table>
+
 @Html.PagedListPager(Model, page => Url.Action("ManagePurchase", new { page, @class = "page-link" }), new PagedListRenderOptions()
     {
         ContainerDivClasses = new[] { "Page", "navigation" },
