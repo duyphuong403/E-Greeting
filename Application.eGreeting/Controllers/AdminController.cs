@@ -23,8 +23,7 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Index", "Home");
         }       
 
-        //================================================ Manage Feedback ====================================================//
-
+      
         [HttpPost]
         public bool InsertFeedback(Feedback model)
         {

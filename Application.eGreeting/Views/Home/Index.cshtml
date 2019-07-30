@@ -68,11 +68,10 @@
 
     </table>
 
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions()
-    {
-        ContainerDivClasses = new[] { "Page", "navigation" },
-        LiElementClasses = new List<string> { "page-item" }
-    })
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, @class = "page-link" }), new PagedListRenderOptions()
+   {
+       ContainerDivClasses = new [] { "Page", "navigation" },
+       LiElementClasses = new List<string> { "page-item" }
+   })
 
 
-</center>

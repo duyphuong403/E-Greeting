@@ -20,12 +20,24 @@ namespace Application.eGreeting.Controllers
             }
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-           
+
+            return View(CardDAO.GetAllCard.ToPagedList(pageNumber,pageSize));
+        }
+
+        public ActionResult Search(string txtSearch, int? page)
+        {
+            if (page == null)
+            {
+                page = 1;
+            }
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
             if (string.IsNullOrEmpty(txtSearch))
             {
                 return View("Index", CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
             }
-            return View("Index", CardDAO.GetCards(txtSearch).ToPagedList(pageNumber, pageSize));
+            return View("Index", CardDAO.GetCards(txtSearch)    .ToPagedList(pageNumber, pageSize));
         }
 
         //public ActionResult Search(string txtSearch, int? page)
