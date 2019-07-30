@@ -7,18 +7,42 @@
 }
 
 <h2>Manage Card</h2>
+
 @using PagedList.Mvc;
 @using PagedList;
 <p>
     @Html.ActionLink("Create New Card", "CreateCard", "Admin", new { @class = "btn btn-success" })
 </p>
+
 @using (Html.BeginForm("ManageCard", "Admin", FormMethod.Get))
 {
     @Html.TextBox("txtSeach")<input type="submit" value="Search"/>
 }
 <table class="table">
-    <tr><th>NameCard</th><th>Category</th><th>Image</th><th>DateCreated</th><th>Action</th></tr>
-@foreach (var item in Model)
+    <tr>
+        
+        <th>
+
+            NameCard
+        </th>
+        <th>
+
+            Category
+        </th>
+        <th>
+
+            Image
+        </th>
+        <th>
+
+            DateCreated
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
     {
         <tr>
             <td>
@@ -35,6 +59,7 @@
             </td>
             <td>
                 <a class="btn btn-warning" href="/Admin/EditCard/@item.CardId"><i class="far fa-edit"></i></a>
+                @*@Html.ActionLink("Edit", "EditCard", new { id = item.CardId }, new { @class = "btn btn-warning" })*@
                 <a onClick="doDelete(@item.CardId)" class="btn btn-danger btn-circle">
                     <i style="color: #fff" class="fas fa-trash"></i>
                 </a>
@@ -42,13 +67,20 @@
         </tr>
             i++;
         }
+
 </table>
+
+
     @Html.PagedListPager(Model, page => Url.Action("ManageCard", new { page, @class = "page-link" }), new PagedListRenderOptions()
     {
         ContainerDivClasses = new [] { "Page", "navigation" },
         LiElementClasses = new List<string> { "page-item" }
     })
+
+
 <script>
+    // delete
+    // không thể truyên 2 parameter mà phải truyền = 1 object
     function doDelete(id) {
         Swal.fire({
             title: 'Are you sure?',
@@ -65,7 +97,33 @@
                     type: "POST",
                     data: {
                         id: id,
-                    },
+                    }, // id phải giống id truyền vào trong TinTucController Delete
+                //    success: function (res) {
+                //        // success là hàm được gọi khi yêu cầu thành công
+                //        // res là giá trị trả về đặt tên là gì cũng được()
+                //        if (res) {
+                //            Swal.fire({
+                //                title: 'Delete success',
+                //                text: 'Successfully deleted!',
+                //                type: 'success'
+                //            }).then(() => {
+                //                location.reload();
+                //            });
+                //        }
+                //        else {
+                //            Swal.fire({
+                //                title: 'Delete failed',
+                //                text: 'An error occurred while deleting!',
+                //                type: 'error'
+                //            })
+                //        }
+                //    }
+                //})
+                //Swal.fire(
+                //    'Deleted!',
+                //    'Your file has been deleted!',
+                //    'success'
+                //)
             }
         })
     }
