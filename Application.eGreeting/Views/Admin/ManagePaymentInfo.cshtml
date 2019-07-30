@@ -1,0 +1,163 @@
+﻿@model PagedList.IPagedList<Application.eGreeting.Models.PaymentInfo>
+
+@{
+    ViewBag.Title = "Manage Payment Info";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+@using PagedList.Mvc
+@using PagedList
+
+<h2>Manage Payment Info</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Bank Name
+        </th>
+        <th>
+            Bank Account
+        </th>
+        <th>
+            Expired Date
+        </th>
+        <th>
+            Date Created
+        </th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="/Admin/EditUser/@item.UserId">@Html.DisplayFor(modelItem => item.UserName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankAccount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateExpire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @if (item.IsActive)
+                {
+                    <span style="color: green; font-weight: 900">Activated</span>
+                }
+                else
+                {
+                    <span style="color: red; font-weight: 900">Not Activated</span>
+                }
+            </td>
+            <td>
+                @if (item.IsActive)
+                {
+                    <input type="button" value="Deactivate" class="btn btn-danger" onClick="Deactive(@item.PayId)" />
+                }
+                else
+                {
+                    <input type="button" value="Activate" class="btn btn-warning" onClick="active(@item.PayId)" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("ManagePurchase", new { page, @class = "page-link" }), new PagedListRenderOptions()
+    {
+        ContainerDivClasses = new[] { "Page", "navigation" },
+        LiElementClasses = new List<string> { "page-item" }
+    })
+
+<script>
+    function active(Id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Active for User can use Subcribe services. ",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Active it!',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "/Admin/EditPayment/",
+                    type: "POST",
+                    data: {
+                        Id: Id,
+                        IsActive: true,
+                    },
+                    success: function (res) {
+                        if (res) {
+                            Swal.fire({
+                                title: 'Active success',
+                                text: 'Successfully Activated!',
+                                type: 'success'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Activated failed',
+                                text: 'An error occurred while Activating!',
+                                type: 'error'
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    };
+
+    function Deactive(Id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Deactivate User will cannot use Subcribe services. ",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Deactivate it!',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "/Admin/EditPayment/",
+                    type: "POST",
+                    data: {
+                        Id: Id,
+                        IsActive: false,
+                    },
+                    success: function (res) {
+                        if (res) {
+                            Swal.fire({
+                                title: 'Deactivate success',
+                                text: 'Successfully Deactivate!',
+                                type: 'success'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Deactivated failed',
+                                text: 'An error occurred while Deactivating!',
+                                type: 'error'
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    }
+</script>

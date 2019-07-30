@@ -22,6 +22,8 @@
     <link href="~/Content/Admin/css/dx.light.css" rel="stylesheet" />
     <link href="~/Content/Admin/css/simplePagination.css" rel="stylesheet" />
     <link href="~/Content/PagedList.css" rel="stylesheet" />
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
     <!--CDN Swal -->
     @*<script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>*@
     <script src="~/Content/Admin/js/jquery.min.js"></script>
@@ -32,8 +34,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
-    <script src="~/Scripts/sweetalert.min.js"></script>
     <script src="~/Content/Admin/js/sweetalert2@8.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
     <script src="~/Content/Admin/js/dx.all.js"></script>
 
 </head>
@@ -69,7 +71,10 @@
                     @Html.ActionLink("Manage User", "ManageUser", "Admin", null, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
-                    @Html.ActionLink("Manage Purchase", "ManagePurchase", "Admin", null, new { @class = "nav-link" })
+                    @Html.ActionLink("Manage Transaction", "ManageTrans", "Admin", null, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Manage Payment", "ManagePaymentInfo", "Admin", null, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
                     @Html.ActionLink("Manage Feedback", "ManageFeedback", "Admin", null, new { @class = "nav-link" })
@@ -99,7 +104,7 @@
                             {
                                 if (Session["role"].ToString() == "true")
                                 {
-                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/Admin/Index" style="font-weight:900">@Session["fullname"]</a></p>
+                                    <p style="text-align:center;margin:0">Welcome <a class="dropdown-item" href="/User/Index" style="font-weight:900">@Session["fullname"]</a></p>
                                 }
                                 else
                                 {

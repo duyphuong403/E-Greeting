@@ -21,16 +21,16 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Login", "Home");
 
         }
-        // GET: User/Details/5
-        public ActionResult Details(int id)
-        {
-            var d = UserDAO.GetUser(id);
-            if (d != null)
-            {
-                return View(d);
-            }
-            return View("Index");
-        }
+        //// GET: User/Details/5
+        //public ActionResult Details(int id)
+        //{
+        //    var d = UserDAO.GetUser(id);
+        //    if (d != null)
+        //    {
+        //        return View(d);
+        //    }
+        //    return View("Index");
+        //}
 
         // GET: User/Create
         public ActionResult Register()
@@ -227,8 +227,8 @@ namespace Application.eGreeting.Controllers
                             {
                                 NameCard = searchCard.NameCard,
                                 Username = Session["username"].ToString(),
-                                ImageName = searchCard.ImageName,
-                                TimeSend = DateTime.Now
+                                ImageNameTrans = searchCard.ImageName,
+                                //TimeSend = DateTime.Now
                             };
                             return View(model);
                         }
@@ -244,13 +244,13 @@ namespace Application.eGreeting.Controllers
 
         //POST: User/CreateTrans
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult CreateTrans(Transaction newTrans)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    newTrans.TimeSend = DateTime.UtcNow;
                     if (TransDAO.CreateTrans(newTrans))
                     {
                         Alert("Send eGreeting card successfully.", NotificationType.success);
@@ -266,32 +266,6 @@ namespace Application.eGreeting.Controllers
                 return View();
                 throw;
             }
-        }
-
-        //GET: User/SubscribeSend
-        public ActionResult SubscribeSend()
-        {
-            // Check login or not ?
-            if (Session["username"] != null)
-            {
-                var search = UserDAO.GetUserByUsername(Session["username"].ToString());
-                // get info user
-                if (search != null)
-                {
-                    // check user purchase or not ?
-                    if (search.IsSubcribeSend)
-                    {
-
-                    }
-                }
-                var model = new Feedback
-                {
-                    Username = Session["username"].ToString(),
-                };
-                return View(model);
-            }
-            Alert("You need Log in to access this page", NotificationType.warning);
-            return RedirectToAction("Login", "Home");
         }
 
         //GET: User/DescriptionPayment
@@ -346,6 +320,21 @@ namespace Application.eGreeting.Controllers
                 throw;
             }
         }
+
+        //==================================================== Subscribes ===========================================================================
+
+        //GET: //User/SubscribeSend
+        public ActionResult SubscribeSend()
+        {
+            if (IsLoggedIn())
+            {
+                return View();
+            }
+            Alert("You need Log in to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
+        }
+
+
 
         public void Alert(string message, NotificationType notificationType)
         {

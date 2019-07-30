@@ -52,13 +52,14 @@
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td width="20%">
-                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width: 100%" />
+                <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" style="width: 100%" title="@item.ImageName"/>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditCard", new { id = item.CardId }, new { @class = "btn btn-warning" })
+                <a class="btn btn-warning" href="/Admin/EditCard/@item.CardId"><i class="far fa-edit"></i></a>
+                @*@Html.ActionLink("Edit", "EditCard", new { id = item.CardId }, new { @class = "btn btn-warning" })*@
                 <a onClick="doDelete(@item.CardId)" class="btn btn-danger btn-circle">
                     <i style="color: #fff" class="fas fa-trash"></i>
                 </a>
@@ -97,32 +98,32 @@
                     data: {
                         id: id,
                     }, // id phải giống id truyền vào trong TinTucController Delete
-                    success: function (res) {
-                        // success là hàm được gọi khi yêu cầu thành công
-                        // res là giá trị trả về đặt tên là gì cũng được()
-                        if (res) {
-                            Swal.fire({
-                                title: 'Delete success',
-                                text: 'Successfully deleted!',
-                                type: 'success'
-                            }).then(() => {
-                                location.reload();
-                            });
-                        }
-                        else {
-                            Swal.fire({
-                                title: 'Delete failed',
-                                text: 'An error occurred while deleting!',
-                                type: 'error'
-                            })
-                        }
-                    }
-                })
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted!',
-                    'success'
-                )
+                //    success: function (res) {
+                //        // success là hàm được gọi khi yêu cầu thành công
+                //        // res là giá trị trả về đặt tên là gì cũng được()
+                //        if (res) {
+                //            Swal.fire({
+                //                title: 'Delete success',
+                //                text: 'Successfully deleted!',
+                //                type: 'success'
+                //            }).then(() => {
+                //                location.reload();
+                //            });
+                //        }
+                //        else {
+                //            Swal.fire({
+                //                title: 'Delete failed',
+                //                text: 'An error occurred while deleting!',
+                //                type: 'error'
+                //            })
+                //        }
+                //    }
+                //})
+                //Swal.fire(
+                //    'Deleted!',
+                //    'Your file has been deleted!',
+                //    'success'
+                //)
             }
         })
     }

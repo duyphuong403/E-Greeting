@@ -1,5 +1,6 @@
 ﻿using Application.eGreeting.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Application.eGreeting.DataAccess
 {
@@ -7,7 +8,7 @@ namespace Application.eGreeting.DataAccess
     {
         private static eGreetingDB db = new eGreetingDB();
 
-        public static IEnumerable<Transaction> GetAllTrans { get => db.Transactions; }
+        public static List<Transaction> GetAllTrans { get => db.Transactions.ToList(); }
 
         public static Transaction GetTransaction(int id)
         {

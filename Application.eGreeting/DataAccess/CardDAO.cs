@@ -1,6 +1,7 @@
 ﻿using Application.eGreeting.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,11 +12,21 @@ namespace Application.eGreeting.DataAccess
     {
         private static readonly eGreetingDB db = new eGreetingDB();
 
-        public static List<Card> GetAllCard { get => db.Cards.ToList(); }
+        public static List<Card> GetAllCard { get => db.Cards.OrderByDescending(o => o.DateCreated).ToList(); }
 
         public static Card GetCard(int id)
         {
             return db.Cards.Find(id);
+        }
+
+        public static bool GetNameCard(string nameCard)
+        {
+            return db.Cards.Any(o => o.NameCard == nameCard);
+        }
+
+        public static bool GetImageCard(string ImageName)
+        {
+            return db.Cards.Any(o => o.ImageName == ImageName);
         }
 
         public static List<Card> GetCards(string name)
@@ -41,9 +52,21 @@ namespace Application.eGreeting.DataAccess
             var b = GetCard(Card.CardId);
             if (b != null)
             {
-                b.Category = Card.Category;
-                b.ImageName = Card.ImageName;
-                db.SaveChanges();
+                if (Card.ImageName != null)
+                {
+                    b.NameCard = Card.NameCard;
+                    b.Category = Card.Category;
+                    b.ImageName = Card.ImageName;
+                    b.DateCreated = Card.DateCreated;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    b.NameCard = Card.NameCard;
+                    b.Category = Card.Category;
+                    b.DateCreated = Card.DateCreated;
+                    db.SaveChanges();
+                }
                 return true;
             }
             return false;

@@ -1,0 +1,89 @@
+﻿@model PagedList.IPagedList<Application.eGreeting.Models.Transaction>
+
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    ViewBag.Title = "ManageTrans";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>Manage Transaction</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Sender (Username)
+        </th>
+        <th>
+            Receiver
+        </th>
+        <th>
+            Subject
+        </th>
+        <th>
+            Content
+        </th>
+        <th>
+            Name Card
+        </th>
+        <th>
+            Image
+        </th>
+        <th>
+            TimeSend
+        </th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Receiver)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td id="Content">
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameCard)
+            </td>
+            <td>
+                <img src="~/ImageCard/@item.ImageNameTrans" alt="@item.ImageNameTrans" style="width:100%" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeSend)
+            </td>
+            <td style="width: 20%">
+                <a href="@Url.Action("Details", "Admin", new { id = item.TransId })" class="btn btn-warning">
+                    <i class="fas fa-info"></i>
+                </a>
+                <a onclick="DoDelete(@item.TransId)" class="btn btn-danger">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("ManageFeedback", new { page, @class = "page-link" }), new PagedListRenderOptions()
+       {
+           ContainerDivClasses = new[] { "Page", "navigation" },
+           LiElementClasses = new List<string> { "page-item" }
+       })
+
+<script>
+    var lengthContent = $('#Content').text().length;
+    if (lengthContent > 50) {
+        var newStr = $('#Content').text().substring(0, 50);
+        document.getElementById("Content").innerText = newStr + "...";
+        $('br').remove();
+    }
+
+</script>

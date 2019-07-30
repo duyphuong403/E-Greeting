@@ -6,7 +6,6 @@
 @{
     ViewBag.Title = "ManageFeedback";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
-    int i = 1;
 }
 @*<div id="gridContainer"></div>
     <div id="my-pagination"></div>*@
@@ -32,7 +31,7 @@
                             @*<td>@i</td>*@
                             <td>@item.Username</td>
                             <td>@item.Subject</td>
-                            <td>@item.Content</td>
+                            <td id="Content">@item.Content</td>
                             <td>@item.DataCreated</td>
                             <td>
 
@@ -47,7 +46,6 @@
                 </tbody>
             </table>
         </div>
-        @*@Html.PagedListPager(Model, page => Url.Action("ManageFeedback", new { page }))*@
 
         @Html.PagedListPager(Model, page => Url.Action("ManageFeedback", new { page, @class = "page-link" }), new PagedListRenderOptions()
         {
@@ -224,5 +222,12 @@
                 )
             }
         })
+    }
+
+    var lengthContent = $('#Content').text().length;
+    if (lengthContent > 50) {
+        var newStr = $('#Content').text().substring(0, 50);
+        document.getElementById("Content").innerText = newStr + "...";
+        $('br').remove();
     }
 </script>

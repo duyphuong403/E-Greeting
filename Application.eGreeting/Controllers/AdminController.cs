@@ -5,6 +5,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,10 +21,10 @@ namespace Application.eGreeting.Controllers
                 return View();
             }
             Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Home");
         }       
 
-      
+        //========================================================= Manage Feedback ===========================================================================
         [HttpPost]
         public bool InsertFeedback(Feedback model)
         {
@@ -67,9 +68,7 @@ namespace Application.eGreeting.Controllers
                 return false;
             }
         }
-
-
-
+               
         [HttpPost]
         public string GetManagerFeedback(int page = 1)
         {
@@ -92,25 +91,6 @@ namespace Application.eGreeting.Controllers
             }
             return JsonConvert.SerializeObject(myResponse);
         }
-
-
-        //public ActionResult ManageCard(int? page)
-        //{
-        //    if (IsAdmin())
-        //    {
-        //        if (page == null)
-        //        {
-        //            page = 1;
-        //        }
-        //        int pageSize = 3;
-        //        int pageNumber = (page ?? 1);
-
-        //        return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
-        //    }
-        //    Alert("You not permit to access that page", NotificationType.warning);
-        //    return RedirectToAction("Index", "Home");
-        //}
-
 
         // GET: Admin/ManageFeedback
         public ActionResult ManageFeedback(int? page)
@@ -190,7 +170,7 @@ namespace Application.eGreeting.Controllers
                 return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
             }
             Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Home");
         }
 
         // GET: Admin/CreateCard
@@ -216,41 +196,147 @@ namespace Application.eGreeting.Controllers
                     {
                         if (file != null && file.ContentLength > 0)
                         {
+                            //var search = CardDAO.GetNameCard(newCard.NameCard);
+                            if (CardDAO.GetNameCard(newCard.NameCard))
+                            {
+                                Alert("Namecard has been exist.", NotificationType.error);
+                                return View();
+                            }
+                           
                             var ext = Path.GetExtension(file.FileName);
                             if (CheckExtImg(ext))
                             {
                                 var fileName = Path.GetFileName(file.FileName);
                                 var imagePath = Server.MapPath("~/ImageCard/" + fileName);
                                 newCard.ImageName = fileName;
-
+                                newCard.DateCreated = DateTime.Now;
+                                if (CardDAO.GetImageCard(fileName))
+                                {
+                                    Alert("Image Name has been exist.", NotificationType.error);
+                                    return View();
+                                }
                                 if (CardDAO.Create(newCard))
                                 {
                                     file.SaveAs(imagePath);
+                                    Alert("Create new Card successfully", NotificationType.success);
                                     return RedirectToAction("ManageCard");
                                 }
-                                ModelState.AddModelError("", "Create new card failed.");
+                                Alert("Create new card failed.",NotificationType.error);
                                 return View();
                             }
                             else
                             {
-                                ModelState.AddModelError("", "Format image invalid");
+                                Alert("File format invalid. Please select file *.png/.jpg/.jpeg.", NotificationType.error);
                                 return View();
                             }
                         }
                         else
                         {
-                            ModelState.AddModelError("", "Please choose Image");
+                            Alert("Please choose Image", NotificationType.error);
                             return View();
                         }
                     }
                     return RedirectToAction("Index");
                 }
                 Alert("You not permit to access that page", NotificationType.warning);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Home");
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", e.Message);
+                Alert(e.Message,NotificationType.error);
+                return View();
+            }
+        }
+
+        //GET: Admin/EditCard/5
+        public ActionResult EditCard(int id)
+        {
+            try
+            {
+                if (IsAdmin())
+                {
+                    var search = CardDAO.GetCard(id);
+                    if (search != null)
+                    {
+                        return View(search);
+                    }
+                    Alert("Cannot get Card", NotificationType.error);
+                    return RedirectToAction("Index");
+                }
+                Alert("You not permit to access that page", NotificationType.warning);
+                return RedirectToAction("Login", "Home");
+                
+            }
+            catch (Exception e)
+            {
+                Alert(e.Message, NotificationType.error);
+                return RedirectToAction("Index");
+                throw;
+            }
+        }
+
+        //POST: Admin/EditCard/5
+        [HttpPost]
+        public ActionResult EditCard(Card editCard, HttpPostedFileBase file)
+        {
+
+            try
+            {
+                if (IsAdmin())
+                {
+                    if (ModelState.IsValid)
+                    {
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            var ext = Path.GetExtension(file.FileName);
+                            if (CheckExtImg(ext))
+                            {
+                                var fileName = Path.GetFileName(file.FileName);
+                                var imagePath = Server.MapPath("~/ImageCard/" + fileName);
+                                editCard.ImageName = fileName;
+                                if (editCard.DateCreated == null)
+                                {
+                                    editCard.DateCreated = DateTime.Now;
+                                }
+
+                                if (CardDAO.EditCard(editCard))
+                                {
+                                    file.SaveAs(imagePath);
+                                    Alert("Update Card successfully", NotificationType.success);
+                                    return RedirectToAction("ManageCard");
+                                }
+                                Alert("Update card failed.", NotificationType.error);
+                                return View();
+                            }
+                            else
+                            {
+                                Alert("File format invalid. Please select file *.png/.jpg/.jpeg.", NotificationType.error);
+                                return View();
+                            }
+                        }
+                        else
+                        {
+                            if (editCard.DateCreated == null)
+                            {
+                                editCard.DateCreated = DateTime.Now;
+                            }
+                            if (CardDAO.EditCard(editCard))
+                            {
+                                Alert("Update Card successfully", NotificationType.success);
+                                return RedirectToAction("ManageCard");
+                            }
+                            Alert("Update card failed.", NotificationType.error);
+                            return View();
+                        }
+                    }
+                    return RedirectToAction("Index");
+                }
+                Alert("You not permit to access that page", NotificationType.warning);
+                return RedirectToAction("Login", "Home");
+            }
+            catch (Exception e)
+            {
+                Alert(e.Message, NotificationType.error);
                 return View();
             }
         }
@@ -463,17 +549,22 @@ namespace Application.eGreeting.Controllers
         }
 
         //================================================ Manage Payment ====================================================//
-        // GET: /Admin/ManagePurchase
-        public ActionResult ManagePurchase(int? page)
+        // GET: /Admin/ManagePaymentInfo
+        public ActionResult ManagePaymentInfo(int? page)
         {
-            if (page == null)
+            if (IsAdmin())
             {
-                page = 1;
-            }
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 3;
+                int pageNumber = (page ?? 1);
 
-            return View(PaymentDAO.GetAllPayment.ToPagedList(pageNumber, pageSize));
+                return View(PaymentDAO.GetAllPayment.ToPagedList(pageNumber, pageSize));
+            }
+            Alert("You not permit to access this page", NotificationType.error);
+            return RedirectToAction("Login", "Home");
         }
 
         [HttpPost]
@@ -482,11 +573,33 @@ namespace Application.eGreeting.Controllers
             if (PaymentDAO.ChangeStatusActivation(id, Boolean.Parse(IsActive)))
             {
                 Alert("Change status activation successfully", NotificationType.success);
-                return RedirectToAction("ManagePurchase");
+                return RedirectToAction("ManagePaymentInfo");
             }
             Alert("Change status activation failed.", NotificationType.error);
             return View();
         }
+
+        //================================================ Manage Payment ====================================================//
+        // GET: /Admin/ManageTrans
+
+        public ActionResult ManageTrans(int? page)
+        {
+            if (IsAdmin())
+            {
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 10;
+                int pageNumber = (page ?? 1);
+
+                return View(TransDAO.GetAllTrans.ToPagedList(pageNumber, pageSize));
+            }
+            Alert("You not permit to access this page", NotificationType.error);
+            return RedirectToAction("Login", "Home");
+        }
+
+
 
         public void Alert(string message, NotificationType notificationType)
         {
