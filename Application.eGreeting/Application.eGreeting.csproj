@@ -2441,6 +2441,7 @@
     <Content Include="Views\User\Payment.cshtml" />
     <Content Include="Views\Admin\ManagePurchase.cshtml" />
     <Content Include="Views\User\DescriptionPayment.cshtml" />
+    <Content Include="Views\Home\Birthday.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

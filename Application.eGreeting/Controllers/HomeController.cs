@@ -12,16 +12,9 @@ namespace Application.eGreeting.Controllers
     {
         [HandleError]
         // GET: Home
-        public ActionResult Index(string txtSearch, int? page) 
-        {
-            if (page==null)
-            {
-                page = 1;
-            }
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-
-            return View(CardDAO.GetAllCard.ToPagedList(pageNumber,pageSize));
+        public ActionResult Index() 
+        {        
+            return View();
         }
 
         public ActionResult Search(string txtSearch, int? page)
@@ -30,27 +23,32 @@ namespace Application.eGreeting.Controllers
             {
                 page = 1;
             }
-            int pageSize = 3;
+            int pageSize = 9;
             int pageNumber = (page ?? 1);
 
             if (string.IsNullOrEmpty(txtSearch))
             {
                 return View("Index", CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
             }
-            return View("Index", CardDAO.GetCards(txtSearch)    .ToPagedList(pageNumber, pageSize));
+            return View("Index", CardDAO.GetCards(txtSearch).ToPagedList(pageNumber, pageSize));
         }
 
-        //public ActionResult Search(string txtSearch, int? page)
-        //{
-        //    if (page == null)
-        //    {
-        //        page = 1;
-        //    }
-        //    int pageSize = 3;
-        //    int pageNumber = (page ?? 1);
-
-           
-        //}
+        //GET: Home/Birthday
+        public ActionResult Birthday(int? page)
+        {
+            var search = CardDAO.GetAllCard;
+            if (search != null)
+            {
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 9;
+                int pageNumber = (page ?? 1);
+                return View(search.ToPagedList(pageNumber, pageSize));
+            }
+            return RedirectToAction("Index");
+        }
 
         //GET: Home/Login
         public ActionResult Login()
