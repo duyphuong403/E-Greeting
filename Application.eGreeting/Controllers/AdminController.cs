@@ -492,16 +492,12 @@ namespace Application.eGreeting.Controllers
         {
             try
             {
-                if (id != null)
+                var search = UserDAO.GetUser(id);
+                if (search != null)
                 {
-                    var search = UserDAO.GetUser(id);
-                    if (search != null)
-                    {
-                        return View(search);
-                    }
-                    Alert("Not found user", NotificationType.error);
-                    return RedirectToAction("Index");
+                    return View(search);
                 }
+                Alert("Not found user", NotificationType.error);
                 return RedirectToAction("Index");
             }
             catch (Exception e)

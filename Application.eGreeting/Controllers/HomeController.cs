@@ -52,7 +52,6 @@ namespace Application.eGreeting.Controllers
                 ViewBag.Message("No item");
                 return View("index");
             }
-            return RedirectToAction("Index");
         }
         //GET: Home/NewYear
         public ActionResult NewYear(int? page)
