@@ -34,7 +34,55 @@ namespace Application.eGreeting.Controllers
         //GET: Home/Birthday
         public ActionResult Birthday(int? page)
         {
-            var search = CardDAO.GetAllCard;
+            var Category = "Birthday";
+            var search = CardDAO.GetCardByCategory(Category);
+
+            if (search != null)
+            {
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 9;
+                int pageNumber = (page ?? 1);
+                return View(search.ToPagedList(pageNumber, pageSize));
+            }
+            else
+            {
+                ViewBag.Message("No item");
+                return View("index");
+            }
+            return RedirectToAction("Index");
+        }
+        //GET: Home/NewYear
+        public ActionResult NewYear(int? page)
+        {
+            var Category = "NewYear";
+            var search = CardDAO.GetCardByCategory(Category);
+
+            if (search != null)
+            {
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 9;
+                int pageNumber = (page ?? 1);
+                return View(search.ToPagedList(pageNumber, pageSize));
+            }
+            else
+            {
+                ViewBag.Message= "No item";
+                return View();
+            }
+            
+        }
+        //GET: Home/Festival
+        public ActionResult Festival(int? page)
+        {
+            var Category = "Festival";
+            var search = CardDAO.GetCardByCategory(Category);
+
             if (search != null)
             {
                 if (page == null)

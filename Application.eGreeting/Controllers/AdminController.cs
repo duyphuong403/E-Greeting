@@ -5,6 +5,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -156,18 +157,28 @@ namespace Application.eGreeting.Controllers
         //================================================ Manage Card ====================================================//
 
         // GET: Admin/ManageCard
-        public ActionResult ManageCard(int? page)
+        public ActionResult ManageCard(string pName,int? page)
         {
+            var model = CardDAO.GetAllCard;
             if (IsAdmin())
             {
-                if (page == null)
+                if (!string.IsNullOrEmpty(pName))
                 {
-                    page = 1;
+                    //seartch by name
+                    model = model.Where(p => p.NameCard.ToUpper().Contains(pName)
+                                        || p.NameCard.ToLower().Contains(pName)).ToList();
+                    //items in page
+                    int pageSize = 9;
+                    int pageNumber = (page ?? 1);
+                    return View(model.ToPagedList(pageNumber, pageSize));
                 }
-                int pageSize = 3;
-                int pageNumber = (page ?? 1);
-
-                return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
+                else
+                {
+                    //items in page
+                    int pageSize = 9;
+                    int pageNumber = (page ?? 1);
+                    return View(model.ToPagedList(pageNumber, pageSize));
+                }
             }
             Alert("You not permit to access that page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
