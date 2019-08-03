@@ -476,6 +476,31 @@ namespace Application.eGreeting.Controllers
             }
         }
 
+        // GET: Admin/EditUser
+        public ActionResult EditUser(int id)
+        {
+            try
+            {
+                if (id != null)
+                {
+                    var search = UserDAO.GetUser(id);
+                    if (search != null)
+                    {
+                        return View(search);
+                    }
+                    Alert("Not found user", NotificationType.error);
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                Alert(e.Message, NotificationType.error);
+                return RedirectToAction("Index");
+                throw;
+            }
+        }
+
         // POST: Admin/EditUser
         [HttpPost]
         public ActionResult EditUser(User editU)
