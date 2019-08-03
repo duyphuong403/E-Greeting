@@ -646,6 +646,11 @@ namespace Application.eGreeting.Controllers
             Alert("You not permit to access this page", NotificationType.error);
             return RedirectToAction("Login", "Home");
         }
+        public ActionResult DetailTrans(int id)
+        {
+            var s = TransDAO.GetTransaction(id);
+            return View(s);
+        }
 
         public ActionResult DeleteTrans(int id)
         {
