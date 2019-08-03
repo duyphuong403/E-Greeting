@@ -99,7 +99,7 @@ namespace Application.eGreeting.Controllers
             if (ModelState.IsValid)
             {
                 UserDAO.EditUser(editU);
-                Alert("Edited successfully!!", NotificationType.error);
+                Alert("Edited successfully!!", NotificationType.success);
                 return RedirectToAction("Index");
             }
             else

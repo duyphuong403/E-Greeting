@@ -2467,6 +2467,7 @@
     <Content Include="Views\User\SubscribeReceive.cshtml" />
     <Content Include="Views\Home\NewYear.cshtml" />
     <Content Include="Views\Home\Festival.cshtml" />
+    <Content Include="Views\Admin\DetailTrans.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
