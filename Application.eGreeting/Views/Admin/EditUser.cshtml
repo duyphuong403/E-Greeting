@@ -44,19 +44,22 @@
         <h4 style="color:#8df364">Note: Leave the field blank if you don't want to change the password</h4>
     </div>
 
-    @if (Session["username"].ToString().ToLower() != "admin")
-    {
-        <div class="form-group">
-            @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
+    @*@if (!Model.Role)
+    {*@
+        @if (Model.UserName != "admin")
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
 
-                    @Html.EditorFor(model => model.Role)
-                    @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.Role)
+                        @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    
 
     <div class="form-group">
         @Html.LabelFor(model => model.IsSubcribeSend, htmlAttributes: new { @class = "control-label col-md-2" })

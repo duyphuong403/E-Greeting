@@ -518,7 +518,7 @@ namespace Application.eGreeting.Controllers
                     editU.Password = searchUser.Password;
                     editU.RePassword = searchUser.RePassword;
                 }
-                if (Session["username"].ToString() == "admin")
+                if (editU.UserName == "admin")
                 {
                     editU.Role = true;
                 }
