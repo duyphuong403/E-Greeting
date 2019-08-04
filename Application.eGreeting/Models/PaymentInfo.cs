@@ -23,6 +23,7 @@ namespace Application.eGreeting.Models
 
         [Required]
         [Display(Name = "Account Number")]
+        //[DataType(DataType.CreditCard)]
         [RegularExpression("[0-9]{12,16}", ErrorMessage = "Account Number just can be from 12 - 16 digits")]
         public long BankAccount { get; set; }
 

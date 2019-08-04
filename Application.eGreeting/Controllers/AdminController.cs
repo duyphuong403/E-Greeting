@@ -492,16 +492,12 @@ namespace Application.eGreeting.Controllers
         {
             try
             {
-                if (id != null)
+                var search = UserDAO.GetUser(id);
+                if (search != null)
                 {
-                    var search = UserDAO.GetUser(id);
-                    if (search != null)
-                    {
-                        return View(search);
-                    }
-                    Alert("Not found user", NotificationType.error);
-                    return RedirectToAction("Index");
+                    return View(search);
                 }
+                Alert("Not found user", NotificationType.error);
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -529,7 +525,7 @@ namespace Application.eGreeting.Controllers
                     editU.Password = searchUser.Password;
                     editU.RePassword = searchUser.RePassword;
                 }
-                if (Session["username"].ToString() == "admin")
+                if (editU.UserName == "admin")
                 {
                     editU.Role = true;
                 }

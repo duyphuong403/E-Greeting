@@ -41,22 +41,22 @@
     </div>
 
     <div class="form-group">
-        <h4 style="color:#8df364">Note: Leave the field blank if you don't want to change the password</h4>
+        <h5 style="color:#4cbc1f">Note: Leave the Password field blank if you don't want to change the password!</h5>
     </div>
 
-    @if (Session["username"].ToString().ToLower() != "admin")
+    @if (Model.UserName != "admin")
     {
         <div class="form-group">
             @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-
-                    @Html.EditorFor(model => model.Role)
+                    @Html.EditorFor(model => model.Role) <p style="display:inline-block; color: red">Admin</p>
                     @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
     }
+
 
     <div class="form-group">
         @Html.LabelFor(model => model.IsSubcribeSend, htmlAttributes: new { @class = "control-label col-md-2" })

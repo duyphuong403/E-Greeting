@@ -2479,7 +2479,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\AvatarTeam\" />
     <Folder Include="ImageCard\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
