@@ -48,7 +48,7 @@
             <td>@Html.DisplayFor(modelItem => item.Phone)</td>
             <td> @Html.DisplayFor(modelItem => item.Email)</td>
             <td>
-                @Html.ActionLink("Edit", "EditUser", new { id = item.UserId }, new { @class = "btn btn-warning" })
+                <a href="/Admin/EditUser/@item.UserId" class = "btn btn-warning"><i class="far fa-edit"></i></a>
                 @if (item.UserId != 1)
                 {
                     <a onClick="doDelete(@item.UserId)" class="btn btn-danger btn-circle">

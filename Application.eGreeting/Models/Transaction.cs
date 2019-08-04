@@ -19,7 +19,7 @@ namespace Application.eGreeting.Models
         public string Username { get; set; }
 
         [Required]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [DataType(DataType.EmailAddress)]
         [StringLength(50, ErrorMessage ="Receiver cannot more than 50 characters")]
         public string Receiver { get; set; }      
      
