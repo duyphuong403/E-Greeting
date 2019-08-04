@@ -13,14 +13,12 @@ namespace Application.eGreeting.Controllers
         [HandleError]
         // GET: Home
         public ActionResult Index()
-        {        
+        {
             return View();
         }
 
         public ActionResult Search(string txtSearch)
         {
-           
-
             if (string.IsNullOrEmpty(txtSearch))
             {
                 Alert("Not Found", NotificationType.warning);
@@ -28,7 +26,7 @@ namespace Application.eGreeting.Controllers
 
             }
             return View("Search", CardDAO.GetCards(txtSearch));
-            
+
         }
 
         //GET: Home/Birthday
@@ -36,9 +34,9 @@ namespace Application.eGreeting.Controllers
         {
             var Category = "Birthday";
             var search = CardDAO.GetCardByCategory(Category);
-
-            if (search != null)
+            if (search.Count != 0)
             {
+
                 if (page == null)
                 {
                     page = 1;
@@ -49,10 +47,8 @@ namespace Application.eGreeting.Controllers
             }
             else
             {
-                ViewBag.Message("No item");
                 return View("index");
             }
-            return RedirectToAction("Index");
         }
         //GET: Home/NewYear
         public ActionResult NewYear(int? page)
@@ -60,8 +56,9 @@ namespace Application.eGreeting.Controllers
             var Category = "NewYear";
             var search = CardDAO.GetCardByCategory(Category);
 
-            if (search != null)
+            if (search.Count != 0)
             {
+
                 if (page == null)
                 {
                     page = 1;
@@ -72,10 +69,10 @@ namespace Application.eGreeting.Controllers
             }
             else
             {
-                ViewBag.Message= "No item";
+
                 return View();
             }
-            
+
         }
         //GET: Home/Festival
         public ActionResult Festival(int? page)
@@ -83,8 +80,9 @@ namespace Application.eGreeting.Controllers
             var Category = "Festival";
             var search = CardDAO.GetCardByCategory(Category);
 
-            if (search != null)
+            if (search.Count != 0)
             {
+
                 if (page == null)
                 {
                     page = 1;
@@ -93,7 +91,11 @@ namespace Application.eGreeting.Controllers
                 int pageNumber = (page ?? 1);
                 return View(search.ToPagedList(pageNumber, pageSize));
             }
-            return RedirectToAction("Index");
+            else
+            {
+
+                return View();
+            }
         }
 
         //GET: Home/Login
@@ -124,7 +126,7 @@ namespace Application.eGreeting.Controllers
                 Session["role"] = search.Role.ToString().ToLower();
                 if (Session["role"].ToString() == "true")
                 {
-                    return RedirectToAction("Index","Admin");
+                    return RedirectToAction("Index", "Admin");
                 }
                 return RedirectToAction("Index");
             }
@@ -160,6 +162,6 @@ namespace Application.eGreeting.Controllers
             success,
             warning,
             info
-        }        
+        }
     }
 }

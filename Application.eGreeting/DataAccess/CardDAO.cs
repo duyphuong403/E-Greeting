@@ -96,7 +96,6 @@ namespace Application.eGreeting.DataAccess
         }
         public static List<Card> GetCardByCategory(string Category)
         {
-
             return db.Cards.Where(item => item.Category.ToLower().Contains(Category.ToLower())).ToList();
         }
 
