@@ -324,6 +324,33 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+        //POST: User/AddEmailList
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddEmailList(EmailList addEmail)
+        {
+            if (addEmail.ListEmail != null)
+            {
+                string[] email = addEmail.ListEmail.Split('\n');
+                if (email.Length < 10)
+                {
+                    Alert("You must be input at least 10 email to send card.", NotificationType.error);
+                    return RedirectToAction("SubscribeSend");
+                }
+                if (Session["username"] != null)
+                {
+                    addEmail.Username = Session["username"].ToString().ToLower();
+                    if (EmailListDAO.Create(addEmail))
+                    {
+                        Alert("You're Subscribe Send successfully", NotificationType.success);
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+            }
+            Alert("Please do not empty fields", NotificationType.error);
+            return RedirectToAction("SubscribeSend");
+        }
+
         //GET: User/SubscribeReceive
         public ActionResult SubscribeReceive()
         {
