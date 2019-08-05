@@ -75,12 +75,9 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-success" />
-            <input type="reset" value="Reset" class="btn btn-danger">
+            <input type="reset" value="Reset" class="btn btn-default">
+            @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", @style = "float:left" })
         </div>
     </div>
 </div>
 }
-
-<div>
-    @Html.ActionLink("Back", "Index")
-</div>
