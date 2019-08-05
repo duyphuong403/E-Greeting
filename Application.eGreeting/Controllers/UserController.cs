@@ -334,7 +334,7 @@ namespace Application.eGreeting.Controllers
                 string[] email = addEmail.ListEmail.Split('\n');
                 if (email.Length < 10)
                 {
-                    Alert("You must be input at least 10 email to send card.", NotificationType.error);
+                    Alert("You must be input at least 10 emails to send card.", NotificationType.error);
                     return RedirectToAction("SubscribeSend");
                 }
                 if (Session["username"] != null)
