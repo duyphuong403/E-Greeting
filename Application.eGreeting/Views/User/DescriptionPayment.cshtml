@@ -14,7 +14,7 @@
     </tr>
     <tr>
         <td>
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning", @style = "float:left" })
             <a onClick="doPayment()" class="btn btn-primary btn-circle">
                 <i style="color: #fff" class="fa fa-money">Payment</i>
             </a>
@@ -27,7 +27,7 @@
     function doPayment() {
         Swal.fire({
             title: 'Confirm',
-            text: "By click OK, you'll accept to pay $10 per month. Are you sure ?",
+            text: "By click OK, you'll accept to pay $10 per month. Are you sure?",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

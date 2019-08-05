@@ -17,13 +17,58 @@ namespace Application.eGreeting.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            if (IsAdmin())
+            if (IsLoggedIn())
             {
-                return View();
+                if (IsAdmin())
+                {
+                    return View();
+                }
+                Alert("You not permit to access that page", NotificationType.warning);
+                return RedirectToAction("Index", "Home");
             }
-            Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Login");
         }       
+
+        //GET: Admin/Login
+        public ActionResult Login()
+        {
+            if (Session["username"] != null)
+            {
+                return RedirectToAction("Index");
+            }
+            Alert("Attention: If you are not Administrator. Please leave from there. Thank you", NotificationType.warning);
+            return View();
+        }
+
+        // POST: Admin/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(User login)
+        {
+            var model = new User
+            {
+                UserName = login.UserName,
+                Password = login.Password
+            };
+            var search = UserDAO.CheckLogin(model);
+            if (search != null)
+            {
+                if (!search.Role)
+                {
+                    Alert("You are not Administrator. Please do not try login here. Thank you.", NotificationType.warning);
+                    return RedirectToAction("Index", "Home");
+                }
+                Session["username"] = search.UserName;
+                Session["fullname"] = search.FullName;
+                Session["role"] = search.Role.ToString().ToLower();             
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                Alert("Invalid Account", NotificationType.error);
+            }
+            return View();
+        }
 
         //========================================================= Manage Feedback ===========================================================================
         [HttpPost]

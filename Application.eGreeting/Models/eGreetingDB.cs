@@ -31,6 +31,8 @@ namespace Application.eGreeting.Models
 
         public virtual DbSet<PaymentInfo> PaymentInfos { get; set; }
 
+        public virtual DbSet<EmailList> EmailLists { get; set; }
+
     }
 
     public class DBInit : DropCreateDatabaseIfModelChanges<eGreetingDB>

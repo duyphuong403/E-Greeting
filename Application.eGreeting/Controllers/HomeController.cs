@@ -124,10 +124,10 @@ namespace Application.eGreeting.Controllers
                 Session["username"] = search.UserName;
                 Session["fullname"] = search.FullName;
                 Session["role"] = search.Role.ToString().ToLower();
-                if (Session["role"].ToString() == "true")
-                {
-                    return RedirectToAction("Index", "Admin");
-                }
+                //if (Session["role"].ToString() == "true")
+                //{
+                //    return RedirectToAction("Index", "Admin");
+                //}
                 return RedirectToAction("Index");
             }
             else
@@ -144,6 +144,7 @@ namespace Application.eGreeting.Controllers
             {
                 Session["username"] = null;
                 Session["role"] = null;
+                Alert("You has signed out!", NotificationType.success);
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");

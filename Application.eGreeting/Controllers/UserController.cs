@@ -183,7 +183,7 @@ namespace Application.eGreeting.Controllers
                 if (FeedbackDAO.Insert(feedback))
                 {
                     Alert("Send feedback successfully!", NotificationType.success);
-                    return RedirectToAction("FeedbackIndex", "User");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace Application.eGreeting.Controllers
                 {
                     if (searchUser != null && !searchPayment.IsActive)
                     {
-                        Alert("Your Info Payment not active. Please contact Administrator", NotificationType.error);
+                        Alert("Your Info Payment is not activated. Please contact Administrator by send feedback.", NotificationType.error);
                         return RedirectToAction("FeedbackIndex");
                     }
                     else
@@ -246,7 +246,7 @@ namespace Application.eGreeting.Controllers
                         Alert("Send eGreeting card successfully.", NotificationType.success);
                         return RedirectToAction("Index", "Home");
                     }
-                    Alert("Send card failed. Please contact your Admin", NotificationType.error);
+                    Alert("Send card failed. Please contact Administrator!", NotificationType.error);
                 }
                 return View();
             }
@@ -295,7 +295,7 @@ namespace Application.eGreeting.Controllers
                     {
                         if (PaymentDAO.CreatePayment(addPayment))
                         {
-                            Alert("Register Payment Account Successfully. Please wait us active your payment. Thanks. ", NotificationType.success);
+                            Alert("Register payment account successfully. Please wait until we activate your payment. Thank you! ", NotificationType.success);
                             return RedirectToAction("Index", "Home");
                         }
                     }
@@ -320,8 +320,35 @@ namespace Application.eGreeting.Controllers
             {
                 return View();
             }
-            Alert("You need Log in to access this page", NotificationType.warning);
+            Alert("You need Log in to access this page!", NotificationType.warning);
             return RedirectToAction("Login", "Home");
+        }
+
+        //POST: User/AddEmailList
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddEmailList(EmailList addEmail)
+        {
+            if (addEmail.ListEmail != null)
+            {
+                string[] email = addEmail.ListEmail.Split('\n');
+                if (email.Length < 10)
+                {
+                    Alert("You must be input at least 10 emails to send card.", NotificationType.error);
+                    return RedirectToAction("SubscribeSend");
+                }
+                if (Session["username"] != null)
+                {
+                    addEmail.Username = Session["username"].ToString().ToLower();
+                    if (EmailListDAO.Create(addEmail))
+                    {
+                        Alert("You're Subscribe Send successfully", NotificationType.success);
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+            }
+            Alert("Please do not empty fields", NotificationType.error);
+            return RedirectToAction("SubscribeSend");
         }
 
         //GET: User/SubscribeReceive
@@ -364,10 +391,10 @@ namespace Application.eGreeting.Controllers
                     Alert("Not found Username", NotificationType.error);
                     return RedirectToAction("SubscribeReceive");
                 }
-                Alert("Sorry Your Payment not activate. Please contact Administrator", NotificationType.error);
+                Alert("Your Payment is not activated. Please contact Administrator by send feedback.", NotificationType.error);
                 return RedirectToAction("FeedbackIndex");
             }
-            Alert("Sorry You not Register Payment Info. Please Register Payment Info", NotificationType.error);
+            Alert("Sorry You not register Payment Information. Please register first!", NotificationType.error);
             return RedirectToAction("Payment");
         }
 
@@ -380,10 +407,10 @@ namespace Application.eGreeting.Controllers
                 search.IsSubcribeReceive = false;
                 if (UserDAO.UpdateSubscribeReceive(search))
                 {
-                    Alert("UnSubscribe Daily Receive New Card Successfully", NotificationType.success);
+                    Alert("UnSubscribe daily receive new Cards successfully", NotificationType.success);
                     return RedirectToAction("Index", "Home");
                 }
-                Alert("UnSubscribe Daily Receive New Card Failed", NotificationType.error);
+                Alert("UnSubscribe daily receive new Card failed", NotificationType.error);
                 return RedirectToAction("SubscribeReceive");
             }
             Alert("Not found Username", NotificationType.error);
