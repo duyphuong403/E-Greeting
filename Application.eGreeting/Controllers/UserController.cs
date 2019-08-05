@@ -391,7 +391,7 @@ namespace Application.eGreeting.Controllers
                     Alert("Not found Username", NotificationType.error);
                     return RedirectToAction("SubscribeReceive");
                 }
-                Alert("Sorry Your Payment not activate. Please contact Administrator", NotificationType.error);
+                Alert("Your Payment is not activated. Please contact Administrator by send feedback.", NotificationType.error);
                 return RedirectToAction("FeedbackIndex");
             }
             Alert("Sorry You not register Payment Information. Please register first!", NotificationType.error);
