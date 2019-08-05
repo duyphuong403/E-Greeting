@@ -40,17 +40,16 @@
             </div>
 
         }
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @class = "page-link" }), new PagedListRenderOptions()
-        {
-           ContainerDivClasses = new [] { "Page", "navigation" },
-           LiElementClasses = new List<string> { "page-item" }
-        })
     }
     else
     {
         <h3>Nothing to display</h3>
     }
 </div>
-
+@Html.PagedListPager(Model, page => Url.Action("NewYear", new { page, @class = "page-link" }), new PagedListRenderOptions()
+    {
+       ContainerDivClasses = new [] { "Page", "navigation" },
+       LiElementClasses = new List<string> { "page-item" }
+    })
 
 

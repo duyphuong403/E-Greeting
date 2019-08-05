@@ -14,34 +14,36 @@
 
 
 
-    <div class="row">
-        @if (Model != null)
+<div class="row">
+    @if (Model != null)
+    {
+        foreach (var item in Model)
         {
-            foreach (var item in Model)
-            {
 
 
-                <h3></h3>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="box-card">
-                        <img src="~/ImageCard/@item.ImageName" alt="image" class="image" style="width:100%">
-                        <div class="middle">
-                            <a href="/User/CreateTrans/@item.CardId" class="btn-select">SELECT</a>
-                        </div>
-                        <div class="name-card">
-                            <h6>@Html.DisplayFor(modelItem => item.NameCard)</h6>
-                        </div>
+            <h3></h3>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="box-card">
+                    <img src="~/ImageCard/@item.ImageName" alt="image" class="image" style="width:100%">
+                    <div class="middle">
+                        <a href="/User/CreateTrans/@item.CardId" class="btn-select">SELECT</a>
+                    </div>
+                    <div class="name-card">
+                        <h6>@Html.DisplayFor(modelItem => item.NameCard)</h6>
                     </div>
                 </div>
+            </div>
 
-            }
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @class = "page-link" }), new PagedListRenderOptions()
-            {
-               ContainerDivClasses = new [] { "Page", "navigation" },
-               LiElementClasses = new List<string> { "page-item" }
-            })
         }
-        else
-        {
-            <h3>Nothing to display</h3>
-        }
+
+    }
+    else
+    {
+        <h3>Nothing to display</h3>
+    }
+</div>
+@Html.PagedListPager(Model, page => Url.Action("Birthday", new { page, @class = "page-link" }), new PagedListRenderOptions()
+    {
+       ContainerDivClasses = new [] { "Page", "navigation" },
+       LiElementClasses = new List<string> { "page-item" }
+    })
