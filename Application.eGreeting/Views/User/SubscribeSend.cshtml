@@ -31,7 +31,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        @Html.TextAreaFor(model => model.ListEmail, new { @class = "form-control", @rows = "10", @placeholder = "Input emails list which you will send card...(at least 10 emails - Each line is an email)" })
+                        @Html.TextAreaFor(model => model.ListEmail, new { @class = "form-control", @rows = "10", @placeholder = "Input emails list which you want to send card...(at least 10 emails - one email per line!)" })
                         @Html.ValidationMessageFor(model => model.ListEmail, "", new { @class = "text-danger" })
                         @*<textarea rows="10" placeholder="Input emails list which you will send card...(at least 10 emails - separate by ';' )" class="form-control rounded-0" style="max-width:100%"></textarea>*@
                     </div>
