@@ -144,6 +144,7 @@ namespace Application.eGreeting.Controllers
             {
                 Session["username"] = null;
                 Session["role"] = null;
+                Alert("You has signed out!", NotificationType.success);
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
