@@ -183,7 +183,7 @@ namespace Application.eGreeting.Controllers
                 if (FeedbackDAO.Insert(feedback))
                 {
                     Alert("Send feedback successfully!", NotificationType.success);
-                    return RedirectToAction("FeedbackIndex", "User");
+                    return RedirectToAction("Index", "User");
                 }
                 else
                 {
