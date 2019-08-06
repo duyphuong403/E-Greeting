@@ -41,6 +41,7 @@ namespace Application.eGreeting.Controllers
         //GET: Home/Birthday
         public ActionResult Birthday(int? page)
         {
+
             var search = CardDAO.GetAllCard;
             if (search != null)
             {

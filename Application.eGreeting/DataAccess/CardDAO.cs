@@ -35,6 +35,16 @@ namespace Application.eGreeting.DataAccess
             return db.Cards.Where(item => item.NameCard.ToLower().Contains(name)).ToList();
         }
 
+        public static List<Card> GetCardsByCategory(string category)
+        {
+            if (category != null)
+            {
+                category = category.ToLower();
+                return db.Cards.Where(item => item.Category.ToLower() == category).ToList();
+            }
+            return db.Cards.OrderByDescending(o => o.DateCreated).ToList();
+        }
+
         public static bool Create(Card newCard)
         {
             var b = GetCard(newCard.CardId);

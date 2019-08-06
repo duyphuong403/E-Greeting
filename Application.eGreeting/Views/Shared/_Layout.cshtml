@@ -163,115 +163,120 @@
 </html>
 
 <script>
-    // Light slider
-    $('#responsive-banner').lightSlider({
-        item: 1,
-        loop: true,
-        slideMove: 1,
-        easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
-        speed: 2400,
-        auto: true,
-        pause: 4200,
-        pauseOnHover: true,
-        controls: false,
-        slideMargin: 30,
-        responsive: [
-            {
-                breakpoint: 800,
-                settings: {
-                    item: 1,
-                    slideMove: 1,
-                    slideMargin: 6,
-                }
-            },
-            {
-                breakpoint: 426,
-                settings: {
-                    item: 1,
-                    slideMove: 1
-                }
-            }
-        ]
-    });
+    $(document).ready(function () {
 
-    $('#responsive').lightSlider({
-        item: 4,
-        loop: false,
-        slideMove: 3,
-        easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
-        speed: 600,
-        controls: false,
-        slideMargin: 30,
-        responsive: [
-            {
-                breakpoint: 800,
-                settings: {
-                    item: 3,
-                    slideMove: 1,
-                    slideMargin: 6,
+        // Light slider
+        $('#responsive-banner').lightSlider({
+            item: 1,
+            loop: true,
+            slideMove: 1,
+            easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
+            speed: 2400,
+            auto: true,
+            pause: 4200,
+            pauseOnHover: true,
+            controls: false,
+            slideMargin: 30,
+            responsive: [
+                {
+                    breakpoint: 800,
+                    settings: {
+                        item: 1,
+                        slideMove: 1,
+                        slideMargin: 6,
+                    }
+                },
+                {
+                    breakpoint: 426,
+                    settings: {
+                        item: 1,
+                        slideMove: 1
+                    }
                 }
-            },
-            {
-                breakpoint: 426,
-                settings: {
-                    item: 1,
-                    slideMove: 1
-                }
-            }
-        ]
-    });
+            ]
+        });
 
-    $('#responsive-1').lightSlider({
-        item: 4,
-        loop: false,
-        slideMove: 3,
-        easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
-        speed: 600,
-        controls: false,
-        slideMargin: 30,
-        responsive: [
-            {
-                breakpoint: 800,
-                settings: {
-                    item: 3,
-                    slideMove: 1,
-                    slideMargin: 6,
+        $('#responsive').lightSlider({
+            item: 4,
+            loop: false,
+            slideMove: 3,
+            easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
+            speed: 600,
+            controls: false,
+            slideMargin: 30,
+            responsive: [
+                {
+                    breakpoint: 800,
+                    settings: {
+                        item: 3,
+                        slideMove: 1,
+                        slideMargin: 6,
+                    }
+                },
+                {
+                    breakpoint: 426,
+                    settings: {
+                        item: 1,
+                        slideMove: 1
+                    }
                 }
-            },
-            {
-                breakpoint: 426,
-                settings: {
-                    item: 1,
-                    slideMove: 1
-                }
-            }
-        ]
-    });
+            ]
+        });
 
-    $('#responsive-2').lightSlider({
-        item: 4,
-        loop: false,
-        slideMove: 3,
-        easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
-        speed: 600,
-        controls: false,
-        slideMargin: 30,
-        responsive: [
-            {
-                breakpoint: 800,
-                settings: {
-                    item: 3,
-                    slideMove: 1,
-                    slideMargin: 6,
+        $('#responsive-1').lightSlider({
+            item: 4,
+            loop: false,
+            slideMove: 3,
+            easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
+            speed: 600,
+            controls: false,
+            slideMargin: 30,
+            responsive: [
+                {
+                    breakpoint: 800,
+                    settings: {
+                        item: 3,
+                        slideMove: 1,
+                        slideMargin: 6,
+                    }
+                },
+                {
+                    breakpoint: 426,
+                    settings: {
+                        item: 1,
+                        slideMove: 1
+                    }
                 }
-            },
-            {
-                breakpoint: 426,
-                settings: {
-                    item: 1,
-                    slideMove: 1
+            ]
+        });
+
+        $('#responsive-2').lightSlider({
+            item: 4,
+            loop: false,
+            slideMove: 3,
+            easing: 'cubic-bezier(0.25, 0, 0.25, 1)',
+            speed: 600,
+            controls: false,
+            slideMargin: 30,
+            responsive: [
+                {
+                    breakpoint: 800,
+                    settings: {
+                        item: 3,
+                        slideMove: 1,
+                        slideMargin: 6,
+                    }
+                },
+                {
+                    breakpoint: 426,
+                    settings: {
+                        item: 1,
+                        slideMove: 1
+                    }
                 }
-            }
-        ]
-    });
+            ]
+        });
+
+    })
+    
 </script>
