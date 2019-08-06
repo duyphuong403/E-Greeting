@@ -6,7 +6,12 @@
 }
 
 <h2>Modify Card</h2>
-
+@if (Model != null)
+{
+    <div class="form-group" style="text-align: center;">
+        <img src="~/ImageCard/@Model.ImageNameTrans" alt="@Model.ImageNameTrans" style="width:50%" id="Image" />
+    </div>
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -18,14 +23,12 @@
         @Html.HiddenFor(model => model.NameCard)
         @Html.HiddenFor(model => model.ImageNameTrans)
 
-        @*<div class="form-group" style="text-align: center;">
-                <img src="~/ImageCard/@Model.ImageNameTrans" alt="@Model.ImageNameTrans" style="width:50%" id="Image"/>
-            </div>*@
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Receiver, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Receiver, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.EditorFor(model => model.Receiver, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Receiver, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,7 +53,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-warning" })
-                <input type="submit" value="Send" class="btn btn-default" style="float:right !important"/>
+                <input type="submit" value="Send" class="btn btn-default" style="float:right !important" />
             </div>
         </div>
     </div>
@@ -72,7 +75,7 @@
             confirmButtonText: 'Yes, Send it!',
             cancelButtonColor: '#d33'
         }).then((result) => {
-            if (result.value) {               
+            if (result.value) {
                 var obj = {};
                 obj.Username = $("#Username").val();
                 obj.NameCard = $("#NameCard").val();
@@ -104,7 +107,7 @@
                             })
                         }
                     }
-                })                
+                })
             }
         })
     };

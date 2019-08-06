@@ -213,12 +213,12 @@ namespace Application.eGreeting.Controllers
                         var searchCard = CardDAO.GetCard(id);
                         if (searchCard != null)
                         {
+                            Session["CardId"] = searchCard.CardId;
                             var model = new Transaction
                             {
                                 NameCard = searchCard.NameCard,
                                 Username = Session["username"].ToString(),
                                 ImageNameTrans = searchCard.ImageName,
-                                //TimeSend = DateTime.Now
                             };
                             return View(model);
                         }
@@ -248,7 +248,24 @@ namespace Application.eGreeting.Controllers
                     }
                     Alert("Send card failed. Please contact Administrator!", NotificationType.error);
                 }
-                return View();
+                if (Session["CardId"] != null)
+                {
+                    var searchCard = CardDAO.GetCard(int.Parse(Session["CardId"].ToString()));
+                    if (searchCard !=null)
+                    {
+                        var model = new Transaction
+                        {
+                            NameCard = searchCard.NameCard,
+                            Username = Session["username"].ToString(),
+                            ImageNameTrans = searchCard.ImageName,
+                        };
+                        Session["CardId"] = null;
+                        return View(model);
+                    }
+                    Alert("Not found Card.", NotificationType.error);
+                }
+                Alert("CardId is null", NotificationType.error);
+                return RedirectToAction("Index","Home");
             }
             catch (Exception e)
             {

@@ -3,7 +3,6 @@ namespace Application.eGreeting.Models
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Data.Entity.ModelConfiguration.Conventions;
 
     public class eGreetingDB : DbContext
     {

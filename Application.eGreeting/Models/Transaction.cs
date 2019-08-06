@@ -35,7 +35,6 @@ namespace Application.eGreeting.Models
         [StringLength(50, ErrorMessage = "NameCard cannot more than 50 characters")]
         public string NameCard { get; set; }
 
-        [Required]
         [StringLength(50, ErrorMessage = "ImageName cannot more than 50 characters")]
         public string ImageNameTrans { get; set; }
 
