@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Information User";
-    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Welcome <b>@Session["fullname"]</b></h2>
@@ -30,7 +30,7 @@
     <br/>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-warning", @style = "float:left" })
+            @Html.ActionLink("Home", "Index", "Home", null, new { @class = "btn btn-warning", @style = "float:left" })
         </div>
     </div>
 </div>

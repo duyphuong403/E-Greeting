@@ -99,10 +99,14 @@ namespace Application.eGreeting.DataAccess
             {
                 new SelectListItem{ Value="", Text="---Select Category---", Selected=true},
                 new SelectListItem{ Value="birthday", Text="Birthday"},
-                new SelectListItem{ Value="newyear", Text="New Year"},
+                new SelectListItem{ Value="newyear", Text="NewYear"},
                 new SelectListItem{ Value="festival", Text="Festival"},
             };
             return model;
+        }
+        public static List<Card> GetCardByCategory(string Category)
+        {
+            return db.Cards.Where(item => item.Category.ToLower().Contains(Category.ToLower())).ToList();
         }
 
     }

@@ -12,7 +12,7 @@ namespace Application.eGreeting.Controllers
     {
         [HandleError]
         // GET: Home
-        public ActionResult Index(int? page)
+        public ActionResult Index()
         {
             if (page == null)
             {
@@ -35,16 +35,17 @@ namespace Application.eGreeting.Controllers
 
             }
             return View("Search", CardDAO.GetCards(txtSearch));
-            
+
         }
 
         //GET: Home/Birthday
         public ActionResult Birthday(int? page)
         {
-
-            var search = CardDAO.GetAllCard;
-            if (search != null)
+            var Category = "Birthday";
+            var search = CardDAO.GetCardByCategory(Category);
+            if (search.Count != 0)
             {
+
                 if (page == null)
                 {
                     page = 1;
@@ -53,7 +54,57 @@ namespace Application.eGreeting.Controllers
                 int pageNumber = (page ?? 1);
                 return View(search.ToPagedList(pageNumber, pageSize));
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return View("index");
+            }
+        }
+        //GET: Home/NewYear
+        public ActionResult NewYear(int? page)
+        {
+            var Category = "NewYear";
+            var search = CardDAO.GetCardByCategory(Category);
+
+            if (search.Count != 0)
+            {
+
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 9;
+                int pageNumber = (page ?? 1);
+                return View(search.ToPagedList(pageNumber, pageSize));
+            }
+            else
+            {
+
+                return View();
+            }
+
+        }
+        //GET: Home/Festival
+        public ActionResult Festival(int? page)
+        {
+            var Category = "Festival";
+            var search = CardDAO.GetCardByCategory(Category);
+
+            if (search.Count != 0)
+            {
+
+                if (page == null)
+                {
+                    page = 1;
+                }
+                int pageSize = 9;
+                int pageNumber = (page ?? 1);
+                return View(search.ToPagedList(pageNumber, pageSize));
+            }
+            else
+            {
+
+                return View();
+            }
         }
 
         //GET: Home/Login
@@ -82,10 +133,10 @@ namespace Application.eGreeting.Controllers
                 Session["username"] = search.UserName;
                 Session["fullname"] = search.FullName;
                 Session["role"] = search.Role.ToString().ToLower();
-                if (Session["role"].ToString() == "true")
-                {
-                    return RedirectToAction("Index","Admin");
-                }
+                //if (Session["role"].ToString() == "true")
+                //{
+                //    return RedirectToAction("Index", "Admin");
+                //}
                 return RedirectToAction("Index");
             }
             else
@@ -102,6 +153,7 @@ namespace Application.eGreeting.Controllers
             {
                 Session["username"] = null;
                 Session["role"] = null;
+                Alert("You has signed out!", NotificationType.success);
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
@@ -120,6 +172,6 @@ namespace Application.eGreeting.Controllers
             success,
             warning,
             info
-        }        
+        }
     }
 }

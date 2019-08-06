@@ -1,33 +1,35 @@
-﻿@model PagedList.IPagedList<Application.eGreeting.Models.Card>
+﻿@model IEnumerable<Application.eGreeting.Models.Card>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container>
-    <div class="col-sm-12">
-        <!-- light-slider -->
-        <div class="light-slider-menu">
-            <ul id="responsive-banner" style="padding: 0">
-                <li>
-                    <div>
-                        <img src="~/Content/img/banner.jpg" style="width: 100%; height: 50%">
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <img src="~/Content/img/banner.jpg" style="width: 100%; height: 50%">
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <img src="~/Content/img/banner.jpg" style="width: 100%; height: 50%">
-                    </div>
-                </li>
-            </ul>
+
+
+    <div class="container">
+        <div class="col-sm-12">
+            <!-- light-slider -->
+            <div class="light-slider-menu">
+                <ul id="responsive-banner" style="padding: 0">
+                    <li>
+                        <div>
+                            <img src="~/Content/img/banner.jpg" style="width: 100%; height: 50%">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <img src="~/Content/img/banner.jpg" style="width: 100%; height: 50%">
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <img src="~/Content/img/banner.jpg" style="width: 100%; height: 50%">
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
 
     @Html.Action("Index", "SlideCard")
 
@@ -109,83 +111,83 @@
         </div>
     </div>
 
-    <div class="col-sm-12" style="padding-top: 30px; padding: bottom: 30px">
-        <h5 style="font-weight: bold; margin-bottom: 30px">New Year</h5>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="light-menu">
-                    <ul id="responsive-1">
-                        <li>
-                            <div class="box-card" style="margin-bottom: 10px">
-                                <img src="~/Content/img/newyear-1.jpg" alt="image" class="image" style="width:100%">
-                                <div class="middle">
-                                    <a href="#" class="btn-select">SELECT</a>
+        <div class="col-sm-12" style="padding-top: 30px; padding-bottom: 30px">
+            <h5 style="font-weight: bold; margin-bottom: 30px">New Year</h5>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="light-menu">
+                        <ul id="responsive-1">
+                            <li>
+                                <div class="box-card" style="margin-bottom: 10px">
+                                    <img src="~/Content/img/newyear-1.jpg" alt="image" class="image" style="width:100%">
+                                    <div class="middle">
+                                        <a href="#" class="btn-select">SELECT</a>
+                                    </div>
+                                    <div class="name-card">
+                                        <h6>New Year 01</h6>
+                                    </div>
                                 </div>
-                                <div class="name-card">
-                                    <h6>New Year 01</h6>
+                            </li>
+                            <li>
+                                <div class="box-card" style="margin-bottom: 10px">
+                                    <img src="~/Content/img/newyear-2.jpg" alt="image" class="image" style="width:100%">
+                                    <div class="middle">
+                                        <a href="#" class="btn-select">SELECT</a>
+                                    </div>
+                                    <div class="name-card">
+                                        <h6>New Year 02</h6>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="box-card" style="margin-bottom: 10px">
-                                <img src="~/Content/img/newyear-2.jpg" alt="image" class="image" style="width:100%">
-                                <div class="middle">
-                                    <a href="#" class="btn-select">SELECT</a>
+                            </li>
+                            <li>
+                                <div class="box-card" style="margin-bottom: 10px">
+                                    <img src="~/Content/img/newyear-3.jpg" alt="image" class="image" style="width:100%">
+                                    <div class="middle">
+                                        <a href="#" class="btn-select">SELECT</a>
+                                    </div>
+                                    <div class="name-card">
+                                        <h6>New Year 03</h6>
+                                    </div>
                                 </div>
-                                <div class="name-card">
-                                    <h6>New Year 02</h6>
+                            </li>
+                            <li>
+                                <div class="box-card" style="margin-bottom: 10px">
+                                    <img src="~/Content/img/newyear-4.jpg" alt="image" class="image" style="width:100%">
+                                    <div class="middle">
+                                        <a href="#" class="btn-select">SELECT</a>
+                                    </div>
+                                    <div class="name-card">
+                                        <h6>New Year 04</h6>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="box-card" style="margin-bottom: 10px">
-                                <img src="~/Content/img/newyear-3.jpg" alt="image" class="image" style="width:100%">
-                                <div class="middle">
-                                    <a href="#" class="btn-select">SELECT</a>
+                            </li>
+                            <li>
+                                <div class="box-card" style="margin-bottom: 10px">
+                                    <img src="~/Content/img/newyear-1.jpg" alt="image" class="image" style="width:100%">
+                                    <div class="middle">
+                                        <a href="#" class="btn-select">SELECT</a>
+                                    </div>
+                                    <div class="name-card">
+                                        <h6>New Year 05</h6>
+                                    </div>
                                 </div>
-                                <div class="name-card">
-                                    <h6>New Year 03</h6>
+                            </li>
+                            <li>
+                                <div class="box-card" style="margin-bottom: 10px">
+                                    <img src="~/Content/img/newyear-2.jpg" alt="image" class="image" style="width:100%">
+                                    <div class="middle">
+                                        <a href="#" class="btn-select">SELECT</a>
+                                    </div>
+                                    <div class="name-card">
+                                        <h6>New Year 06</h6>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="box-card" style="margin-bottom: 10px">
-                                <img src="~/Content/img/newyear-4.jpg" alt="image" class="image" style="width:100%">
-                                <div class="middle">
-                                    <a href="#" class="btn-select">SELECT</a>
-                                </div>
-                                <div class="name-card">
-                                    <h6>New Year 04</h6>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="box-card" style="margin-bottom: 10px">
-                                <img src="~/Content/img/newyear-1.jpg" alt="image" class="image" style="width:100%">
-                                <div class="middle">
-                                    <a href="#" class="btn-select">SELECT</a>
-                                </div>
-                                <div class="name-card">
-                                    <h6>New Year 05</h6>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="box-card" style="margin-bottom: 10px">
-                                <img src="~/Content/img/newyear-2.jpg" alt="image" class="image" style="width:100%">
-                                <div class="middle">
-                                    <a href="#" class="btn-select">SELECT</a>
-                                </div>
-                                <div class="name-card">
-                                    <h6>New Year 06</h6>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
     <div class="col-sm-12" style="padding-top: 30px; padding-bottom: 50px">
         <h5 style="font-weight: bold; margin-bottom: 30px">Festival</h5>
@@ -269,173 +271,174 @@
 
 
 
-    <!-- Section Our Team -->
-    <section class="team-section text-center my-5">
+        <!-- Section Our Team -->
+        <section class="team-section text-center my-5">
 
-        <!-- Section heading -->
-        <h2 class="h1-responsive font-weight-bold my-5">Our amazing team</h2>
-        <!-- Section description -->
-        <p class="grey-text w-responsive mx-auto mb-5">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam
-            eum porro a pariatur veniam.
-        </p>
+            <!-- Section heading -->
+            <h2 class="h1-responsive font-weight-bold my-5">Our amazing team</h2>
+            <!-- Section description -->
+            <p class="grey-text w-responsive mx-auto mb-5">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam
+                eum porro a pariatur veniam.
+            </p>
 
-        <!-- Grid row -->
-        <div class="row">
+            <!-- Grid row -->
+            <div class="row">
 
-            <!-- Grid column Phuc-->
-            <div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
-                <div class="avatar mx-auto">
-                    <img src="~/Content/AvatarTeam/Avatar-Phuc.PNG" class="rounded-circle z-depth-1"
-                         alt="Avatar-Phuc" style="width:100%">
+                <!-- Grid column Phuc-->
+                <div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
+                    <div class="avatar mx-auto">
+                        <img src="~/Content/AvatarTeam/Avatar-Phuc.PNG" class="rounded-circle z-depth-1"
+                             alt="Avatar-Phuc" style="width:100%">
+                    </div>
+                    <h5 class="font-weight-bold mt-4 mb-3">Le Gia Phuc</h5>
+                    <p class="text-uppercase blue-text"><strong>Graphic designer</strong></p>
+                    <p class="grey-text">
+                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
+                        adipisci sed quia non numquam modi tempora eius.
+                    </p>
+                    <ul class="list-unstyled mb-0">
+                        <!-- Facebook -->
+                        <a class="p-2 fa-lg fb-ic">
+                            <i class="fab fa-facebook-f blue-text"> </i>
+                        </a>
+                        <!-- Twitter -->
+                        <a class="p-2 fa-lg tw-ic">
+                            <i class="fab fa-twitter blue-text"> </i>
+                        </a>
+                        <!-- Instagram -->
+                        <a class="p-2 fa-lg ins-ic">
+                            <i class="fab fa-instagram blue-text"> </i>
+                        </a>
+                    </ul>
                 </div>
-                <h5 class="font-weight-bold mt-4 mb-3">Le Gia Phuc</h5>
-                <p class="text-uppercase blue-text"><strong>Graphic designer</strong></p>
-                <p class="grey-text">
-                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                    adipisci sed quia non numquam modi tempora eius.
-                </p>
-                <ul class="list-unstyled mb-0">
-                    <!-- Facebook -->
-                    <a class="p-2 fa-lg fb-ic">
-                        <i class="fab fa-facebook-f blue-text"> </i>
-                    </a>
-                    <!-- Twitter -->
-                    <a class="p-2 fa-lg tw-ic">
-                        <i class="fab fa-twitter blue-text"> </i>
-                    </a>
-                    <!-- Instagram -->
-                    <a class="p-2 fa-lg ins-ic">
-                        <i class="fab fa-instagram blue-text"> </i>
-                    </a>
-                </ul>
+                <!-- Grid column -->
+                <!-- Grid column Dung-->
+                <div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
+                    <div class="avatar mx-auto">
+                        <img src="~/Content/AvatarTeam/Avatar-Dung.png" class="rounded-circle z-depth-1"
+                             alt="Avatar-Phuc" style="width:100%">
+                    </div>
+                    <h5 class="font-weight-bold mt-4 mb-3">Bui Duc Dung</h5>
+                    <p class="text-uppercase blue-text"><strong>Web developer</strong></p>
+                    <p class="grey-text">
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem ipsa accusantium
+                        doloremque rem laudantium totam aperiam.
+                    </p>
+                    <ul class="list-unstyled mb-0">
+                        <!-- Facebook -->
+                        <a class="p-2 fa-lg fb-ic">
+                            <i class="fab fa-facebook-f blue-text"> </i>
+                        </a>
+                        <!-- Instagram -->
+                        <a class="p-2 fa-lg ins-ic">
+                            <i class="fab fa-instagram blue-text"> </i>
+                        </a>
+                    </ul>
+                </div>
+                <!-- Grid column -->
+                <!-- Grid column Phuc-->
+                <div class="col-lg-3 col-md-6 mb-md-0 mb-5">
+                    <div class="avatar mx-auto">
+                        <img src="~/Content/AvatarTeam/Avatar-Vi.png" class="rounded-circle z-depth-1"
+                             alt="Avatar-Phuc" style="width:100%">
+                    </div>
+                    <h5 class="font-weight-bold mt-4 mb-3">Phuong The Vi</h5>
+                    <p class="text-uppercase blue-text"><strong>Web developer</strong></p>
+                    <p class="grey-text">
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                        mollit anim est fugiat nulla id eu laborum.
+                    </p>
+                    <ul class="list-unstyled mb-0">
+                        <!-- Facebook -->
+                        <a class="p-2 fa-lg fb-ic">
+                            <i class="fab fa-facebook-f blue-text"> </i>
+                        </a>
+                        <!-- Instagram -->
+                        <a class="p-2 fa-lg ins-ic">
+                            <i class="fab fa-instagram blue-text"> </i>
+                        </a>
+                        <!-- Dribbble -->
+                        <a class="p-2 fa-lg ins-ic">
+                            <i class="fab fa-dribbble blue-text"> </i>
+                        </a>
+                    </ul>
+                </div>
+                <!-- Grid column -->
+                <!-- Grid column Vi-->
+                <div class="col-lg-3 col-md-6">
+                    <div class="avatar mx-auto">
+                        <img src="~/Content/AvatarTeam/Avatar-Phuong.jpg" class="rounded-circle z-depth-1"
+                             alt="Avatar-Phuc" style="width:100%">
+                    </div>
+                    <h5 class="font-weight-bold mt-4 mb-3">Ngo Duy Phuong</h5>
+                    <p class="text-uppercase blue-text"><strong>Backend developer</strong></p>
+                    <p class="grey-text">
+                        Perspiciatis repellendus ad odit consequuntur, eveniet earum nisi qui consectetur
+                        totam officia voluptates perferendis voluptatibus aut.
+                    </p>
+                    <ul class="list-unstyled mb-0">
+                        <!-- Facebook -->
+                        <a class="p-2 fa-lg fb-ic">
+                            <i class="fab fa-facebook-f blue-text"> </i>
+                        </a>
+                        <!-- Github -->
+                        <a class="p-2 fa-lg ins-ic">
+                            <i class="fab fa-github blue-text"> </i>
+                        </a>
+                    </ul>
+                </div>
+                <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+        </section>
+        <!--/.Section Our Team -->
+        <!-- Section: Contact v.1 -->
+        <section class="my-5">
+
+            <!-- Section heading -->
+            <h2 class="h1-responsive font-weight-bold text-center my-5">Contact us</h2>
+
+            <!-- Grid column -->
+            <!-- Grid column -->
+            <div class="container">
+
+                <!--Google map-->
+                <div id="map-container-section" class="z-depth-1-half map-container-section mb-4" style="height: 400px">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.3257176556144!2d106.6641388146226!3d10.78634619231479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ed23ca5d8db%3A0x24d414f45e5a523!2zNTkwIEPDoWNoIE3huqFuZyBUaMOhbmcgOCwgUGjGsOG7nW5nIDExLCBRdeG6rW4gMywgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1564456157755!5m2!1svi!2s" frameborder="0" style="border:0; width:100%; height:400px" allowfullscreen></iframe>
+                </div>
+                <!-- Buttons-->
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <a class="btn-floating accent-1">
+                            <i class="fas fa-map-marker-alt" style="font-size: 50px; color: #4285f4"></i>
+                        </a>
+                        <p>Ho Chi Minh city, 70000</p>
+                        <p class="mb-md-0">Vietnam</p>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn-floating accent-1">
+                            <i class="fas fa-phone" style="font-size: 50px; color: #4285f4"></i>
+                        </a>
+                        <p>+ 84 234 567 89</p>
+                        <p class="mb-md-0">Mon - Fri, 8:00-22:00</p>
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn-floating accent-1">
+                            <i class="fa fa-envelope" style="font-size: 50px; color: #4285f4"></i>
+                        </a>
+                        <p>info@gmail.com</p>
+                        <p class="mb-0">sale@gmail.com</p>
+                    </div>
+                </div>
+
             </div>
             <!-- Grid column -->
-            <!-- Grid column Dung-->
-            <div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
-                <div class="avatar mx-auto">
-                    <img src="~/Content/AvatarTeam/Avatar-Dung.png" class="rounded-circle z-depth-1"
-                         alt="Avatar-Phuc" style="width:100%">
-                </div>
-                <h5 class="font-weight-bold mt-4 mb-3">Bui Duc Dung</h5>
-                <p class="text-uppercase blue-text"><strong>Web developer</strong></p>
-                <p class="grey-text">
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem ipsa accusantium
-                    doloremque rem laudantium totam aperiam.
-                </p>
-                <ul class="list-unstyled mb-0">
-                    <!-- Facebook -->
-                    <a class="p-2 fa-lg fb-ic">
-                        <i class="fab fa-facebook-f blue-text"> </i>
-                    </a>
-                    <!-- Instagram -->
-                    <a class="p-2 fa-lg ins-ic">
-                        <i class="fab fa-instagram blue-text"> </i>
-                    </a>
-                </ul>
-            </div>
-            <!-- Grid column -->
-            <!-- Grid column Phuc-->
-            <div class="col-lg-3 col-md-6 mb-md-0 mb-5">
-                <div class="avatar mx-auto">
-                    <img src="~/Content/AvatarTeam/Avatar-Vi.png" class="rounded-circle z-depth-1"
-                         alt="Avatar-Phuc" style="width:100%">
-                </div>
-                <h5 class="font-weight-bold mt-4 mb-3">Phuong The Vi</h5>
-                <p class="text-uppercase blue-text"><strong>Web developer</strong></p>
-                <p class="grey-text">
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                    mollit anim est fugiat nulla id eu laborum.
-                </p>
-                <ul class="list-unstyled mb-0">
-                    <!-- Facebook -->
-                    <a class="p-2 fa-lg fb-ic">
-                        <i class="fab fa-facebook-f blue-text"> </i>
-                    </a>
-                    <!-- Instagram -->
-                    <a class="p-2 fa-lg ins-ic">
-                        <i class="fab fa-instagram blue-text"> </i>
-                    </a>
-                    <!-- Dribbble -->
-                    <a class="p-2 fa-lg ins-ic">
-                        <i class="fab fa-dribbble blue-text"> </i>
-                    </a>
-                </ul>
-            </div>
-            <!-- Grid column -->
-            <!-- Grid column Vi-->
-            <div class="col-lg-3 col-md-6">
-                <div class="avatar mx-auto">
-                    <img src="~/Content/AvatarTeam/Avatar-Phuong.jpg" class="rounded-circle z-depth-1"
-                         alt="Avatar-Phuc" style="width:100%">
-                </div>
-                <h5 class="font-weight-bold mt-4 mb-3">Ngo Duy Phuong</h5>
-                <p class="text-uppercase blue-text"><strong>Backend developer</strong></p>
-                <p class="grey-text">
-                    Perspiciatis repellendus ad odit consequuntur, eveniet earum nisi qui consectetur
-                    totam officia voluptates perferendis voluptatibus aut.
-                </p>
-                <ul class="list-unstyled mb-0">
-                    <!-- Facebook -->
-                    <a class="p-2 fa-lg fb-ic">
-                        <i class="fab fa-facebook-f blue-text"> </i>
-                    </a>
-                    <!-- Github -->
-                    <a class="p-2 fa-lg ins-ic">
-                        <i class="fab fa-github blue-text"> </i>
-                    </a>
-                </ul>
-            </div>
-            <!-- Grid column -->
 
-        </div>
-        <!-- Grid row -->
+        </section>
+        <!-- Section: Contact v.1 -->
 
-    </section>
-    <!--/.Section Our Team -->
-    <!-- Section: Contact v.1 -->
-    <section class="my-5">
-
-        <!-- Section heading -->
-        <h2 class="h1-responsive font-weight-bold text-center my-5">Contact us</h2>
-
-        <!-- Grid column -->
-        <!-- Grid column -->
-        <div class="container">
-
-            <!--Google map-->
-            <div id="map-container-section" class="z-depth-1-half map-container-section mb-4" style="height: 400px">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.3257176556144!2d106.6641388146226!3d10.78634619231479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ed23ca5d8db%3A0x24d414f45e5a523!2zNTkwIEPDoWNoIE3huqFuZyBUaMOhbmcgOCwgUGjGsOG7nW5nIDExLCBRdeG6rW4gMywgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1564456157755!5m2!1svi!2s" frameborder="0" style="border:0" allowfullscreen width="100%" height="400"></iframe>
-            </div>
-            <!-- Buttons-->
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <a class="btn-floating blue accent-1">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </a>
-                    <p>Ho Chi Minh city, 70000</p>
-                    <p class="mb-md-0">Vietnam</p>
-                </div>
-                <div class="col-md-4">
-                    <a class="btn-floating blue accent-1">
-                        <i class="fas fa-phone"></i>
-                    </a>
-                    <p>+ 84 234 567 89</p>
-                    <p class="mb-md-0">Mon - Fri, 8:00-22:00</p>
-                </div>
-                <div class="col-md-4">
-                    <a class="btn-floating blue accent-1">
-                        <i class="fa fa-envelope"></i>
-                    </a>
-                    <p>info@gmail.com</p>
-                    <p class="mb-0">sale@gmail.com</p>
-                </div>
-            </div>
-
-        </div>
-        <!-- Grid column -->
-
-    </section>
-    <!-- Section: Contact v.1 -->
-</div>
+    </div>

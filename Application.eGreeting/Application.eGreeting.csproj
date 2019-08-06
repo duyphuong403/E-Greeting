@@ -2414,6 +2414,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataAccess\CardDAO.cs" />
     <Compile Include="DataAccess\FeedbackDAO.cs" />
+    <Compile Include="DataAccess\EmailListDAO.cs" />
     <Compile Include="DataAccess\PaymentDAO.cs" />
     <Compile Include="DataAccess\TransDAO.cs" />
     <Compile Include="DataAccess\UserDAO.cs" />
@@ -2423,6 +2424,7 @@
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\ChangePassword.cs" />
     <Compile Include="Models\eGreetingDB.cs" />
+    <Compile Include="Models\EmailList.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\SlideCard.cs" />
     <Compile Include="Models\PaymentInfo.cs" />
@@ -2467,6 +2469,11 @@
     <Content Include="Views\User\SubscribeSend.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\SlideCard\Index.cshtml" />
+    <Content Include="Views\User\SubscribeReceive.cshtml" />
+    <Content Include="Views\Home\NewYear.cshtml" />
+    <Content Include="Views\Home\Festival.cshtml" />
+    <Content Include="Views\Admin\DetailTrans.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -14,10 +14,10 @@
     @Html.ActionLink("Create New Card", "CreateCard", "Admin", new { @class = "btn btn-success" })
 </p>
 
-@using (Html.BeginForm("ManageCard", "Admin", FormMethod.Get))
-{
-    @Html.TextBox("txtSeach")<input type="submit" value="Search"/>
-}
+<form action="~/Admin/ManageCard" method="get">
+    <input type="text" name="pName" style="font-size:14px" placeholder="Enter Card name">
+    <button type="submit" class="btn alazea-btn">Search</button>
+</form>
 <table class="table">
     <tr>
         

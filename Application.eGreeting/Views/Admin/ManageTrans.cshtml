@@ -12,72 +12,39 @@
 
 <table class="table">
     <tr>
-        <th>
-            Sender (Username)
-        </th>
-        <th>
-            Receiver
-        </th>
-        <th>
-            Subject
-        </th>
-        <th>
-            Content
-        </th>
-        <th>
-            Name Card
-        </th>
-        <th>
-            Image
-        </th>
-        <th>
-            TimeSend
-        </th>
+        <th>Sender (Username)</th>
+        <th>Receiver</th>
+        <th>Subject</th>
+        <th>Content</th>
+        <th>Name Card</th>
+        <th>Image</th>
+        <th>TimeSend</th>
         <th>Action</th>
     </tr>
-
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Receiver)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject)
-            </td>
-            <td id="Content">
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NameCard)
-            </td>
-            <td>
-                <img src="~/ImageCard/@item.ImageNameTrans" alt="@item.ImageNameTrans" style="width:100%" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeSend)
-            </td>
+            <td>@Html.DisplayFor(modelItem => item.Username)</td>
+            <td>@Html.DisplayFor(modelItem => item.Receiver)</td>
+            <td>@Html.DisplayFor(modelItem => item.Subject)</td>
+            <td id="Content">@Html.DisplayFor(modelItem => item.Content)</td>
+            <td>@Html.DisplayFor(modelItem => item.NameCard)</td>
+            <td><img src="~/ImageCard/@item.ImageNameTrans" alt="@item.ImageNameTrans" style="width:100%" /></td>
+            <td>@Html.DisplayFor(modelItem => item.TimeSend)</td>
             <td style="width: 20%">
-                <a href="@Url.Action("Details", "Admin", new { id = item.TransId })" class="btn btn-warning">
+                <a href="@Url.Action("DetailTrans", "Admin", new { id = item.TransId })" class="btn btn-warning">
                     <i class="fas fa-info"></i>
                 </a>
-                <a onclick="DoDelete(@item.TransId)" class="btn btn-danger">
-                    <i class="fas fa-trash"></i>
-                </a>
+                <a onclick="DoDelete(@item.TransId)" class="btn btn-danger"><i class="fas fa-trash"></i></a>
             </td>
         </tr>
     }
-
 </table>
 @Html.PagedListPager(Model, page => Url.Action("ManageFeedback", new { page, @class = "page-link" }), new PagedListRenderOptions()
        {
            ContainerDivClasses = new[] { "Page", "navigation" },
            LiElementClasses = new List<string> { "page-item" }
        })
-
 <script>
     var lengthContent = $('#Content').text().length;
     if (lengthContent > 50) {
@@ -86,4 +53,33 @@
         $('br').remove();
     }
 
+    function DoDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "/Admin/DeleteTrans",
+                    type: "POST",
+                    data: { id: id },
+                    success: function (res) {
+                        if (res) {                            
+                            location.reload();
+                        }                      
+                    }
+                })
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted!',
+                    'success'
+                )
+            }
+        })
+    }
 </script>

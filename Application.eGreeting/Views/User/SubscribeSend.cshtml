@@ -1,39 +1,47 @@
-﻿
+﻿@model Application.eGreeting.Models.EmailList
 @{
     ViewBag.Title = "SubscribeSend";
-    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Subscribe Send</h2>
+<h2 style="color:chocolate">Subscribe Send</h2>
 
 <div class="container">
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    <h4>Our motto is make the most convenient for customers, so you only need to subscribe once (pay once), you can comfortably free to send all kind of greeting cards like birthday, new year, festival for a month. Subscribtion for experience our service!</h4>
     <br />
     <div class="col-md-offset-2 col-md-10" style="text-align:center; display: inline-block">
-        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-warning" })
         <button class="btn btn-success" data-toggle="modal" data-target="#formEmailSend">Accept</button>
     </div>
 
     <!-- Modal -->
     <div class="modal fade" id="formEmailSend" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Email</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <textarea rows="10" placeholder="Your emails will daily receive card...(separate by ';' )" class="form-control rounded-0" style="max-width:100%"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    @Html.ActionLink("Submit", "SubscribeSend", null, new { @class="btn btn-success" })
+        @using (Html.BeginForm("AddEmailList","User"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Email</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @Html.TextAreaFor(model => model.ListEmail, new { @class = "form-control", @rows = "10", @placeholder = "Input emails list which you want to send card...(at least 10 emails - one email per line!)" })
+                        @Html.ValidationMessageFor(model => model.ListEmail, "", new { @class = "text-danger" })
+                        @*<textarea rows="10" placeholder="Input emails list which you will send card...(at least 10 emails - separate by ';' )" class="form-control rounded-0" style="max-width:100%"></textarea>*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" name="name" value="Submit" class="btn btn-success" />
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 </div>
 

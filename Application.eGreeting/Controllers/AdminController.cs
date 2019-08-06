@@ -5,6 +5,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -16,13 +17,58 @@ namespace Application.eGreeting.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            if (IsAdmin())
+            if (IsLoggedIn())
             {
-                return View();
+                if (IsAdmin())
+                {
+                    return View();
+                }
+                Alert("You not permit to access that page", NotificationType.warning);
+                return RedirectToAction("Index", "Home");
             }
-            Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Login");
         }       
+
+        //GET: Admin/Login
+        public ActionResult Login()
+        {
+            if (Session["username"] != null)
+            {
+                return RedirectToAction("Index");
+            }
+            Alert("Attention: If you are not Administrator. Please leave from there. Thank you", NotificationType.warning);
+            return View();
+        }
+
+        // POST: Admin/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(User login)
+        {
+            var model = new User
+            {
+                UserName = login.UserName,
+                Password = login.Password
+            };
+            var search = UserDAO.CheckLogin(model);
+            if (search != null)
+            {
+                if (!search.Role)
+                {
+                    Alert("You are not Administrator. Please do not try login here. Thank you.", NotificationType.warning);
+                    return RedirectToAction("Index", "Home");
+                }
+                Session["username"] = search.UserName;
+                Session["fullname"] = search.FullName;
+                Session["role"] = search.Role.ToString().ToLower();             
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                Alert("Invalid Account", NotificationType.error);
+            }
+            return View();
+        }
 
         //========================================================= Manage Feedback ===========================================================================
         [HttpPost]
@@ -156,18 +202,28 @@ namespace Application.eGreeting.Controllers
         //================================================ Manage Card ====================================================//
 
         // GET: Admin/ManageCard
-        public ActionResult ManageCard(int? page)
+        public ActionResult ManageCard(string pName,int? page)
         {
+            var model = CardDAO.GetAllCard;
             if (IsAdmin())
             {
-                if (page == null)
+                if (!string.IsNullOrEmpty(pName))
                 {
-                    page = 1;
+                    //seartch by name
+                    model = model.Where(p => p.NameCard.ToUpper().Contains(pName)
+                                        || p.NameCard.ToLower().Contains(pName)).ToList();
+                    //items in page
+                    int pageSize = 9;
+                    int pageNumber = (page ?? 1);
+                    return View(model.ToPagedList(pageNumber, pageSize));
                 }
-                int pageSize = 3;
-                int pageNumber = (page ?? 1);
-
-                return View(CardDAO.GetAllCard.ToPagedList(pageNumber, pageSize));
+                else
+                {
+                    //items in page
+                    int pageSize = 9;
+                    int pageNumber = (page ?? 1);
+                    return View(model.ToPagedList(pageNumber, pageSize));
+                }
             }
             Alert("You not permit to access that page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
@@ -424,7 +480,7 @@ namespace Application.eGreeting.Controllers
                 return View(UserDAO.GetAllUser.ToPagedList(pageNumber, pageSize));
             }
             Alert("You not permit to access that page", NotificationType.warning);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Home");
         }
 
         // GET: Admin/CreateCard
@@ -476,28 +532,47 @@ namespace Application.eGreeting.Controllers
             }
         }
 
+        // GET: Admin/EditUser
         public ActionResult EditUser(int id)
         {
-            if (IsAdmin())
+            try
             {
-                var result = UserDAO.GetUser(id);
-                return View(result);
+                var search = UserDAO.GetUser(id);
+                if (search != null)
+                {
+                    return View(search);
+                }
+                Alert("Not found user", NotificationType.error);
+                return RedirectToAction("Index");
             }
-            Alert("You not permit to access this page", NotificationType.warning);
-            return RedirectToAction("Index", "Home");
+            catch (Exception e)
+            {
+                Alert(e.Message, NotificationType.error);
+                return RedirectToAction("Index");
+                throw;
+            }
         }
 
-        // POST: User/Edit/5
+        // POST: Admin/EditUser
         [HttpPost]
         public ActionResult EditUser(User editU)
         {
             try
             {
+                var searchUser = UserDAO.GetUser(editU.UserId);
+                if (searchUser == null)
+                {
+                    Alert("Not found This User", NotificationType.error);
+                    return View();
+                }
                 if (editU.Password == null || editU.RePassword == null)
                 {
-                    var searchUser = UserDAO.GetUser(editU.UserId);
                     editU.Password = searchUser.Password;
                     editU.RePassword = searchUser.RePassword;
+                }
+                if (editU.UserName == "admin")
+                {
+                    editU.Role = true;
                 }
                 if (UserDAO.EditUser(editU))
                 {
@@ -579,7 +654,32 @@ namespace Application.eGreeting.Controllers
             return View();
         }
 
-        //================================================ Manage Payment ====================================================//
+        //POST: /Admin/DeletePayment
+        [HttpPost]
+        public ActionResult DeletePayment(int id)
+        {
+            try
+            {
+                if (PaymentDAO.DeletePayment(id))
+                {
+                    Alert("Delete Payment Successfully .", NotificationType.success);
+                    return RedirectToAction("ManagePaymentInfo");
+                }
+                else
+                {
+                    Alert("Delete error, cannot find this User!!!", NotificationType.error);
+                    return RedirectToAction("ManagePaymentInfo");
+                }
+            }
+            catch (Exception e)
+            {
+                Alert(e.Message, NotificationType.error);
+                return RedirectToAction("ManagePaymentInfo");
+                throw;
+            }
+        }
+        
+        //================================================ Manage Transaction====================================================//
         // GET: /Admin/ManageTrans
 
         public ActionResult ManageTrans(int? page)
@@ -598,8 +698,34 @@ namespace Application.eGreeting.Controllers
             Alert("You not permit to access this page", NotificationType.error);
             return RedirectToAction("Login", "Home");
         }
+        public ActionResult DetailTrans(int id)
+        {
+            var s = TransDAO.GetTransaction(id);
+            return View(s);
+        }
 
-
+        public ActionResult DeleteTrans(int id)
+        {
+            try
+            {
+                if (TransDAO.DeleteTrans(id))
+                {
+                    Alert("Delete Transaction Successfully .", NotificationType.success);
+                    return RedirectToAction("ManageTrans");
+                }
+                else
+                {
+                    Alert("Delete Transaction error, cannot find this User!!!", NotificationType.error);
+                    return RedirectToAction("ManageTrans");
+                }
+            }
+            catch (Exception e)
+            {
+                Alert(e.Message, NotificationType.error);
+                return RedirectToAction("ManageTrans");
+                throw;
+            }
+        }
 
         public void Alert(string message, NotificationType notificationType)
         {
