@@ -7,7 +7,7 @@
     Layout = null; //
 }
 
-<div class="col-sm-12" style="padding-top: 30px; padding: bottom: 30px">
+<div class="col-sm-12" style="padding-top: 30px; padding-bottom: 30px">
     <h5 style="font-weight: bold; margin-bottom: 30px">Birthday</h5>
     <div class="row">
         <div class="col-sm-12">
@@ -19,7 +19,7 @@
                         {
                             <li>
                                 <div class="box-card" style="margin-bottom: 10px">
-                                    <img src="~/Content/img/@item.ImageName" alt="image" class="image" style="width:100%">
+                                    <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" class="image" style="width:100%">
                                     <div class="middle">
                                         <a href="#" class="btn-select">SELECT</a>
                                     </div>
@@ -36,19 +36,19 @@
     </div>
 </div>
 
-<div class="col-sm-12" style="padding-top: 30px; padding: bottom: 30px">
+<div class="col-sm-12" style="padding-top: 30px; padding-bottom: 30px">
     <h5 style="font-weight: bold; margin-bottom: 30px">New Year</h5>
     <div class="row">
         <div class="col-sm-12">
             <div class="light-menu">
-                <ul id="responsive">
+                <ul id="responsive-1">
                     @if (Model.ListNewYear != null)
                     {
                         foreach (var item in Model.ListNewYear)
                         {
                             <li>
                                 <div class="box-card" style="margin-bottom: 10px">
-                                    <img src="~/Content/img/@item.ImageName" alt="image" class="image" style="width:100%">
+                                    <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" class="image" style="width:100%">
                                     <div class="middle">
                                         <a href="#" class="btn-select">SELECT</a>
                                     </div>
@@ -65,19 +65,19 @@
     </div>
 </div>
 
-<div class="col-sm-12" style="padding-top: 30px; padding: bottom: 30px">
+<div class="col-sm-12" style="padding-top: 30px; padding-bottom: 30px">
     <h5 style="font-weight: bold; margin-bottom: 30px">Festival</h5>
     <div class="row">
         <div class="col-sm-12">
             <div class="light-menu">
-                <ul id="responsive">
+                <ul id="responsive-2">
                     @if (Model.ListFestival != null)
                     {
                         foreach (var item in Model.ListFestival)
                         {
                             <li>
                                 <div class="box-card" style="margin-bottom: 10px">
-                                    <img src="~/Content/img/@item.ImageName" alt="image" class="image" style="width:100%">
+                                    <img src="~/ImageCard/@item.ImageName" alt="@item.ImageName" class="image" style="width:100%">
                                     <div class="middle">
                                         <a href="#" class="btn-select">SELECT</a>
                                     </div>
