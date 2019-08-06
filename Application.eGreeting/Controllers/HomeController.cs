@@ -14,13 +14,6 @@ namespace Application.eGreeting.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            if (page == null)
-            {
-                page = 1;
-            }
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
-
             return View();
         }
 

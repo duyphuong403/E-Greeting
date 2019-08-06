@@ -15,9 +15,9 @@ namespace Application.eGreeting.Controllers
         {
             SlideCard slidecard = new SlideCard();
 
-            slidecard.ListBirthday = CardDAO.GetCardsByCategory("birthday").Take(9).ToList();
-            slidecard.ListNewYear = CardDAO.GetCardsByCategory("newyear").Take(9).ToList();
-            slidecard.ListFestival = CardDAO.GetCardsByCategory("festival").Take(9).ToList();
+            slidecard.ListBirthday = CardDAO.GetCardsByCategory("birthday").OrderByDescending(o => o.CardId).Take(9).ToList();
+            slidecard.ListNewYear = CardDAO.GetCardsByCategory("newyear").OrderByDescending(o => o.CardId).Take(9).ToList();
+            slidecard.ListFestival = CardDAO.GetCardsByCategory("festival").OrderByDescending(o => o.CardId).Take(9).ToList();
 
             return View("Index", slidecard);
         }
