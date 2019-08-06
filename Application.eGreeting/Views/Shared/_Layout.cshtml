@@ -7,8 +7,7 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/ico" href="~/ImageCard/gift-card.ico" />
-    <!-- Button back top -->
-    <link href="~/Content/Site.css" rel="stylesheet" />
+
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Font Awesome -->
@@ -26,6 +25,8 @@
     <link rel='stylesheet' href='~/Content/Light-slider/css/lightslider.min.css'>
     <!-- Phuc css -->
     <link href="~/Content/Phuc.css" rel="stylesheet" />
+    <!-- Button back top -->
+    <link href="~/Content/Site.css" rel="stylesheet" />
 
     <script src="~/Content/Admin/js/sweetalert2@8.js"></script>
     <!--CDN Swal -->
@@ -37,7 +38,7 @@
     <a id="button"></a>
 
     <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
+    <nav class="navbar navbar-expand-lg navbar-dark primary-color" style="background-image: linear-gradient(to right, #f804cc, #409ddf , #07ec23);">
 
         <!-- Navbar brand -->
         @Html.ActionLink("eGreeting Online", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -144,7 +145,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="page-footer font-small blue" style="position: fixed; width: 100%">
+    <footer class="page-footer font-small blue" style="position: fixed; width: 100%;background-image: linear-gradient(to right, #f804cc, #409ddf , #07ec23);">
         <!-- Footer Links -->
         <!-- Copyright -->
         <div class="footer-copyright text-center py-3">
@@ -287,5 +288,19 @@
         });
 
     })
-    
+
+        var btn = $('#button');
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass('show');
+        } else {
+            btn.removeClass('show');
+        }
+    });
+
+    btn.on('click', function (e) {
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: 0 }, '300');
+    });
 </script>
