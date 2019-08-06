@@ -2,14 +2,31 @@
 
 @{
     ViewBag.Title = "Sign in for Administrator";
-    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+    Layout = null;
 }
-
-
-<div class="container body-content" style="padding-top: 30px; padding-bottom: 30px;max-width:500px">
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+        <!-- Bootstrap core CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Material Design Bootstrap -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/css/mdb.min.css" rel="stylesheet">
+        <!-- Style SWAL-->
+        <link rel='stylesheet' href='~/Content/sweetalert.min.css'>
+        <!--CDN Swal -->
+        <script src="~/Scripts/sweetalert.min.js"></script>
+    </head>
+<div class="container body-content" style="margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);max-width:500px">
     <div class="card">
-        <h5 class="card-header info-color white-text text-center py-4" style="background-color:#a6c!important">
-            <strong>Sign in</strong>
+        @Html.Partial("_NotificationPanel")
+        <h5 class="card-header info-color white-text text-center py-4" style="background-color:#ff3547!important">
+            <strong>Administrator</strong>
         </h5>
         <!--Card content-->
         <div class="card-body px-lg-5 pt-0">
@@ -30,10 +47,18 @@
                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
 
-                <button type="submit" class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0">Sign In</button>
+                <button type="submit" class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" style="border: 2px solid #ff3547!important;color:#ff3547!important ">Sign In</button>
 
             }
         </div>
     </div>
 </div>
 
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>

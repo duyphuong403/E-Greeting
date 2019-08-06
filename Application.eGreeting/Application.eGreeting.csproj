@@ -2441,7 +2441,6 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_AdminLayoutPage.cshtml" />
-    <Content Include="Views\Shared\_UserLayoutPage.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Admin\CreateCard.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
@@ -2486,7 +2485,6 @@
     <Folder Include="Content\AvatarTeam\" />
     <Folder Include="ImageCard\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\HomeCard\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
