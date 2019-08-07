@@ -43,7 +43,7 @@
         @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="checkbox">
-                @Html.EditorFor(model => model.Role)
+                @Html.EditorFor(model => model.Role) <p style="display:inline-block; color: red">Admin</p>
                 @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -80,9 +80,9 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-                    <label><input type="radio" name="Gender" value="true" checked="checked">Male</label>
-                    <label><input type="radio" name="Gender" value="false">Female</label>
-                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+            <label><input type="radio" name="Gender" value="true" checked="checked">Male</label>
+            <label><input type="radio" name="Gender" value="false">Female</label>
+            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -105,14 +105,12 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Create" class="btn btn-default" />
+            @Html.ActionLink("Cancel", "ManageUser", "Admin", null, new { @class = "btn btn-warning", @style = "float:left" })
         </div>
     </div>
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
