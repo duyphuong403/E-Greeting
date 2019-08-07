@@ -590,7 +590,7 @@ namespace Application.eGreeting.Controllers
             }
         }
 
-        // POST: User/Delete/5
+        // POST: Admin/Delete/5
         [HttpPost]
         public ActionResult DeleteUser(int id)
         {
@@ -621,6 +621,29 @@ namespace Application.eGreeting.Controllers
                 Console.WriteLine(e.Message);
                 return RedirectToAction("ManageCard");
             }
+        }
+
+        //GET: Admin/EditEmailList/1
+        public ActionResult EditEmailList(int id)
+        {
+            if (IsAdmin())
+            {
+                var search = UserDAO.GetUser(id);
+                if (search != null)
+                {
+                    var searchEmail = EmailListDAO.GetEmailByUsername(search.UserName);
+                    if (searchEmail != null)
+                    {
+                        return View(searchEmail);
+                    }
+                    Alert("Cannot found Email List", NotificationType.warning);
+                    return RedirectToAction("ManageUser", "Admin");
+                }
+                Alert("Cannot found User", NotificationType.warning);
+                return RedirectToAction("ManageUser", "Admin");
+            }
+            Alert("You not permit to access that page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
         }
 
         //================================================ Manage Payment ====================================================//
