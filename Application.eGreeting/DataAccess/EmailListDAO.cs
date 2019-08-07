@@ -10,6 +10,10 @@ namespace Application.eGreeting.DataAccess
     {
         private static readonly eGreetingDB db = new eGreetingDB();
 
+        public static EmailList GetEmailByUsername(string username)
+        {
+            return db.EmailLists.FirstOrDefault(item => item.Username == username);
+        }
         public static bool Create(EmailList emailList)
         {
             db.EmailLists.Add(emailList);

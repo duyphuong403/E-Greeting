@@ -335,6 +335,12 @@ namespace Application.eGreeting.Controllers
         {
             if (IsLoggedIn())
             {
+                var search = UserDAO.GetUserByUsername(Session["username"].ToString());
+                if (search.IsSubcribeSend)
+                {
+                    Alert("You are Subscribed Send", NotificationType.error);
+                    return RedirectToAction("Index", "Home");
+                }                
                 return View();
             }
             Alert("You need Log in to access this page!", NotificationType.warning);
@@ -359,8 +365,18 @@ namespace Application.eGreeting.Controllers
                     addEmail.Username = Session["username"].ToString().ToLower();
                     if (EmailListDAO.Create(addEmail))
                     {
-                        Alert("You're Subscribe Send successfully", NotificationType.success);
-                        return RedirectToAction("Index", "Home");
+                        var model = new User
+                        {
+                            UserName = addEmail.Username,
+                            IsSubcribeSend = true
+                        };
+                        if (UserDAO.UpdateSubscribeSend(model))
+                        {
+                            Alert("You're Subscribe Send successfully", NotificationType.success);
+                            return RedirectToAction("Index", "Home");
+                        }
+                        Alert("Cannot update status subscribe send", NotificationType.error);
+                        return RedirectToAction("SubscribeSend");
                     }
                 }
             }
