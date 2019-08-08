@@ -61,7 +61,6 @@ namespace Application.eGreeting.Controllers
                 Session["username"] = search.UserName;
                 Session["fullname"] = search.FullName;
                 Session["role"] = search.Role.ToString().ToLower();
-                CheckActive(search); // Phuc
                 return RedirectToAction("Index", "Admin");
             }
             else
@@ -71,21 +70,7 @@ namespace Application.eGreeting.Controllers
             return View();
         }
 
-        // Phuc
-        private void CheckActive(User user) {
-            PaymentInfo item = PaymentDAO.GetPaymentByUsername(user.UserName);
-            if (item != null)
-            {
-                if (item.IsActive)
-                {
-                    if (item.DateExpire < DateTime.Now)
-                    {
-                        item.IsActive = false;
-                        PaymentDAO.EditPayment(item);
-                    }
-                }
-            }
-        }
+       
 
         //========================================================= Manage Feedback ===========================================================================
         [HttpPost]

@@ -33,10 +33,9 @@ namespace Application.eGreeting.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DateExpire { get; set; }
 
-        [Required]
         [Display(Name = "Date Created")]
         [DataType(DataType.Date)]
-        public DateTime DateCreated { get; set; }
+        public DateTime? DateCreated { get; set; }
 
         [Display(Name = "Status Activation")]
         public bool IsActive { get; set; }
