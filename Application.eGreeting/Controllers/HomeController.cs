@@ -23,12 +23,17 @@ namespace Application.eGreeting.Controllers
 
             if (string.IsNullOrEmpty(txtSearch))
             {
-                Alert("Not Found", NotificationType.warning);
+                Alert("Please input name card to searching.", NotificationType.warning);
                 return View("Index");
 
             }
-            return View("Search", CardDAO.GetCards(txtSearch));
-
+            var search = CardDAO.GetCards(txtSearch);
+            if (search.Count == 0)
+            {
+                Alert("Not Found Any Card", NotificationType.error);
+                return View("Index");
+            }
+            return View("Search", search);
         }
 
         //GET: Home/Birthday
