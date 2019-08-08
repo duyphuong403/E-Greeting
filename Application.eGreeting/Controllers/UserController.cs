@@ -214,7 +214,7 @@ namespace Application.eGreeting.Controllers
                 var searchPayment = PaymentDAO.GetPaymentByUsername(Session["username"].ToString());
                 if (searchPayment != null)
                 {
-                    if (searchUser != null && !searchPayment.IsActive)
+                    if (searchUser != null || !searchPayment.IsActive)
                     {
                         Alert("Your Info Payment is not activated. Please contact Administrator by send feedback.", NotificationType.error);
                         return RedirectToAction("FeedbackIndex");
