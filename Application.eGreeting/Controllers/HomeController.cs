@@ -19,7 +19,7 @@ namespace Application.eGreeting.Controllers
 
         public ActionResult Search(string txtSearch)
         {
-           
+
 
             if (string.IsNullOrEmpty(txtSearch))
             {
@@ -144,14 +144,11 @@ namespace Application.eGreeting.Controllers
             PaymentInfo item = PaymentDAO.GetPaymentByUsername(user.UserName);
             if (item != null)
             {
-                if (item.IsActive)
+                if ((item.DateCreated).Value.AddMonths(1) < DateTime.Now || item.DateExpire < DateTime.Now)
                 {
-                    if (item.DateCreated < DateTime.Now || item.DateExpire < DateTime.Now)
-                    {
-                        Alert("Your Payment Info was expired. Please register again. Thank", NotificationType.warning);
-                        item.IsActive = false;
-                        PaymentDAO.EditPayment(item);
-                    }
+                    Alert("Your Payment Info was expired. Please register again. Thank", NotificationType.warning);
+                    item.IsActive = false;
+                    PaymentDAO.EditPayment(item);
                 }
             }
         }
