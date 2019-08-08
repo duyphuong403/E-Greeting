@@ -113,6 +113,63 @@ namespace Application.eGreeting.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        //Phuc
+        public ActionResult EditPaymentInfo()
+        {
+            //if (id > 0)
+            //{
+            //    var findPaymentInfo = PaymentDAO.GetPaymentByUsername(Session["username"].ToString());
+            //    if (findPaymentInfo == null)
+            //    {
+            //        Alert("Your Payment Info are not registered!!", NotificationType.warning);
+            //        return RedirectToAction("Index");
+            //          }
+            //    return View(findPaymentInfo);
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index");
+            //}
+            if (IsLoggedIn())
+            {
+                var findPaymentInfo = PaymentDAO.GetPaymentByUsername(Session["username"].ToString());
+                if (findPaymentInfo == null)
+                {
+                    Alert("Your Payment Info are not registered!!", NotificationType.warning);
+                    return RedirectToAction("Index");
+                }
+                return View(findPaymentInfo);
+            }
+            Alert("You need Log in to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult EditPaymentInfo(PaymentInfo edit)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (UserDAO.EditUserPaymentInfo(edit))
+                {
+                    Alert("Edited successfully!!", NotificationType.success);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    Alert("Edited failed!!", NotificationType.error);
+                    return View();
+                }
+            }
+            else
+            {
+                Alert("Edited failed!!", NotificationType.error);
+                return View();
+            }
+        }
+        // End Phuc
+
         public ActionResult ChangePassword(int id)
         {
             if (id >0)

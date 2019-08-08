@@ -60,6 +60,26 @@ namespace Application.eGreeting.DataAccess
             return false;
         }
 
+        //Phuc
+        public static PaymentInfo GetUserPaymentInfo(int id)
+        {
+            return db.PaymentInfos.Find(id);
+        }
+
+        public static bool EditUserPaymentInfo(PaymentInfo editPaymentInfo)
+        {
+            var b = GetUserPaymentInfo(editPaymentInfo.UserId);
+            if (b != null)
+            {
+                b.BankName = editPaymentInfo.BankName;
+                b.BankAccount = editPaymentInfo.BankAccount;
+                b.DateExpire = editPaymentInfo.DateExpire;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         public static bool UpdateSubscribeReceive(User editUser)
         {
             var b = GetUser(editUser.UserId);
