@@ -7,7 +7,7 @@ namespace Application.eGreeting.Controllers
 {
     public class UserController : BaseController
     {
-        
+
         // GET: User
         public ActionResult Index()
         {
@@ -17,7 +17,7 @@ namespace Application.eGreeting.Controllers
                 return View(result);
             }
             Alert("You need login to access this page", NotificationType.warning);
-           
+
             return RedirectToAction("Login", "Home");
 
         }
@@ -172,7 +172,7 @@ namespace Application.eGreeting.Controllers
 
         public ActionResult ChangePassword(int id)
         {
-            if (id >0)
+            if (id > 0)
             {
                 var search = UserDAO.GetUser(id);
                 var model = new ChangePassword
@@ -319,7 +319,7 @@ namespace Application.eGreeting.Controllers
                 if (Session["CardId"] != null)
                 {
                     var searchCard = CardDAO.GetCard(int.Parse(Session["CardId"].ToString()));
-                    if (searchCard !=null)
+                    if (searchCard != null)
                     {
                         var model = new Transaction
                         {
@@ -333,7 +333,7 @@ namespace Application.eGreeting.Controllers
                     Alert("Not found Card.", NotificationType.error);
                 }
                 Alert("CardId is null", NotificationType.error);
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception e)
             {
@@ -403,12 +403,24 @@ namespace Application.eGreeting.Controllers
         {
             if (IsLoggedIn())
             {
-                var search = UserDAO.GetUserByUsername(Session["username"].ToString());
+                var username = Session["username"].ToString();
+                var searchPayment = PaymentDAO.GetPaymentByUsername(username);
+                if (searchPayment == null)
+                {
+                    Alert("You must register Payment Info to use this feature.", NotificationType.error);
+                    return RedirectToAction("Payment", "User");
+                }
+                var search = UserDAO.GetUserByUsername(username);
                 if (search.IsSubcribeSend)
                 {
                     Alert("You are Subscribed Send", NotificationType.error);
                     return RedirectToAction("Index", "Home");
-                }                
+                }
+                if (!searchPayment.IsActive)
+                {
+                    Alert("You Payment Not Activate. Please Contact Administrator. Thank you.", NotificationType.error);
+                    return RedirectToAction("FeedbackIndex", "User");
+                }
                 return View();
             }
             Alert("You need Log in to access this page!", NotificationType.warning);
@@ -431,25 +443,107 @@ namespace Application.eGreeting.Controllers
                 if (Session["username"] != null)
                 {
                     addEmail.Username = Session["username"].ToString().ToLower();
-                    if (EmailListDAO.Create(addEmail))
+                    var search = EmailListDAO.SearchEmailListByUsername(addEmail.Username);
+                    if (search.Count == 0)
                     {
-                        var model = new User
+                        if (EmailListDAO.Create(addEmail))
                         {
-                            UserName = addEmail.Username,
-                            IsSubcribeSend = true
-                        };
-                        if (UserDAO.UpdateSubscribeSend(model))
-                        {
-                            Alert("You're Subscribe Send successfully", NotificationType.success);
-                            return RedirectToAction("Index", "Home");
+                            var model = new User
+                            {
+                                UserName = addEmail.Username,
+                                IsSubcribeSend = true
+                            };
+                            if (UserDAO.UpdateSubscribeSend(model))
+                            {
+                                Alert("You're Subscribe Send successfully", NotificationType.success);
+                                return RedirectToAction("Index", "Home");
+                            }
+                            else
+                            {
+                                EmailListDAO.Delete(addEmail.EmailId);
+                                Alert("Subscribe Send Failed. Please contact Administrator", NotificationType.error);
+                                return RedirectToAction("SubscribeSend");
+                            }
                         }
-                        Alert("Cannot update status subscribe send", NotificationType.error);
-                        return RedirectToAction("SubscribeSend");
                     }
+                    Alert("You has already register Email List", NotificationType.error);
+                    return RedirectToAction("Index", "Home");
                 }
             }
             Alert("Please do not empty fields", NotificationType.error);
             return RedirectToAction("SubscribeSend");
+        }
+
+        //GET: User/EditEmailList/5
+        public ActionResult EditEmailList(string username)
+        {
+            if (IsLoggedIn())
+            {
+                if (username != null)
+                {
+                    var search = EmailListDAO.GetEmailListByUsername(username);
+                    if (search != null)
+                    {
+                        return View(search);
+                    }
+                    Alert("Not found Email List with this Username", NotificationType.error);
+                    return View();
+                }
+                Alert("Username was null", NotificationType.error);
+                return View();
+            }
+            Alert("You need Log in to access this page!", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
+        }
+
+        //POST: User/EditEmailList
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEmailList(EmailList editEmailList)
+        {
+            if (editEmailList != null)
+            {
+                var search = EmailListDAO.GetEmailList(editEmailList.EmailId);
+                if (search != null)
+                {
+                    editEmailList.ListEmail.Trim();
+                    string[] ListEmail = editEmailList.ListEmail.Split('\n');
+                    if (ListEmail.Length < 10 || ListEmail.Length > 20)
+                    {
+                        Alert("You must be enter from 10 to 20 emails.", NotificationType.error);
+                        return View(search);
+                    }
+                    if (editEmailList == null)
+                    {
+                        if (EmailListDAO.Delete(editEmailList.EmailId))
+                        {
+                            Alert("Remove email list successfully", NotificationType.success);
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            Alert("Remove email list failed", NotificationType.error);
+                            return View(search);
+                        }
+                    }
+                    else
+                    {
+                        editEmailList.ListEmail = editEmailList.ListEmail.ToString();
+                        if (EmailListDAO.Edit(editEmailList))
+                        {
+                            Alert("Update email list successfully", NotificationType.success);
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            Alert("Update email list failed", NotificationType.error);
+                            return View(search);
+                        }
+                    }
+                }
+            }
+                Alert("Model was null. Please try again", NotificationType.error);
+                return RedirectToAction("Index");
         }
 
         //GET: User/SubscribeReceive
@@ -459,8 +553,8 @@ namespace Application.eGreeting.Controllers
             {
                 var searchUser = UserDAO.GetUserByUsername(Session["username"].ToString().ToLower());
                 if (searchUser != null)
-                {                   
-                   return View(searchUser);
+                {
+                    return View(searchUser);
                 }
                 Alert("Not found this Username", NotificationType.error);
                 return RedirectToAction("Index", "Home");
@@ -481,7 +575,7 @@ namespace Application.eGreeting.Controllers
                 {
                     var searchUser = UserDAO.GetUser(search.UserId);
                     if (searchUser != null)
-                    {                        
+                    {
                         searchUser.IsSubcribeReceive = true;
                         if (UserDAO.UpdateSubscribeReceive(searchUser))
                         {

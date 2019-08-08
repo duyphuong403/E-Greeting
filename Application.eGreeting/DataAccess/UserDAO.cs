@@ -94,7 +94,7 @@ namespace Application.eGreeting.DataAccess
 
         public static bool UpdateSubscribeSend(User editUser)
         {
-            var b = GetUser(editUser.UserId);
+            var b = GetUserByUsername(editUser.UserName);
             if (b != null)
             {
                 b.IsSubcribeSend = editUser.IsSubcribeSend;

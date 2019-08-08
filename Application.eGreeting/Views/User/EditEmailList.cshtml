@@ -1,17 +1,23 @@
-﻿@model PagedList.IPagedList<Application.eGreeting.Models.EmailList>
+﻿@model Application.eGreeting.Models.EmailList
 
 @{
     ViewBag.Title = "EditEmailList";
-    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] emailList = null;
+    if (Model.ListEmail != null)
+    {
+        emailList = Model.ListEmail.Split('\n');
+    }
 }
 
-<h2>Edit Email List</h2>
+<h2>EditEmailList</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
+        <h4>EmailList</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.EmailId)
@@ -27,16 +33,25 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ListEmail, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ListEmail, new { htmlAttributes = new { @class = "form-control" } })
+                <textarea rows="10" class="form-control" name="ListEmail">@if (Model.ListEmail != null)
+                {
+                    foreach (var item in emailList)
+                    {
+                        @item
+                    }
+                }</textarea>
                 @Html.ValidationMessageFor(model => model.ListEmail, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @Html.ActionLink("Back to List", "Index", null, new { @class="btn btn-default"})
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

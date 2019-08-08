@@ -633,7 +633,7 @@ namespace Application.eGreeting.Controllers
                 var search = UserDAO.GetUser(id);
                 if (search != null)
                 {
-                    var searchEmail = EmailListDAO.GetEmailByUsername(search.UserName);
+                    var searchEmail = EmailListDAO.GetEmailListByUsername(search.UserName);
                     if (searchEmail != null)
                     {
                         return View(searchEmail);
@@ -687,7 +687,7 @@ namespace Application.eGreeting.Controllers
             {
                 if (PaymentDAO.DeletePayment(id))
                 {
-                    Alert("Delete Payment Successfully .", NotificationType.success);
+                    //Alert("Delete Payment Successfully .", NotificationType.success);
                     return RedirectToAction("ManagePaymentInfo");
                 }
                 else

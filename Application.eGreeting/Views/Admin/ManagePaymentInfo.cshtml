@@ -28,13 +28,34 @@
             <td>@Html.DisplayFor(modelItem => item.DateExpire)</td>
             <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
             <td>
-                @if (item.IsActive)
+                @if (item.DateCreated != null)
                 {
-                    <span style="color: green; font-weight: 900">Activated</span>
+                    if (item.DateExpire < DateTime.Now || (item.DateCreated.Value.AddMonths(1)) < DateTime.Now)
+                    {
+                        <span style="color: red; font-weight: 900">Expired</span>
+                    }
+                    else
+                    {
+                        if (item.IsActive)
+                        {
+                            <span style="color: green; font-weight: 900">Activated</span>
+                        }
+                        else
+                        {
+                            <span style="color: red; font-weight: 900">Not Activated</span>
+                        }
+                    }
                 }
                 else
                 {
-                    <span style="color: red; font-weight: 900">Not Activated</span>
+                    if (item.IsActive)
+                    {
+                        <span style="color: green; font-weight: 900">Activated</span>
+                    }
+                    else
+                    {
+                        <span style="color: red; font-weight: 900">Not Activated</span>
+                    }
                 }
             </td>
             <td>
