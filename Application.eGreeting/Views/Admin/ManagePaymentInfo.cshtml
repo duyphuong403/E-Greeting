@@ -42,13 +42,28 @@
                 {
                     <input type="button" value="Deactivate" class="btn btn-danger" onClick="Deactive(@item.PayId)" />
                     <a onClick="doDelete(@item.PayId)" href="#" class="btn btn-danger btn-circle">
-                        <i style="color: #fff" class="fas fa-trash"></i></a>
+                        <i style="color: #fff" class="fas fa-trash"></i>
+                    </a>
                 }
                 else
                 {
-                    <input type="button" value="Activate" class="btn btn-success" onClick="active(@item.PayId)" />
-                    <a onClick="doDelete(@item.PayId)" href="#" class="btn btn-danger btn-circle">
-                        <i style="color: #fff" class="fas fa-trash"></i></a>
+                    if (item.DateExpire < DateTime.Now || item.DateCreated < DateTime.Now)
+                    {
+                        <input type="button" value="Activate" class="btn btn-success" onClick="active(@item.PayId)" disabled
+                               title="This Card was expired !!!" />
+                        <a onClick="doDelete(@item.PayId)" href="#" class="btn btn-danger btn-circle">
+                            <i style="color: #fff" class="fas fa-trash"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <input type="button" value="Activate" class="btn btn-success" onClick="active(@item.PayId)" />
+                        <a onClick="doDelete(@item.PayId)" href="#" class="btn btn-danger btn-circle">
+                            <i style="color: #fff" class="fas fa-trash"></i>
+                        </a>
+                    }
+
+
                 }
             </td>
         </tr>
