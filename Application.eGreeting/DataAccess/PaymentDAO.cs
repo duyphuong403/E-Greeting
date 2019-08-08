@@ -50,6 +50,20 @@ namespace Application.eGreeting.DataAccess
             return false;
         }
 
+        public static bool EditPaymentInfo(PaymentInfo editPayment)
+        {
+            var b = GetPayment(editPayment.PayId);
+            if (b != null)
+            {
+                b.BankAccount = editPayment.BankAccount;
+                b.BankName = editPayment.BankName;
+                b.DateExpire = editPayment.DateExpire;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         public static bool DeletePayment(int id)
         {
             var b = GetPayment(id);

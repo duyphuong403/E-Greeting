@@ -24,13 +24,16 @@
     <!-- Style Light slider-->
     <link rel='stylesheet' href='~/Content/Light-slider/css/lightslider.min.css'>
     <!-- Phuc css -->
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.theme.min.css" rel="stylesheet" />
     <link href="~/Content/Phuc.css" rel="stylesheet" />
     <!-- Button back top -->
     <link href="~/Content/Site.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <script src="~/Content/Admin/js/sweetalert2@8.js"></script>
-    <!--CDN Swal -->
     <script src="~/Scripts/sweetalert.min.js"></script>
+
 </head>
 <body class="container-fluid" style="padding: 0; background-image: url('../../Content/img/background.jpg')">
     <!-- Layout -->
@@ -140,6 +143,7 @@
     <!--/.Navbar-->
 
     <div class="container body-content" style="padding-top: 30px; padding-bottom: 50px">
+
         @Html.Partial("_NotificationPanel")
         @RenderBody()
     </div>
@@ -153,27 +157,37 @@
         </div>
         <!-- Copyright -->
         <!-- JQuery -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <!-- Bootstrap tooltips -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-        <!-- Bootstrap core JavaScript -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <!-- MDB core JavaScript -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
-        <!-- Light slider JavaScript -->
-        <script type="text/javascript" src="~/Content/Light-slider/js/lightslider.min.js"></script>
 
-        <script src="~/Scripts/modernizr-2.6.2.js"></script>
 
 
 
     </footer>
     <!-- Footer -->
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.5/js/mdb.min.js"></script>
+    <!-- Light slider JavaScript -->
+    <script type="text/javascript" src="~/Content/Light-slider/js/lightslider.min.js"></script>
+    <script src="~/Content/Admin/js/sweetalert2@8.js"></script>
+    <!--CDN Swal -->
+    <script src="~/Scripts/sweetalert.min.js"></script>
+
+
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
 </body>
 </html>
 
 <script>
     $(document).ready(function () {
+        
+        
+        $("#datepicker").datepicker();
+        
+
 
         // Light slider
         $('#responsive-banner').lightSlider({
