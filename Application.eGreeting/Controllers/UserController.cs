@@ -124,13 +124,14 @@ namespace Application.eGreeting.Controllers
             //    {
             //        Alert("Your Payment Info are not registered!!", NotificationType.warning);
             //        return RedirectToAction("Index");
-            //          }
+            //    }
             //    return View(findPaymentInfo);
             //}
             //else
             //{
             //    return RedirectToAction("Index");
             //}
+
             if (IsLoggedIn())
             {
                 var findPaymentInfo = PaymentDAO.GetPaymentByUsername(Session["username"].ToString());
@@ -151,9 +152,14 @@ namespace Application.eGreeting.Controllers
             if (ModelState.IsValid)
             {
 
-                if (UserDAO.EditUserPaymentInfo(edit))
+                if (PaymentDAO.EditPaymentInfo(edit))
                 {
                     Alert("Edited successfully!!", NotificationType.success);
+                    var search = PaymentDAO.GetPayment(edit.PayId);
+                    if (search != null)
+                    {
+                        return View(search);
+                    }
                     return RedirectToAction("Index");
                 }
                 else
