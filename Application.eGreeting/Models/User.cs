@@ -57,5 +57,7 @@ namespace Application.eGreeting.Models
         [Display(Name ="Email Address")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        public PaymentInfo UserPaymentInfo { get; set; }
     }
 }

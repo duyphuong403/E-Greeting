@@ -2464,6 +2464,7 @@
     <Content Include="Views\Admin\DetailTrans.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\EditEmailList.cshtml" />
+    <Content Include="Views\User\EditPaymentInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
