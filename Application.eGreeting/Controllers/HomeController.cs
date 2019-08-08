@@ -126,10 +126,9 @@ namespace Application.eGreeting.Controllers
                 Session["username"] = search.UserName;
                 Session["fullname"] = search.FullName;
                 Session["role"] = search.Role.ToString().ToLower();
-                //if (Session["role"].ToString() == "true")
-                //{
-                //    return RedirectToAction("Index", "Admin");
-                //}
+
+                CheckActive(search); // Phuc
+
                 return RedirectToAction("Index");
             }
             else
@@ -137,6 +136,24 @@ namespace Application.eGreeting.Controllers
                 Alert("Invalid Account", NotificationType.error);
             }
             return View();
+        }
+
+        // Phuc Check Payment Expire
+        private void CheckActive(User user)
+        {
+            PaymentInfo item = PaymentDAO.GetPaymentByUsername(user.UserName);
+            if (item != null)
+            {
+                if (item.IsActive)
+                {
+                    if (item.DateCreated < DateTime.Now || item.DateExpire < DateTime.Now)
+                    {
+                        Alert("Your Payment Info was expired. Please register again. Thank", NotificationType.warning);
+                        item.IsActive = false;
+                        PaymentDAO.EditPayment(item);
+                    }
+                }
+            }
         }
 
         //GET: Home/Logout

@@ -96,6 +96,7 @@ namespace Application.eGreeting.Controllers
         [HttpPost]
         public ActionResult Edit(User editU)
         {
+            var search = UserDAO.GetUser(editU.UserId);
             if (ModelState.IsValid)
             {
                 UserDAO.EditUser(editU);
@@ -104,7 +105,12 @@ namespace Application.eGreeting.Controllers
             }
             else
             {
-                return View();
+                if (search != null)
+                {
+                    return View(search);
+                }
+                Alert("Cannot get User", NotificationType.error);
+                return RedirectToAction("Index");
             }
         }
 
@@ -187,6 +193,11 @@ namespace Application.eGreeting.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (changePassword.NewPassword != changePassword.ConfirmNewPassword)
+                {
+                    Alert("Confirm New Password not match.", NotificationType.error);
+                    return View();
+                }
                 var searchUser = UserDAO.GetUser(changePassword.UserId);
                 if (searchUser != null)
                 {
@@ -364,8 +375,8 @@ namespace Application.eGreeting.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    addPayment.DateCreated = DateTime.Now;
-                    if (addPayment.DateExpire > addPayment.DateCreated)
+                    //addPayment.DateCreated = DateTime.Now;
+                    if (addPayment.DateExpire > DateTime.Now)
                     {
                         if (PaymentDAO.CreatePayment(addPayment))
                         {

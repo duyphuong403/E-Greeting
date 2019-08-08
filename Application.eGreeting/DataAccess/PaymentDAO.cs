@@ -67,7 +67,15 @@ namespace Application.eGreeting.DataAccess
             var search = GetPayment(id);
             if (search != null)
             {
-                search.IsActive = check;
+                if (!check)
+                {
+                    search.IsActive = check;
+                }
+                else
+                {
+                    search.IsActive = check;
+                    search.DateCreated = DateTime.Now;
+                }
                 db.SaveChanges();
                 return true;
             }

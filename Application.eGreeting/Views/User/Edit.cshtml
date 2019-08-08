@@ -37,16 +37,19 @@
         @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="col-md-10">
-                @if (Model.Gender)
+                @if (Model != null)
                 {
-                    <label><input type="radio" name="Gender" value="true" checked="checked">Male</label><br />
-                    <label><input type="radio" name="Gender" value="false">Female</label>
+                    if (Model.Gender)
+                    {
+                        <label><input type="radio" name="Gender" value="true" checked="checked">Male</label><br />
+                        <label><input type="radio" name="Gender" value="false">Female</label>
 
-                }
-                else
-                {
-                    <label><input type="radio" name="Gender" value="true">Male</label><br />
-                    <label><input type="radio" name="Gender" value="false" checked="checked">Female</label>
+                    }
+                    else
+                    {
+                        <label><input type="radio" name="Gender" value="true">Male</label><br />
+                        <label><input type="radio" name="Gender" value="false" checked="checked">Female</label>
+                    }
                 }
                 @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
             </div>
