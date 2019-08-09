@@ -275,8 +275,8 @@ namespace Application.eGreeting.Controllers
                 {
                     if (searchUser == null)
                     {
-                        Alert("Cannot found User", NotificationType.error);
-                        return RedirectToAction("Index","Home");
+                        Alert("You not Register Email List", NotificationType.error);
+                        return RedirectToAction("SubscribeSend");
                     }
                     if (!searchPayment.IsActive)
                     {
@@ -289,12 +289,11 @@ namespace Application.eGreeting.Controllers
                         var searchEmailList = EmailListDAO.GetEmailListByUsername(searchUser.UserName);
                         if (searchEmailList == null)
                         {
-                            Alert("You not register email list to send Card. Please register it", NotificationType.error);
+                            Alert("You not register email list to send Card. Please click Subscribe Send Card to register email list.", NotificationType.error);
                             return RedirectToAction("Index");
                         }
                         if (searchCard != null)
                         {
-                            Session["CardId"] = searchCard.CardId;
                             var model = new Transaction
                             {
                                 NameCard = searchCard.NameCard,
@@ -330,25 +329,9 @@ namespace Application.eGreeting.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                     Alert("Send card failed. Please contact Administrator!", NotificationType.error);
+                    return RedirectToAction("Index", "Home");
                 }
-                if (Session["CardId"] != null)
-                {
-                    var searchCard = CardDAO.GetCard(int.Parse(Session["CardId"].ToString()));
-                    if (searchCard != null)
-                    {
-                        var model = new Transaction
-                        {
-                            NameCard = searchCard.NameCard,
-                            Username = Session["username"].ToString(),
-                            ImageNameTrans = searchCard.ImageName,
-                        };
-                        Session["CardId"] = null;
-                        return View(model);
-                    }
-                    Alert("Not found Card.", NotificationType.error);
-                }
-                Alert("CardId is null", NotificationType.error);
-                return RedirectToAction("Index", "Home");
+                return View(newTrans);
             }
             catch (Exception e)
             {
@@ -429,8 +412,7 @@ namespace Application.eGreeting.Controllers
                 var search = UserDAO.GetUserByUsername(username);
                 if (search.IsSubcribeSend)
                 {
-                    Alert("You're already Subscribed Send", NotificationType.success);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ChangeSubscribeSend");
                 }
                 if (!searchPayment.IsActive)
                 {
@@ -441,6 +423,50 @@ namespace Application.eGreeting.Controllers
             }
             Alert("You need Log in to access this page!", NotificationType.warning);
             return RedirectToAction("Login", "Home");
+        }
+
+        //GET: User/ChangeSubscribeSend/5
+        public ActionResult ChangeSubscribeSend()
+        {
+            if (IsLoggedIn())
+            {
+                var search = UserDAO.GetUserByUsername(Session["username"].ToString());
+                if (search != null)
+                {
+                    return View(search);
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            Alert("You need Log in to access this page!", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
+        }
+
+        //POST: User/ChangeSubscribeSend
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeSubscribeSend(User search)
+        {
+            if (search != null)
+            {
+                if (UserDAO.UpdateSubscribeSend(search))
+                {
+                    var searchEmailList = EmailListDAO.GetEmailListByUsername(search.UserName);
+                    if (searchEmailList != null)
+                    {
+                        if (EmailListDAO.Delete(searchEmailList.EmailId))
+                        {
+                            Alert("You are Unsubscribe Send Card successfully", NotificationType.success);
+                            return RedirectToAction("Index", "Home");
+                        }
+                        Alert("Remove Email List failed", NotificationType.error);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    Alert("Not found Email List", NotificationType.error);
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            Alert("Unsubscribe Send Card failed", NotificationType.error);
+            return RedirectToAction("Index", "Home");
         }
 
         //GET: User/EditSubscribe/5
@@ -493,7 +519,7 @@ namespace Application.eGreeting.Controllers
                             };
                             if (UserDAO.UpdateSubscribeSend(model))
                             {
-                                Alert("You're Subscribe Send successfully", NotificationType.success);
+                                Alert("You are Subscribe Send successfully", NotificationType.success);
                                 return RedirectToAction("Index", "Home");
                             }
                             else
@@ -525,7 +551,7 @@ namespace Application.eGreeting.Controllers
                         return View(search);
                     }
                     Alert("Not found Email List with this Username", NotificationType.error);
-                    return View();
+                    return RedirectToAction("Index");
                 }
                 Alert("Username was null", NotificationType.error);
                 return View();
@@ -580,8 +606,8 @@ namespace Application.eGreeting.Controllers
                     }
                 }
             }
-                Alert("Model was null. Please try again", NotificationType.error);
-                return RedirectToAction("Index");
+            Alert("Model was null. Please try again", NotificationType.error);
+            return RedirectToAction("Index");
         }
 
         //GET: User/SubscribeReceive

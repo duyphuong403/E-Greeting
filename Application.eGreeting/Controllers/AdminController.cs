@@ -654,7 +654,7 @@ namespace Application.eGreeting.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditEmailList(EmailList edit)
         {
-            if (edit != null)
+            if (edit.ListEmail != null)
             {
                 string[] email = edit.ListEmail.Split('\n');
                 if (email.Length < 10 || email.Length > 20)
@@ -664,12 +664,22 @@ namespace Application.eGreeting.Controllers
                 }
                 if (EmailListDAO.Edit(edit))
                 {
-                    Alert("Update Email List Successfully", NotificationType.success);
+                    Alert("Updating Email List Successfully", NotificationType.success);
                     return RedirectToAction("ManageUser");
                 }
+                Alert("Updating Email List failed", NotificationType.error);
+                return RedirectToAction("ManageUser");
             }
-            Alert("Update Email List failed", NotificationType.error);
-            return RedirectToAction("ManageUser");
+            else
+            {
+                if (EmailListDAO.Delete(edit.EmailId))
+                {
+                    Alert("Email List has been removed", NotificationType.success);
+                    return RedirectToAction("ManageUser");
+                }
+                Alert("Removing Email List failed", NotificationType.error);
+                return RedirectToAction("ManageUser");
+            }
         }
 
         //================================================ Manage Payment ====================================================//

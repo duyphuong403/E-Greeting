@@ -54,13 +54,11 @@ namespace Application.eGreeting.DataAccess
             var search = GetEmailListByUsername(Username);
             if (search != null)
             {
+                string[] email = search.ListEmail.Split('\n');
                 var model = new List<SelectListItem>();
-                foreach (var item in search.ListEmail)
+                foreach (var item in email)
                 {
-                    model = new List<SelectListItem>()
-                    {
-                        new SelectListItem{ Value=item.ToString(), Text=item.ToString()},
-                    };
+                    model.Add(new SelectListItem { Value = item.ToString(), Text = item.ToString() });
                 }
 
                 return model;

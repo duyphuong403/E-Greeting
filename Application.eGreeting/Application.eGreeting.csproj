@@ -2472,6 +2472,7 @@
     <Content Include="Views\Admin\EditEmailList.cshtml" />
     <Content Include="Views\User\EditPaymentInfo.cshtml" />
     <Content Include="Views\User\EditEmailList.cshtml" />
+    <Content Include="Views\User\ChangeSubscribeSend.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
