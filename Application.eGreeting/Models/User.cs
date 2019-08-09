@@ -58,6 +58,8 @@ namespace Application.eGreeting.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        public PaymentInfo UserPaymentInfo { get; set; }
+        public bool IsVIP { get; set; }
+
+        public bool IsDeactive { get; set; }
     }
 }

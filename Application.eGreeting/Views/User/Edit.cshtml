@@ -17,7 +17,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.UserId)
     @Html.HiddenFor(model => model.Password)
-    @Html.HiddenFor(model =>model.RePassword)
+    @Html.HiddenFor(model => model.RePassword)
 
     <div class="form-group">
         @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -55,6 +55,26 @@
             </div>
         </div>
     </div>
+
+    @if (Model.IsVIP)
+    {
+        <div class="form-group">
+            <label class = "control-label col-md-2">Subscribe Receive New Card</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsSubcribeReceive, new { htmlAttributes = new { @class = "" } })
+                @Html.ValidationMessageFor(model => model.IsSubcribeReceive, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Subscribe Send Card</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsSubcribeSend, new { htmlAttributes = new { @class = "" } })
+                @Html.ValidationMessageFor(model => model.IsSubcribeSend, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+
     <div class="form-group">
         @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">

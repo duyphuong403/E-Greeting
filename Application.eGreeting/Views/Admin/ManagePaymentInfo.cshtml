@@ -68,7 +68,7 @@
                 }
                 else
                 {
-                    if (item.DateExpire < DateTime.Now || item.DateCreated < DateTime.Now)
+                    if (item.DateCreated != null && (item.DateExpire < DateTime.Now || (item.DateCreated.Value.AddMonths(1)) < DateTime.Now))
                     {
                         <input type="button" value="Activate" class="btn btn-success" onClick="active(@item.PayId)" disabled
                                title="This Card was expired !!!" />

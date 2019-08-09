@@ -557,6 +557,7 @@ namespace Application.eGreeting.Controllers
 
         // POST: Admin/EditUser
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditUser(User editU)
         {
             try
@@ -577,9 +578,9 @@ namespace Application.eGreeting.Controllers
                     editU.Role = true;
                 }
                 if (UserDAO.EditUser(editU))
-                {
+                {                   
                     Alert("Edit User successfully!", NotificationType.success);
-                    return RedirectToAction("ManageUser");
+                    return RedirectToAction("ManageUser");              
                 }
                 Alert("Edit User failed!", NotificationType.error);
                 return View();
@@ -648,6 +649,29 @@ namespace Application.eGreeting.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+        //POST: Admin/EditEmailList
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEmailList(EmailList edit)
+        {
+            if (edit != null)
+            {
+                string[] email = edit.ListEmail.Split('\n');
+                if (email.Length < 10 || email.Length > 20)
+                {
+                    Alert("You must enter from 10 to 20 email.", NotificationType.error);
+                    return View(edit);
+                }
+                if (EmailListDAO.Edit(edit))
+                {
+                    Alert("Update Email List Successfully", NotificationType.success);
+                    return RedirectToAction("ManageUser");
+                }
+            }
+            Alert("Update Email List failed", NotificationType.error);
+            return RedirectToAction("ManageUser");
+        }
+
         //================================================ Manage Payment ====================================================//
         // GET: /Admin/ManagePaymentInfo
         public ActionResult ManagePaymentInfo(int? page)
@@ -672,8 +696,32 @@ namespace Application.eGreeting.Controllers
         {
             if (PaymentDAO.ChangeStatusActivation(id, Boolean.Parse(IsActive)))
             {
-                Alert("Change status activation successfully", NotificationType.success);
-                return RedirectToAction("ManagePaymentInfo");
+                var searchPayment = PaymentDAO.GetPayment(id);
+                if (searchPayment != null)
+                {
+                    var searchUser = UserDAO.GetUser(searchPayment.UserId);
+                    if (searchUser != null)
+                    {
+                        if (Boolean.Parse(IsActive))
+                        {
+                            searchUser.IsVIP = true;
+                        }
+                        else
+                        {
+                            searchUser.IsVIP = false;
+                        }
+
+                        if (UserDAO.UpdateIsVIP(searchUser))
+                        {
+                            Alert("Change status activation successfully", NotificationType.success);
+                            return RedirectToAction("ManagePaymentInfo");
+                        }
+                    }
+                    Alert("Cannot found User.", NotificationType.error);
+                    return View();
+                }
+                Alert("Cannot found Payment.", NotificationType.error);
+                return View();
             }
             Alert("Change status activation failed.", NotificationType.error);
             return View();

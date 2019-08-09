@@ -16,7 +16,18 @@
 </p>
 <table class="table">
     <tr>
-        <th>No.</th><th>UserName</th><th>Role</th><th>Subcribe Send</th><th>Subcribe Receive</th><th>FullName</th><th>Gender</th><th>Phone Number</th><th>Email</th><th>Action</th>
+        <th>No.</th>
+        <th>UserName</th>
+        <th>Role</th>
+        <th>Is VIP</th>
+        <th>Is Inactive</th>
+        <th>Subcribe Send</th>
+        <th>Subcribe Receive</th>
+        <th>FullName</th>
+        <th>Gender</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th style="width:15%">Action</th>
     </tr>
 
     @foreach (var item in Model)
@@ -25,25 +36,47 @@
             <td>@i</td>
             <td>@Html.DisplayFor(modelItem => item.UserName)</td>
             <td>
-                @if (item.Role){<label>Admin</label>}
-                else{<label>User</label>}
-            </td>          
+                @if (item.Role)
+                {<label>Admin</label>}
+                else
+                {<label>User</label>}
+            </td>
+            <td>
+                @if (item.IsVIP)
+                {
+                    <label>Yes</label>
+                }
+                else
+                { <label>No</label>}
+            </td>
+            <td>
+                @if (item.IsDeactive)
+                {
+                    <label>Yes</label>
+                }
+                else
+                { <label>No</label>}
+            </td>
             <td>
                 @if (item.IsSubcribeSend)
                 {<label>Yes</label>}
-                else{<label>No</label>}
+                else
+                {<label>No</label>}
             </td>
             <td>
                 @if (item.IsSubcribeReceive)
                 {<label>Yes</label>}
-                else{<label>No</label>}
+                else
+                {<label>No</label>}
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-                @if (item.Gender){<label>Male</label>}
-                else{<label>Female</label>}
+                @if (item.Gender)
+                {<label>Male</label>}
+                else
+                {<label>Female</label>}
             </td>
             <td>@Html.DisplayFor(modelItem => item.Phone)</td>
             <td> @Html.DisplayFor(modelItem => item.Email)</td>
@@ -65,7 +98,7 @@
 
 @Html.PagedListPager(Model, page => Url.Action("ManageUser", new { page, @class = "page-link" }), new PagedListRenderOptions()
    {
-       ContainerDivClasses = new [] { "Page", "navigation" },
+       ContainerDivClasses = new[] { "Page", "navigation" },
        LiElementClasses = new List<string> { "page-item" }
    })
 

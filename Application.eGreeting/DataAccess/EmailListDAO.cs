@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Application.eGreeting.DataAccess
 {
@@ -46,6 +47,25 @@ namespace Application.eGreeting.DataAccess
                 return true;
             }
             return false;
+        }
+
+        public static IEnumerable<SelectListItem> GetEmail(string Username)
+        {
+            var search = GetEmailListByUsername(Username);
+            if (search != null)
+            {
+                var model = new List<SelectListItem>();
+                foreach (var item in search.ListEmail)
+                {
+                    model = new List<SelectListItem>()
+                    {
+                        new SelectListItem{ Value=item.ToString(), Text=item.ToString()},
+                    };
+                }
+
+                return model;
+            }
+            return null;
         }
     }
 }

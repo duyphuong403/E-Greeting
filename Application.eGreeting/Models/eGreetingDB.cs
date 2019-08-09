@@ -41,7 +41,7 @@ namespace Application.eGreeting.Models
             // Seed some record for Payment
             var dsPayment = new List<PaymentInfo>
             {
-                new PaymentInfo {UserId = 2, UserName = "test", BankName = "ACB", BankAccount=9405123465478545, DateExpire = DateTime.ParseExact("2022-01-12","yyyy-MM-dd",null), DateCreated = DateTime.Now}
+                new PaymentInfo {UserId = 2, UserName = "test", BankName = "ACB", BankAccount=9405123465478545, DateExpire = DateTime.ParseExact("2022-01-12","yyyy-MM-dd",null)}
             };
             dsPayment.ForEach(item => context.PaymentInfos.Add(item));
 
@@ -125,7 +125,7 @@ namespace Application.eGreeting.Models
             // Seed some record for Users
             var dsUser = new List<User>
             {
-                new User { UserName = "admin" ,Password = "admin1234",RePassword = "admin1234", FullName = "Admin", Gender = true, Email ="admin@egreeting.com",Phone = "0762327226", Role = true},
+                new User { UserName = "admin" ,Password = "admin1234",RePassword = "admin1234", FullName = "Admin", Gender = true, Email ="admin@egreeting.com",Phone = "0762327226", Role = true, IsDeactive = false, IsVIP = true},
                 new User { UserName = "test" ,Password = "123123123",RePassword = "123123123", FullName = "test", Gender = true, Email ="test@gmail.com",Phone = "0762371254"}
             };
             dsUser.ForEach(item => context.Users.Add(item));

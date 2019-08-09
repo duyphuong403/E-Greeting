@@ -3,14 +3,10 @@
 @{
     ViewBag.Title = "EditEmailList";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string[] emailList = null;
-    if (Model.ListEmail != null)
-    {
-        emailList = Model.ListEmail.Split('\n');
-    }
+
 }
 
-<h2>EditEmailList</h2>
+<h2>Edit Email List</h2>
 
 @using (Html.BeginForm())
 {
@@ -33,9 +29,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ListEmail, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <textarea rows="10" class="form-control" name="ListEmail">@if (Model.ListEmail != null)
+                <textarea rows="15" class="form-control" name="ListEmail">@if (Model != null)
                 {
-                    foreach (var item in emailList)
+                    foreach (var item in Model.ListEmail)
                     {
                         @item
                     }
@@ -46,12 +42,9 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Back to List", "Index", null, new { @class="btn btn-warning" })
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

@@ -56,6 +56,25 @@
             </div>
         </div>
     }
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsVIP, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.IsVIP)
+                @Html.ValidationMessageFor(model => model.IsVIP, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsDeactive, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.IsDeactive)
+                @Html.ValidationMessageFor(model => model.IsSubcribeSend, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
 
 
     <div class="form-group">
@@ -116,7 +135,7 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             @Html.ActionLink("Back to List", "ManageUser", null, new { @class = "btn btn-default", @style = "float:left" })
-            <input type="submit" value="Save" class="btn btn-primary" style = "float:right"/>
+            <input type="submit" value="Save" class="btn btn-primary" style="float:right" />
         </div>
     </div>
 </div>

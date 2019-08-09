@@ -11,15 +11,13 @@ namespace Application.eGreeting.Controllers
         // GET: User
         public ActionResult Index()
         {
-            if (Session["username"] != null)
+            if (IsLoggedIn())
             {
                 var result = UserDAO.GetUserByUsername(Session["username"].ToString());
                 return View(result);
             }
             Alert("You need login to access this page", NotificationType.warning);
-
             return RedirectToAction("Login", "Home");
-
         }
 
         // GET: User/Create
@@ -81,25 +79,31 @@ namespace Application.eGreeting.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(int id)
         {
-            if (id > 0)
+            if (IsLoggedIn())
             {
-                var edi = UserDAO.GetUser(id);
-                return View(edi);
+                if (id > 0)
+                {
+                    var edi = UserDAO.GetUser(id);
+                    return View(edi);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+            Alert("You need Log in to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
         }
 
         // POST: User/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(User editU)
         {
             var search = UserDAO.GetUser(editU.UserId);
             if (ModelState.IsValid)
             {
-                UserDAO.EditUser(editU);
+                UserDAO.UserEditUser(editU);
                 Alert("Edited successfully!!", NotificationType.success);
                 return RedirectToAction("Index");
             }
@@ -117,21 +121,6 @@ namespace Application.eGreeting.Controllers
         //Phuc
         public ActionResult EditPaymentInfo()
         {
-            //if (id > 0)
-            //{
-            //    var findPaymentInfo = PaymentDAO.GetPaymentByUsername(Session["username"].ToString());
-            //    if (findPaymentInfo == null)
-            //    {
-            //        Alert("Your Payment Info are not registered!!", NotificationType.warning);
-            //        return RedirectToAction("Index");
-            //    }
-            //    return View(findPaymentInfo);
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Index");
-            //}
-
             if (IsLoggedIn())
             {
                 var findPaymentInfo = PaymentDAO.GetPaymentByUsername(Session["username"].ToString());
@@ -147,6 +136,7 @@ namespace Application.eGreeting.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditPaymentInfo(PaymentInfo edit)
         {
             if (ModelState.IsValid)
@@ -178,20 +168,25 @@ namespace Application.eGreeting.Controllers
 
         public ActionResult ChangePassword(int id)
         {
-            if (id > 0)
+            if (IsLoggedIn())
             {
-                var search = UserDAO.GetUser(id);
-                var model = new ChangePassword
+                if (id > 0)
                 {
-                    UserId = id,
-                    OldPassword = search.Password,
-                };
-                return View(model);
+                    var search = UserDAO.GetUser(id);
+                    var model = new ChangePassword
+                    {
+                        UserId = id,
+                        OldPassword = search.Password,
+                    };
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+            Alert("You need Log in to access this page", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
         }
 
         [HttpPost]
@@ -235,7 +230,7 @@ namespace Application.eGreeting.Controllers
         // GET: User/CreateFeedback
         public ActionResult FeedbackIndex()
         {
-            if (Session["username"] != null)
+            if (IsLoggedIn())
             {
                 var model = new Feedback
                 {
@@ -273,11 +268,17 @@ namespace Application.eGreeting.Controllers
         {
             if (IsLoggedIn())
             {
-                var searchUser = UserDAO.GetUser(id);
-                var searchPayment = PaymentDAO.GetPaymentByUsername(Session["username"].ToString());
+                var Username = Session["username"].ToString();
+                var searchUser = UserDAO.GetUserByUsername(Username);
+                var searchPayment = PaymentDAO.GetPaymentByUsername(Username);
                 if (searchPayment != null)
                 {
-                    if (searchUser != null || !searchPayment.IsActive)
+                    if (searchUser == null)
+                    {
+                        Alert("Cannot found User", NotificationType.error);
+                        return RedirectToAction("Index","Home");
+                    }
+                    if (!searchPayment.IsActive)
                     {
                         Alert("Your Info Payment is not activated. Please contact Administrator by send feedback.", NotificationType.error);
                         return RedirectToAction("FeedbackIndex");
@@ -285,6 +286,12 @@ namespace Application.eGreeting.Controllers
                     else
                     {
                         var searchCard = CardDAO.GetCard(id);
+                        var searchEmailList = EmailListDAO.GetEmailListByUsername(searchUser.UserName);
+                        if (searchEmailList == null)
+                        {
+                            Alert("You not register email list to send Card. Please register it", NotificationType.error);
+                            return RedirectToAction("Index");
+                        }
                         if (searchCard != null)
                         {
                             Session["CardId"] = searchCard.CardId;
@@ -293,6 +300,7 @@ namespace Application.eGreeting.Controllers
                                 NameCard = searchCard.NameCard,
                                 Username = Session["username"].ToString(),
                                 ImageNameTrans = searchCard.ImageName,
+                                Receiver = searchEmailList.ListEmail
                             };
                             return View(model);
                         }
@@ -308,6 +316,7 @@ namespace Application.eGreeting.Controllers
 
         //POST: User/CreateTrans
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CreateTrans(Transaction newTrans)
         {
             try
@@ -375,6 +384,7 @@ namespace Application.eGreeting.Controllers
 
         //POST: User/Payment
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Payment(PaymentInfo addPayment)
         {
             try
@@ -419,7 +429,7 @@ namespace Application.eGreeting.Controllers
                 var search = UserDAO.GetUserByUsername(username);
                 if (search.IsSubcribeSend)
                 {
-                    Alert("You are Subscribed Send", NotificationType.error);
+                    Alert("You're already Subscribed Send", NotificationType.success);
                     return RedirectToAction("Index", "Home");
                 }
                 if (!searchPayment.IsActive)
@@ -430,6 +440,28 @@ namespace Application.eGreeting.Controllers
                 return View();
             }
             Alert("You need Log in to access this page!", NotificationType.warning);
+            return RedirectToAction("Login", "Home");
+        }
+
+        //GET: User/EditSubscribe/5
+        public ActionResult EditSubscribe(int id)
+        {
+            if (IsLoggedIn())
+            {
+                if (id > 0)
+                {
+                    var search = UserDAO.GetUser(id);
+                    if (search != null)
+                    {
+                        return View(search);
+                    }
+                    Alert("Not found User", NotificationType.error);
+                    return RedirectToAction("Index");
+                }
+                Alert("UserId invalid", NotificationType.error);
+                return RedirectToAction("Index");
+            }
+            Alert("You need Log in to access this page", NotificationType.warning);
             return RedirectToAction("Login", "Home");
         }
 

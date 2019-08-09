@@ -54,6 +54,28 @@ namespace Application.eGreeting.DataAccess
                 b.Gender = editUser.Gender;
                 b.Phone = editUser.Phone;
                 b.Email = editUser.Email;
+                b.IsVIP = editUser.IsVIP;
+                b.IsDeactive = editUser.IsDeactive;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool UserEditUser(User editUser)
+        {
+            var b = GetUser(editUser.UserId);
+            if (b != null)
+            {
+                b.Password = editUser.Password;
+                b.RePassword = editUser.RePassword;
+                b.Role = editUser.Role;
+                b.IsSubcribeSend = editUser.IsSubcribeSend;
+                b.IsSubcribeReceive = editUser.IsSubcribeReceive;
+                b.FullName = editUser.FullName;
+                b.Gender = editUser.Gender;
+                b.Phone = editUser.Phone;
+                b.Email = editUser.Email;
                 db.SaveChanges();
                 return true;
             }
@@ -74,6 +96,18 @@ namespace Application.eGreeting.DataAccess
                 b.BankName = editPaymentInfo.BankName;
                 b.BankAccount = editPaymentInfo.BankAccount;
                 b.DateExpire = editPaymentInfo.DateExpire;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool UpdateIsVIP(User editUser)
+        {
+            var b = GetUser(editUser.UserId);
+            if (b != null)
+            {
+                b.IsVIP = editUser.IsVIP;
                 db.SaveChanges();
                 return true;
             }

@@ -14,7 +14,6 @@ namespace Application.eGreeting.Controllers
             {
                 if (Session["role"].ToString().ToLower() == "true")
                 {
-                    //return View(FeedbackDAO.GetAllFeedback.OrderByDescending(o => o.Id));
                     return true;
                 }
             }

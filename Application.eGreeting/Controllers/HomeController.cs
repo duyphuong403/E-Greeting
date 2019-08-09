@@ -128,6 +128,11 @@ namespace Application.eGreeting.Controllers
             var search = UserDAO.CheckLogin(model);
             if (search != null)
             {
+                if (search.IsDeactive)
+                {
+                    Alert("Your account has been block. Please contact Administrator.", NotificationType.warning);
+                    return View();
+                }
                 Session["username"] = search.UserName;
                 Session["fullname"] = search.FullName;
                 Session["role"] = search.Role.ToString().ToLower();
@@ -147,11 +152,11 @@ namespace Application.eGreeting.Controllers
         private void CheckActive(User user)
         {
             PaymentInfo item = PaymentDAO.GetPaymentByUsername(user.UserName);
-            if (item != null)
+            if (item != null && item.DateCreated != null)
             {
                 if ((item.DateCreated).Value.AddMonths(1) < DateTime.Now || item.DateExpire < DateTime.Now)
                 {
-                    Alert("Your Payment Info was expired. Please register again. Thank", NotificationType.warning);
+                    Alert("Your Payment Info was expired. Please register again. Thank you.", NotificationType.warning);
                     item.IsActive = false;
                     PaymentDAO.EditPayment(item);
                 }
