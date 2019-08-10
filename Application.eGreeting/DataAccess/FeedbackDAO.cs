@@ -24,11 +24,11 @@ namespace Application.eGreeting.DataAccess
             return db.Database.SqlQuery<FeedbackModel>(query).ToList();
         }
 
-        public static List<Feedback> GetAllFeedback { get => db.Feedbacks.OrderByDescending(o => o.Id).ToList(); }
+        public static List<Feedback> GetAllFeedback { get => db.Feedbacks.OrderByDescending(o => o.FeedbackId).ToList(); }
 
         public static IEnumerable<Feedback> GetAllFeedbackPaging(int page, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(o => o.Id).ToPagedList(page, pageSize);
+            return db.Feedbacks.OrderByDescending(o => o.FeedbackId).ToPagedList(page, pageSize);
         }
 
         public static Feedback GetById(int id)

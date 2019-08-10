@@ -255,7 +255,6 @@ namespace Application.eGreeting.Controllers
                     {
                         if (file != null && file.ContentLength > 0)
                         {
-                            //var search = CardDAO.GetNameCard(newCard.NameCard);
                             if (CardDAO.GetNameCard(newCard.NameCard))
                             {
                                 Alert("Namecard has been exist.", NotificationType.error);

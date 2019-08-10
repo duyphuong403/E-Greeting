@@ -60,9 +60,11 @@
 
 <script>
     $('#file').on("change", function () {
-        if (this.) {
-
+        if (this.files[0].size > 2097152) {
+            Swal.fire("Error", "File size cannot bigger than 2 MB. Please choose again !", "error").then((result) => { location.reload();});
+            return false;
         }
+        //alert(this.files[0].size);
         if (this.files && this.files[0]) {
             var fr = new FileReader();
             fr.onload = function (e) {

@@ -40,7 +40,7 @@ namespace Application.eGreeting.DataAccess
             if (category != null)
             {
                 category = category.ToLower();
-                return db.Cards.Where(item => item.Category.ToLower() == category).ToList();
+               return db.Cards.Where(item => item.Category.ToLower() == category).ToList();
             }
             return db.Cards.OrderByDescending(o => o.DateCreated).ToList();
         }
