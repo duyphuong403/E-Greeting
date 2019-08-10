@@ -244,6 +244,7 @@ namespace Application.eGreeting.Controllers
 
         // POST: Admin/CreateCard
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CreateCard(Card newCard, HttpPostedFileBase file)
         {
             try
@@ -294,7 +295,7 @@ namespace Application.eGreeting.Controllers
                             return View();
                         }
                     }
-                    return RedirectToAction("Index");
+                    return View();
                 }
                 Alert("You not permit to access that page", NotificationType.warning);
                 return RedirectToAction("Login", "Home");
@@ -567,6 +568,11 @@ namespace Application.eGreeting.Controllers
                 {
                     Alert("Not found This User", NotificationType.error);
                     return View();
+                }
+                if (editU.Password != editU.RePassword)
+                {
+                    Alert("Re-Password not match !!!", NotificationType.error);
+                    return View(editU);
                 }
                 if (editU.Password == null || editU.RePassword == null)
                 {
